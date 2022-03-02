@@ -70,7 +70,7 @@ class PatientPortal{
         }
 
         shouldNotBeVisible(name: string): void {
-            cy.contains(name).should('not.be.visible')
+            cy.contains(name).should('not.exist')
         }
 }
 
