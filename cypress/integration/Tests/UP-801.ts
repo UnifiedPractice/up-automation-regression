@@ -34,7 +34,11 @@ describe('Automation test for UP-801', () => {
         clinicLocations.chooseAutomation();
 
         cy.log('Set the slider Clinic Location is active? (ON)');
-        cy.get('label[for="inputType"]').contains('Clinic location is active?')
+
+        clinicLocations.setToOn('Use service facility NPI number in box 32a of HCFA form?');
+        
+
+        
         // clinicLocations.setToOn(0);
         // cy.wait(2000);
         // clinicLocations.saveButton();

@@ -7,7 +7,7 @@
     private password: string = 'input[name="Parameter.Password"]'; 
     //private PPNCFPCCPE: string = 'PPNCFPCCPE'
     //private PPNCFPCCPEpassword: string = 'password'
-    
+    //
     goToStaging(): void{
         cy.visit(this.StagingLink)
     }

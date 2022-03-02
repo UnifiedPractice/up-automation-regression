@@ -1,14 +1,13 @@
 /// <reference types="cypress" />
 
 class ClinicLocations{
- public location: string = '.footer-left-button';
- public rooms: string = '.footer-right-button';
- public addLocation: string = '';
- public controlsSelector: string = '.checkboxSlider';
- public rightButtonsSelector: string = '.pull-right';
- public offSliderButton : string ='.redClass'; 
- public onSliderButton : string ='.change';
- public editLocationButton : string ='.card-footer span:contains("Edit location")'
+ private location: string = '.footer-left-button';
+ private rooms: string = '.footer-right-button';
+ private controlsSelector: string = '.checkboxSlider';
+ private rightButtonsSelector: string = '.pull-right';
+ private offSliderButton : string ='.redClass'; 
+ private onSliderButton : string ='.change';
+ private editLocationButton : string ='.card-footer span:contains("Edit location")'
  
  editLocation(value: number) : void { 
      cy.get(this.location).eq(value).click()
@@ -20,7 +19,7 @@ class ClinicLocations{
 
 saveButton() : void{
     cy.get(this.rightButtonsSelector).eq(1).click({force:true});
-    cy.wait(2500)
+    cy.wait(1500)
 }
 
 cancelButton() : void{
@@ -36,30 +35,28 @@ chooseAutomation(): void {
         if (cardExists) {
           cy.contains('div.card', 'Automation Location') 
           .find(this.editLocationButton)
-          .click()
+          .click({force:true})
         }
       })
-      cy.wait(2000);
+      cy.wait(700);
     }
 
-setToOn(value: number) {
-    cy.get(this.controlsSelector).eq(value).then(($button) => {
+
+setToOn(name: string) {
+    cy.get('.form-group').contains(name).parent().find('.checkboxSlider').then(($button) => {
         if ($button.hasClass('redClass')) {
-            cy.get(this.offSliderButton).eq(value).click({force:true});
+            cy.get('.form-group').contains(name).parent().find('.checkboxSlider').click({force:true});
         } 
       })
 }
 
- setToOff(value: number): void {
-    cy.get(this.controlsSelector).eq(value).then(($button) => {
-    if ($button.hasClass('greenClass')) {
-        cy.get(this.onSliderButton).eq(value).click({force:true});
-    } 
-  })
+ setToOff(name: string): void {
+    cy.get('.form-group').contains(name).parent().find('.checkboxSlider').then(($button) => {
+        if ($button.hasClass('greenClass')) {
+            cy.get('.form-group').contains(name).parent().find('.checkboxSlider').click({force:true});
+        } 
+      })
  }
-
-
-
 }
 
 export default ClinicLocations
