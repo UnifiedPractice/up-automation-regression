@@ -1,5 +1,7 @@
 /// <reference types="cypress" />
 
+import { cloneWith } from "../../../node_modules/cypress/types/lodash/index";
+
 class ClinicLocations{
  private location: string = '.footer-left-button';
  private rooms: string = '.footer-right-button';
@@ -8,6 +10,8 @@ class ClinicLocations{
  private offSliderButton : string ='.redClass'; 
  private onSliderButton : string ='.change';
  private editLocationButton : string ='.card-footer span:contains("Edit location")'
+ private cardSelector : string = '.card-top-gradient'
+ private cardLocations : string = '.card-locations'
  
  editLocation(value: number) : void { 
      cy.get(this.location).eq(value).click()
@@ -56,6 +60,27 @@ setToOn(name: string) {
             cy.get('.form-group').contains(name).parent().find('.checkboxSlider').click({force:true});
         } 
       })
+ }
+
+ remainOneActive() : void {
+     
+    cy.get(this.cardSelector).each((item, index, list) => {
+            //cy.wrap(index)
+            cy.wait(2500);
+            cy.wrap(item);
+            cy.contains('Edit location').click()
+            cy.wait(1660);
+            this.setToOff('Clinic location is active?')
+            cy.wait(1660);
+            cy.get(this.rightButtonsSelector).eq(1).click({force:true})
+      });
+      cy.wait(1500)
+      cy.contains('Edit location').first().click({force:true});
+      cy.wait(1200)
+      this.setToOn('Clinic location is active?')
+      cy.wait(500)
+      cy.get(this.rightButtonsSelector).eq(1).click({force:true})
+      cy.get(this.cardLocations).eq(0).not('inactive')
  }
 }
 
