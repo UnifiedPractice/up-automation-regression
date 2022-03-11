@@ -2,16 +2,14 @@ import LoginPage from "../PageObject/LoginPage"
 import SideBarNavigate from "../PageObject/SideBarMenu"
 import PatientPortal from "../PageObject/PatientPortal"
 import ClinicLocations from "../PageObject/ClinicLocations"
-import BasePage from "../PageObject/basePage"
+import AddClinicLocation from "../PageObject/AddClinicLocationWindow"
 
-
-describe('Automation test for UP-802', () => {
+describe('Automation test for UP-801', () => {
     const login = new LoginPage();
     const pp = new PatientPortal() ;
     const navigate = new SideBarNavigate();
     const clinicLocations = new ClinicLocations();
-    const basePage = new BasePage();
-
+    const addLocation = new AddClinicLocation();
 
     // For retain session and prevent logout during testing - it's a must have in all tests for prevent logout
     beforeEach(() => {
@@ -21,7 +19,7 @@ describe('Automation test for UP-802', () => {
 
     //Start login process. It calls Patient Portal class from PatientPortal file and
     // for more easiness that class is attributed to login const
-    it("UP-802", function () {
+    it("UP-801", function () {
 
         cy.log('Login to platform');
         login.goToStaging();
@@ -33,22 +31,8 @@ describe('Automation test for UP-802', () => {
         cy.log('In Clinic Settings - Locations and rooms - Open one location that is inactive');
         navigate.selectCS('Locations');
         cy.wait(1300);
-        clinicLocations.chooseAutomation();
-
-        cy.log('Set the slider Clinic Location is active? (ON)');
-        basePage.setToOff('Clinic location is active?');
-        clinicLocations.saveButton();
-
-        cy.log('Go to Clinic Settings - Patient Portal - Patient Portal URL');
-        navigate.extendMenu();
-        navigate.selectPP();
-        pp.openPP();
-
-        cy.log('Have you been to any of our clinics before? (Select YES)');
-        pp.checkLogin();
-        pp.selectRadio(1);
-        pp.shouldNotBeVisible ('Automation Location')
-      
+        clinicLocations.addNewLocation();
+        cy.wait(1500);
+        addLocation.addDetails('Address','test22')
     })
-
 })

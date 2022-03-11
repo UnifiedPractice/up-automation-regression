@@ -65,7 +65,7 @@ class PatientPortal{
         // else 
 
           }
-          shouldBeVisible(name: string): void {
+        shouldBeVisible(name: string): void {
             cy.contains(name).should('be.visible')
         }
 

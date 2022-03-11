@@ -1,17 +1,20 @@
 /// <reference types="cypress" />
 
 import { cloneWith } from "../../../node_modules/cypress/types/lodash/index";
+import BasePage from "../PageObject/basePage"
+
+const basePage = new BasePage();
 
 class ClinicLocations{
+
  private location: string = '.footer-left-button';
  private rooms: string = '.footer-right-button';
- private controlsSelector: string = '.checkboxSlider';
  private rightButtonsSelector: string = '.pull-right';
- private offSliderButton : string ='.redClass'; 
- private onSliderButton : string ='.change';
- private editLocationButton : string ='.card-footer span:contains("Edit location")'
- private cardSelector : string = '.card-top-gradient'
- private cardLocations : string = '.card-locations'
+ private editLocationButton : string ='.card-footer span:contains("Edit location")';
+ private cardSelector : string = '.card-top-gradient';
+ private cardLocations : string = '.card-locations';
+ private addNewLocationSelector : string = '.js-pageActions';
+
  
  editLocation(value: number) : void { 
      cy.get(this.location).eq(value).click()
@@ -21,12 +24,12 @@ class ClinicLocations{
      cy.get(this.rooms)
  }
 
-saveButton() : void{
+saveButton() : void {
     cy.get(this.rightButtonsSelector).eq(1).click({force:true});
     cy.wait(1500)
 }
 
-cancelButton() : void{
+cancelButton() : void {
     cy.get(this.rightButtonsSelector).eq(0).click({force:true});
 }
 
@@ -45,43 +48,31 @@ chooseAutomation(): void {
       cy.wait(700);
     }
 
-
-setToOn(name: string) {
-    cy.get('.form-group').contains(name).parent().find('.checkboxSlider').then(($button) => {
-        if ($button.hasClass('redClass')) {
-            cy.get('.form-group').contains(name).parent().find('.checkboxSlider').click({force:true});
-        } 
-      })
-}
-
- setToOff(name: string): void {
-    cy.get('.form-group').contains(name).parent().find('.checkboxSlider').then(($button) => {
-        if ($button.hasClass('greenClass')) {
-            cy.get('.form-group').contains(name).parent().find('.checkboxSlider').click({force:true});
-        } 
-      })
- }
-
  remainOneActive() : void {
-     
-    cy.get(this.cardSelector).each((item, index, list) => {
+
+    cy.get(this.cardSelector).each((item, index) => {
             //cy.wrap(index)
             cy.wait(2500);
             cy.wrap(item);
             cy.contains('Edit location').click()
             cy.wait(1660);
-            this.setToOff('Clinic location is active?')
+            basePage.setToOff('Clinic location is active?')
             cy.wait(1660);
             cy.get(this.rightButtonsSelector).eq(1).click({force:true})
       });
       cy.wait(1500)
       cy.contains('Edit location').first().click({force:true});
       cy.wait(1200)
-      this.setToOn('Clinic location is active?')
+      basePage.setToOn('Clinic location is active?')
       cy.wait(500)
       cy.get(this.rightButtonsSelector).eq(1).click({force:true})
       cy.get(this.cardLocations).eq(0).not('inactive')
  }
+
+addNewLocation(): void { 
+    cy.get(this.addNewLocationSelector).click();
+}
+
 }
 
 export default ClinicLocations
