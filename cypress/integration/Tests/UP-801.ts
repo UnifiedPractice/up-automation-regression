@@ -37,7 +37,7 @@ describe('Automation test for UP-801', () => {
 
         cy.log('Set the slider Clinic Location is active? (ON)');
         basePage.setToOn('Clinic location is active?');
-        clinicLocations.saveButton();
+        basePage.saveButton();
 
         cy.log('Go to Clinic Settings - Patient Portal - Patient Portal URL');
         navigate.extendMenu();

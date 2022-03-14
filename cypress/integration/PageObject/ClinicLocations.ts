@@ -9,7 +9,6 @@ class ClinicLocations{
 
  private location: string = '.footer-left-button';
  private rooms: string = '.footer-right-button';
- private rightButtonsSelector: string = '.pull-right';
  private editLocationButton : string ='.card-footer span:contains("Edit location")';
  private cardSelector : string = '.card-top-gradient';
  private cardLocations : string = '.card-locations';
@@ -24,14 +23,7 @@ class ClinicLocations{
      cy.get(this.rooms)
  }
 
-saveButton() : void {
-    cy.get(this.rightButtonsSelector).eq(1).click({force:true});
-    cy.wait(1500)
-}
 
-cancelButton() : void {
-    cy.get(this.rightButtonsSelector).eq(0).click({force:true});
-}
 
 chooseAutomation(): void {
 
@@ -58,14 +50,14 @@ chooseAutomation(): void {
             cy.wait(1660);
             basePage.setToOff('Clinic location is active?')
             cy.wait(1660);
-            cy.get(this.rightButtonsSelector).eq(1).click({force:true})
+            cy.get(basePage.rightButtonsSelector).eq(1).click({force:true})
       });
       cy.wait(1500)
       cy.contains('Edit location').first().click({force:true});
       cy.wait(1200)
       basePage.setToOn('Clinic location is active?')
       cy.wait(500)
-      cy.get(this.rightButtonsSelector).eq(1).click({force:true})
+      cy.get(basePage.rightButtonsSelector).eq(1).click({force:true})
       cy.get(this.cardLocations).eq(0).not('inactive')
  }
 

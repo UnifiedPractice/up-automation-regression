@@ -8,12 +8,13 @@
     //private PPNCFPCCPE: string = 'PPNCFPCCPE'
     //private PPNCFPCCPEpassword: string = 'password'
     //
-    goToStaging(): void{
+
+    goToStaging(): void {
         cy.visit(this.StagingLink)
     }
 
 
-    loginPPNCFPCCPE(): void{
+    loginPPNCFPCCPE(): void {
         cy.get(this.username).type('PPNCFPCCPE');
         cy.get(this.password).type('password');
     }

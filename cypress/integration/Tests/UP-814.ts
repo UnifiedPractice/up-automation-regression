@@ -31,14 +31,17 @@ describe('Automation test for UP-814', () => {
     
         //It is desired to extend the test by disabling all but one location so that the test does not fail 
         //if there are one or more active locations in the patient portal before choosing the service.
-        navigate.selectCS('Locations');
-        clinicLocations.remainOneActive()
-        navigate.extendMenu();
+        
+        // navigate.selectCS('Locations');
+        // clinicLocations.remainOneActive()
+        //navigate.extendMenu();
 
         cy.log('In Clinic Settings - Clinic Services - Edit one service that is inactive');
         navigate.selectCS('Clinic Services');
         cy.wait(1300);
-        clinicServices.chooseService('Service with CCPE');
+        clinicServices.chooseService('Automation with CCPE');
+        cy.wait(1000);
+        basePage.setToOffService('Online booking');
         cy.wait(2000);
         // cy.log('Go to Clinic Settings - Patient Portal - Patient Portal URL');
         // navigate.extendMenu();
@@ -48,7 +51,7 @@ describe('Automation test for UP-814', () => {
         // cy.log('Have you been to any of our clinics before? (Select YES)');
         // pp.checkLogin();
         // pp.selectRadio(1);
-        // pp.shouldBeVisible ('Select a service')
+        // pp.shouldBeVisible('Automation with CCPE')
     })
 
 })
