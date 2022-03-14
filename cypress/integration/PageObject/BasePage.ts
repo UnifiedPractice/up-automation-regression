@@ -39,19 +39,12 @@ public rightButtonsSelector: string = '.pull-right';
         cy.get('#Service_IsActive').then(($ele) => {
             if ($ele.text().trim() == name) {
               cy.get('#Service_IsActive').click({force: true})
-            } else if ($ele.text().trim() == name) {
+            } 
+            else if ($ele.text().trim() == name) {
               cy.get('#Service_AllowOnlineScheduling').click({force: true})
             }
           })
-    //     cy.get(service).contains(name).parent().find(this.sliderSelector).then(($button) => {
-    //         if ($button === 'Service is available') {
-    //             cy.get('#Service_IsActive').click({force:true});
-    //         }
-    //         else if (name === 'Service is available'){}
-    // })
 }
-
-
 
     saveButton() : void {
         cy.get(this.rightButtonsSelector).eq(1).click({force:true});
