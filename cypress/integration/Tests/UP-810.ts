@@ -1,7 +1,7 @@
-import LoginPage from "../PageObject/LoginPage"
-import SideBarNavigate from "../PageObject/SideBarMenu"
-import PatientPortal from "../PageObject/PatientPortal"
-import ClinicLocations from "../PageObject/ClinicLocations"
+import LoginPage from "../PageObject/login-page"
+import SideBarNavigate from "../PageObject/side-bar-menu"
+import PatientPortal from "../PageObject/patient-portal"
+import ClinicLocations from "../PageObject/clinic-settings/clinic-locations"
 
 describe('Automation test for UP-810', () => {
     const login = new LoginPage();

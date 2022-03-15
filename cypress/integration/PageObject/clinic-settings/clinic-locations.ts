@@ -1,11 +1,13 @@
 /// <reference types="cypress" />
 
-import { cloneWith } from "../../../node_modules/cypress/types/lodash/index";
-import BasePage from "../PageObject/basePage"
+import { cloneWith } from "../../../../node_modules/cypress/types/lodash/index";
+import BasePage from "../base-page"
+import { DrawerModal } from "../drawer-modal";
 
 const basePage = new BasePage();
+const drawerModal = new DrawerModal();
 
-class ClinicLocations{
+ class ClinicLocations extends DrawerModal{
 
  private location: string = '.footer-left-button';
  private rooms: string = '.footer-right-button';
@@ -22,8 +24,6 @@ class ClinicLocations{
  editRooms() : void { 
      cy.get(this.rooms)
  }
-
-
 
 chooseAutomation(): void {
 
@@ -50,14 +50,14 @@ chooseAutomation(): void {
             cy.wait(1660);
             basePage.setToOff('Clinic location is active?')
             cy.wait(1660);
-            cy.get(basePage.rightButtonsSelector).eq(1).click({force:true})
+            cy.get(drawerModal.rightButtonsSelector).eq(1).click({force:true})
       });
       cy.wait(1500)
       cy.contains('Edit location').first().click({force:true});
       cy.wait(1200)
       basePage.setToOn('Clinic location is active?')
       cy.wait(500)
-      cy.get(basePage.rightButtonsSelector).eq(1).click({force:true})
+      cy.get(drawerModal.rightButtonsSelector).eq(1).click({force:true})
       cy.get(this.cardLocations).eq(0).not('inactive')
  }
 

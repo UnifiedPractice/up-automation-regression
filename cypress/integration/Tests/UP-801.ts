@@ -1,8 +1,9 @@
-import LoginPage from "../PageObject/LoginPage"
-import SideBarNavigate from "../PageObject/SideBarMenu"
-import PatientPortal from "../PageObject/PatientPortal"
-import ClinicLocations from "../PageObject/ClinicLocations"
-import BasePage from "../PageObject/basePage"
+import LoginPage from "../PageObject/login-page"
+import SideBarNavigate from "../PageObject/side-bar-menu"
+import PatientPortal from "../PageObject/patient-portal"
+import ClinicLocations from "../PageObject/clinic-settings/clinic-locations"
+import BasePage from "../PageObject/base-page"
+import { DrawerModal } from "../PageObject/drawer-modal"
 
 describe('Automation test for UP-801', () => {
     const login = new LoginPage();
@@ -10,6 +11,7 @@ describe('Automation test for UP-801', () => {
     const navigate = new SideBarNavigate();
     const clinicLocations = new ClinicLocations();
     const basePage = new BasePage();
+    const drawerModal = new DrawerModal();
 
     // For retain session and prevent logout during testing - it's a must have in all tests for prevent logout
     beforeEach(() => {
@@ -37,7 +39,7 @@ describe('Automation test for UP-801', () => {
 
         cy.log('Set the slider Clinic Location is active? (ON)');
         basePage.setToOn('Clinic location is active?');
-        basePage.saveButton();
+        drawerModal.saveButton();
 
         cy.log('Go to Clinic Settings - Patient Portal - Patient Portal URL');
         navigate.extendMenu();

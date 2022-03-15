@@ -1,9 +1,9 @@
-import LoginPage from "../PageObject/LoginPage"
-import SideBarNavigate from "../PageObject/SideBarMenu"
-import PatientPortal from "../PageObject/PatientPortal"
-import ClinicLocations from "../PageObject/ClinicLocations"
-import ClinicServices from "../PageObject/ClinicServices"
-import BasePage from "../PageObject/basePage"
+import LoginPage from "../PageObject/login-page"
+import SideBarNavigate from "../PageObject/side-bar-menu"
+import PatientPortal from "../PageObject/patient-portal"
+import ClinicLocations from "../PageObject/clinic-settings/clinic-locations"
+import ClinicServices from "../PageObject/clinic-settings/clinic-services"
+import BasePage from "../PageObject/base-page"
 
 describe('Automation test for UP-814', () => {
     const login = new LoginPage();
@@ -41,7 +41,7 @@ describe('Automation test for UP-814', () => {
         cy.wait(1300);
         clinicServices.chooseService('Automation with CCPE');
         cy.wait(1000);
-        basePage.setToOffService('Online booking');
+        clinicServices.checkBoxSliderServiceSetOn('#Service_AllowOnlineScheduling');
         cy.wait(2000);
         // cy.log('Go to Clinic Settings - Patient Portal - Patient Portal URL');
         // navigate.extendMenu();
