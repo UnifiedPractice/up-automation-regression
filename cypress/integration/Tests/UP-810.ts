@@ -21,14 +21,11 @@ describe('Automation test for UP-810', () => {
 
         cy.log('Login to platform');
         login.goToStaging();
-        cy.wait(1000)
         login.loginPPNCFPCCPE();
         cy.contains('Login').click();
-    
 
         cy.log('In Clinic Settings - Locations and rooms - Open one location that is inactive');
         navigate.selectCS('Locations');
-        cy.wait(1300);
         clinicLocations.remainOneActive()
 
         cy.log('Go to Clinic Settings - Patient Portal - Patient Portal URL');

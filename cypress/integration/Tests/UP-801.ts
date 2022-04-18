@@ -3,7 +3,7 @@ import SideBarNavigate from "../PageObject/side-bar-menu"
 import PatientPortal from "../PageObject/patient-portal"
 import ClinicLocations from "../PageObject/clinic-settings/clinic-locations"
 import BasePage from "../PageObject/base-page"
-import { DrawerModal } from "../PageObject/drawer-modal"
+import DrawerModal from "../PageObject/drawer-modal"
 
 describe('Automation test for UP-801', () => {
     const login = new LoginPage();
@@ -25,21 +25,18 @@ describe('Automation test for UP-801', () => {
 
         cy.log('Login to platform');
         login.goToStaging();
-        cy.wait(1000)
         login.loginPPNCFPCCPE();
         cy.contains('Login').click();
     
 
         cy.log('In Clinic Settings - Locations and rooms - Open one location that is inactive');
         navigate.selectCS('Locations');
-        cy.wait(1300);
-        //clinicLocations.editLocation(0);
-        //cy.wait(2500);
         clinicLocations.chooseAutomation();
 
         cy.log('Set the slider Clinic Location is active? (ON)');
+        cy.wait(1500);
         basePage.setToOn('Clinic location is active?');
-        drawerModal.saveButton();
+        drawerModal.cancelButton();
 
         cy.log('Go to Clinic Settings - Patient Portal - Patient Portal URL');
         navigate.extendMenu();

@@ -1,7 +1,4 @@
 /// <reference types="cypress" />
-
-import { cloneWith } from "../../../node_modules/cypress/types/lodash/index";
-
 class AddClinicLocation{
 
 private formSelector : string = '.form-control';

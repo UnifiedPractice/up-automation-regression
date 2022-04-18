@@ -1,27 +1,33 @@
 /// <reference types="cypress" />
 
-class PatientPortal{
+import BasePage from "./base-page";
+
+class PatientPortal extends BasePage{
 
     private radioSelector: string = '.md-radio';
     private formControl: string = '.form-control';
     private loginButton: string = '.btn-login';
 
     openPP(): void {
-        cy.clearCookies()
         cy.wait(1500)
-        cy.get('.label-pp-url').eq(1).invoke('removeAttr', 'target').click()
-        cy.clearCookies()
-        cy.wait(3500)
+        cy.wait(1500).get('.label-pp-url').eq(1).invoke('removeAttr', 'target').click().wait(3500)
     }
 
     selectRadio(value: number): void {
-        cy.wait(2500);
-        cy.get(this.radioSelector).eq(value).click();
+        cy.wait(2500).get(this.radioSelector).eq(value).click();
     }
 
     loginCredentials(email,password): void {
         cy.get(this.formControl).eq(0).type(email);
         cy.get(this.formControl).eq(1).type(password);
+    }
+    
+    selectLocation(name: string) : void { 
+        cy.contains(name).click();
+    }
+
+    selectService(name: string) : void { 
+        cy.contains(name).click();
     }
 
     pressLogin(): void {
@@ -44,33 +50,14 @@ class PatientPortal{
             cy.get('.logo-symbol').click({ force: true })
             cy.get('.mat-menu-content').click();
         })
-        
-        
-        // else if (cy.get(".nav-link")){
-        //     cy.contains('Logout').click({ force: true });
-        //     cy.get('.logo-symbol').click({ force: true })
-
-        // }
-        // else if (cy.contains('Email')) {
-        // cy.get('.logo-symbol').click({ force: true })
-        // }
-
-        // if ( Cypress.$(".burger-menu").length > 0  ) {
-        //     cy.get('.navbar-toggler').click({ force: true });
-        //     cy.contains('Logout').click({ force: true });
-        // }
-        // else if ( Cypress.$(".nav-link").length > 0 ) {
-        //         cy.contains('Logout').click({ force: true });
-        //     } 
-        // else 
-
           }
+
         shouldBeVisible(name: string): void {
-            cy.contains(name).should('be.visible')
+            cy.wait(1200).contains(name).should('be.visible')
         }
 
         shouldNotBeVisible(name: string): void {
-            cy.contains(name).should('not.exist')
+            cy.wait(1200).contains(name).should('not.exist')
         }
 }
 

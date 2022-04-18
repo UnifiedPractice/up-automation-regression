@@ -1,8 +1,8 @@
-import LoginPage from "../PageObject/LoginPage"
-import SideBarNavigate from "../PageObject/SideBarMenu"
-import PatientPortal from "../PageObject/PatientPortal"
-import ClinicLocations from "../PageObject/ClinicLocations"
-import BasePage from "../PageObject/basePage"
+import LoginPage from "../PageObject/login-page"
+import SideBarNavigate from "../PageObject/side-bar-menu"
+import PatientPortal from "../PageObject/patient-portal"
+import ClinicLocations from "../PageObject/clinic-settings/clinic-locations"
+import BasePage from "../PageObject/base-page"
 
 
 describe('Automation test for UP-803', () => {
@@ -26,19 +26,16 @@ describe('Automation test for UP-803', () => {
 
         cy.log('Login to platform');
         login.goToStaging();
-        cy.wait(1000)
         login.loginPPNCFPCCPE();
         cy.contains('Login').click();
     
 
         cy.log('In Clinic Settings - Locations and rooms - Open one location that is inactive');
         navigate.selectCS('Locations');
-        cy.wait(1300);
-        //clinicLocations.editLocation(0);
-        //cy.wait(2500);
         clinicLocations.chooseAutomation();
 
         cy.log('Set the slider Allow Online Scheduling? (Yes)');
+        basePage.setToOn('Clinic location is active?');
         basePage.setToOn('Allow Online Scheduling?');
         clinicLocations.saveButton();
 

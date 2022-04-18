@@ -1,17 +1,16 @@
 import LoginPage from "../PageObject/login-page"
 import SideBarNavigate from "../PageObject/side-bar-menu"
 import PatientPortal from "../PageObject/patient-portal"
-import ClinicLocations from "../PageObject/clinic-settings/clinic-locations"
+import DrawerModal from "../PageObject/drawer-modal"
 import ClinicServices from "../PageObject/clinic-settings/clinic-services"
-import BasePage from "../PageObject/base-page"
+
 
 describe('Automation test for UP-814', () => {
     const login = new LoginPage();
     const pp = new PatientPortal() ;
     const navigate = new SideBarNavigate();
+    const drawerModal = new DrawerModal();
     const clinicServices = new ClinicServices();
-    const clinicLocations = new ClinicLocations();
-    const basePage = new BasePage();
 
     // For retain session and prevent logout during testing - it's a must have in all tests for prevent logout
     beforeEach(() => {
@@ -25,33 +24,22 @@ describe('Automation test for UP-814', () => {
 
         cy.log('Login to platform');
         login.goToStaging();
-        cy.wait(1000)
         login.loginPPNCFPCCPE();
-        cy.contains('Login').click();
-    
-        //It is desired to extend the test by disabling all but one location so that the test does not fail 
-        //if there are one or more active locations in the patient portal before choosing the service.
-        
-        // navigate.selectCS('Locations');
-        // clinicLocations.remainOneActive()
-        //navigate.extendMenu();
+        cy.contains('Login').click(); 
 
-        cy.log('In Clinic Settings - Clinic Services - Edit one service that is inactive');
         navigate.selectCS('Clinic Services');
-        cy.wait(1300);
         clinicServices.chooseService('Automation with CCPE');
-        cy.wait(1000);
-        clinicServices.checkBoxSliderServiceSetOn('#Service_AllowOnlineScheduling');
-        cy.wait(2000);
-        // cy.log('Go to Clinic Settings - Patient Portal - Patient Portal URL');
-        // navigate.extendMenu();
-        // navigate.selectPP();
-        // pp.openPP();
+        clinicServices.checkBoxSliderSetOn('#Service_IsActive');
+        drawerModal.saveButton();
 
-        // cy.log('Have you been to any of our clinics before? (Select YES)');
-        // pp.checkLogin();
-        // pp.selectRadio(1);
-        // pp.shouldBeVisible('Automation with CCPE')
+        navigate.extendMenu();
+        navigate.selectPP();
+        pp.openPP();
+
+        pp.checkLogin();
+        pp.selectRadio(1);
+        pp.selectLocation('Automation Location')
+        pp.shouldBeVisible('Automation with CCPE')
     })
 
 })

@@ -1,6 +1,6 @@
 /// <reference types="cypress" />
 
-class SideBarNavigate{
+class SideBarNavigate  {
     
     public level1Selector: string = '.menu-level-1';
     public level2Selector: string = '.menu-level-2';
@@ -33,9 +33,6 @@ class SideBarNavigate{
         cy.get(this.level2Selector).contains(name).click({force:true});
 
     }
-
-    
-
 }
 
 export default SideBarNavigate
