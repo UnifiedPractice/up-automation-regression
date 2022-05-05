@@ -37,16 +37,24 @@ chooseAutomation(): void {
  remainOneActive() : void {
 
     cy.get(this.cardSelector).each((item, index) => {
-            cy.wait(2500).wrap(item);
+            //cy.wait(2500).
+            cy.wrap(item);
+            cy.intercept({
+              method: 'GET',
+              path: 'https://staging.unifiedpractice.com/Public/Clinic/EditLocation?locationId=',
+            }).as('matchedUrl')
+            
             cy.contains('Edit location').click()
-            cy.wait(1660);
+            cy.wait('@matchedUrl')
+            //cy.wait(1660);
             this.setToOff('Clinic location is active?')
-            cy.wait(1660);
-            cy.get(this.rightButtonsSelector).eq(1).click({force:true})
+            //cy.wait(1660);
+            cy.get(this.saveButtonSelector).click({force:true})
       });
-            cy.wait(1500).contains('Edit location').first().click({force:true}).wait(1200);
+            cy.contains('Edit location').first().click({force:true});
+         
             this.setToOn('Clinic location is active?')
-            cy.wait(500).get(this.rightButtonsSelector).eq(1).click({force:true})
+            cy.get(this.saveButtonSelector).click({force:true})
             cy.get(this.cardLocations).eq(0).not('inactive')
  }
 

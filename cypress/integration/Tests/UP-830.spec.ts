@@ -1,15 +1,17 @@
 import LoginPage from "../PageObject/login-page"
 import SideBarNavigate from "../PageObject/side-bar-menu"
 import PatientPortal from "../PageObject/patient-portal"
-import DrawerModal from "../PageObject/drawer-modal"
+import ClinicStaff from "../PageObject/clinic-settings/clinic-staff"
+import BasePage from "../PageObject/base-page"
+import { cli } from "cypress"
 import ClinicServices from "../PageObject/clinic-settings/clinic-services"
 
 
-describe('Automation test for UP-821', () => {
+describe('Automation test for UP-830', () => {
     const login = new LoginPage();
     const pp = new PatientPortal() ;
     const navigate = new SideBarNavigate();
-    const drawerModal = new DrawerModal();
+    const clinicStaff = new ClinicStaff();
     const clinicServices = new ClinicServices();
 
     // For retain session and prevent logout during testing - it's a must have in all tests for prevent logout
@@ -20,28 +22,28 @@ describe('Automation test for UP-821', () => {
 
     //Start login process. It calls Patient Portal class from PatientPortal file and
     // for more easiness that class is attributed to login const
-    it("UP-821", function () {
-
+    it("UP-830", function () {
         cy.log('Login to platform');
         login.goToStaging();
         login.loginPPNCFPCCPE();
         cy.contains('Login').click(); 
 
-        navigate.selectCS('Clinic Services');
-        clinicServices.chooseService('Automation with CCPE');
-        drawerModal.clickOnDropdownMarkedTest();
-        // clinicServices.checkBoxSliderSetOn('#Service_IsActive');
-        // clinicServices.checkBoxSliderSetOn('#Service_AllowOnlineScheduling')
-        // drawerModal.saveButton();
-        
-        // navigate.extendMenu();
-        // navigate.selectPP();
-        // pp.openPP();
-        // pp.checkLogin();
-        // pp.selectRadio(1);
-        // pp.selectLocation('Automation Location')
-        // pp.selectService('Automation with CCPE')
-        // pp.shouldBeVisible('John')
-    })
+        navigate.selectCS('Clinic Staff');
+        clinicStaff.markUserActive('Automation')
+        clinicStaff.clickOnDetails('Automation')
+        clinicServices.checkBoxSliderSetOn('#PractitionerInfo_AllowOnlineScheduling')
+        clinicStaff.saveButton();
+
+        navigate.extendMenu();
+        navigate.selectPP();
+        pp.openPP();
+
+        pp.checkLogin();
+        pp.selectRadio(1);
+        pp.selectLocation('Automation Location')
+        pp.selectService('Automation with CCPE')
+        pp.selectPractitioner('Automation Engineer')
+        pp.shouldBeVisible('Select an appointment date & time')
+         })
 
 })

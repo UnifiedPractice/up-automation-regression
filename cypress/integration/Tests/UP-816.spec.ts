@@ -1,14 +1,18 @@
 import LoginPage from "../PageObject/login-page"
 import SideBarNavigate from "../PageObject/side-bar-menu"
 import PatientPortal from "../PageObject/patient-portal"
+import ClinicLocations from "../PageObject/clinic-settings/clinic-locations"
+import BasePage from "../PageObject/base-page"
 import DrawerModal from "../PageObject/drawer-modal"
 import ClinicServices from "../PageObject/clinic-settings/clinic-services"
 
 
-describe('Automation test for UP-821', () => {
+describe('Automation test for UP-816', () => {
     const login = new LoginPage();
     const pp = new PatientPortal() ;
     const navigate = new SideBarNavigate();
+    const clinicLocations = new ClinicLocations();
+    const basePage = new BasePage();
     const drawerModal = new DrawerModal();
     const clinicServices = new ClinicServices();
 
@@ -20,28 +24,28 @@ describe('Automation test for UP-821', () => {
 
     //Start login process. It calls Patient Portal class from PatientPortal file and
     // for more easiness that class is attributed to login const
-    it("UP-821", function () {
+    it("UP-816", function () {
 
         cy.log('Login to platform');
         login.goToStaging();
         login.loginPPNCFPCCPE();
         cy.contains('Login').click(); 
 
+
         navigate.selectCS('Clinic Services');
         clinicServices.chooseService('Automation with CCPE');
-        drawerModal.clickOnDropdownMarkedTest();
-        // clinicServices.checkBoxSliderSetOn('#Service_IsActive');
-        // clinicServices.checkBoxSliderSetOn('#Service_AllowOnlineScheduling')
-        // drawerModal.saveButton();
+        clinicServices.checkBoxSliderSetOn('#Service_IsActive');
+        clinicServices.checkBoxSliderSetOn('#Service_AllowOnlineScheduling');
+        drawerModal.saveButton();
         
-        // navigate.extendMenu();
-        // navigate.selectPP();
-        // pp.openPP();
-        // pp.checkLogin();
-        // pp.selectRadio(1);
-        // pp.selectLocation('Automation Location')
-        // pp.selectService('Automation with CCPE')
-        // pp.shouldBeVisible('John')
+        navigate.extendMenu();
+        navigate.selectPP();
+        pp.openPP();
+
+        pp.checkLogin();
+        pp.selectRadio(1);
+        pp.selectLocation('Automation Location')
+        pp.shouldBeVisible('Automation with CCPE')
     })
 
 })

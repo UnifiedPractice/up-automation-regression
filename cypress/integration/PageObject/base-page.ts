@@ -22,7 +22,7 @@ public sliderSelector: string = '.checkboxSlider';
         }
 
     setToOn(name: string): void {
-        cy.wait(850).get(this.formSelector).contains(name).parent().find(this.sliderSelector).then(($button) => {
+        cy.get(this.formSelector).contains(name).parent().find(this.sliderSelector).then(($button) => {
             if ($button.hasClass('redClass')) {
                 cy.get(this.formSelector).contains(name).parent().find(this.sliderSelector).click({force:true});
             } 
@@ -30,7 +30,7 @@ public sliderSelector: string = '.checkboxSlider';
     }
     
      setToOff(name: string): void {
-        cy.wait(1500).get(this.formSelector).contains(name).parent().find(this.sliderSelector).then(($button) => {
+        cy.get(this.formSelector).contains(name).parent().find(this.sliderSelector).then(($button) => {
             if ($button.hasClass('greenClass')) {
                 cy.get(this.formSelector).contains(name).parent().find(this.sliderSelector).click({force:true});
             } 

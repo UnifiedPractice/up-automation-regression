@@ -29,19 +29,19 @@ describe('Automation test for UP-821', () => {
 
         navigate.selectCS('Clinic Services');
         clinicServices.chooseService('Automation with CCPE');
-        drawerModal.clickOnDropdownMarkedTest();
-        // clinicServices.checkBoxSliderSetOn('#Service_IsActive');
-        // clinicServices.checkBoxSliderSetOn('#Service_AllowOnlineScheduling')
-        // drawerModal.saveButton();
+        drawerModal.clickOnDropdownUnmarked('John')
+        clinicServices.checkBoxSliderSetOn('#Service_IsActive');
+        clinicServices.checkBoxSliderSetOn('#Service_AllowOnlineScheduling')
+        drawerModal.saveButton();
         
-        // navigate.extendMenu();
-        // navigate.selectPP();
-        // pp.openPP();
-        // pp.checkLogin();
-        // pp.selectRadio(1);
-        // pp.selectLocation('Automation Location')
-        // pp.selectService('Automation with CCPE')
-        // pp.shouldBeVisible('John')
+        navigate.extendMenu();
+        navigate.selectPP();
+        pp.openPP();
+        pp.checkLogin();
+        pp.selectRadio(1);
+        pp.selectLocation('Automation Location')
+        pp.selectService('Automation with CCPE')
+        pp.shouldBeVisible('John')
     })
 
 })
