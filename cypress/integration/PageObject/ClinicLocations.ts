@@ -44,19 +44,35 @@ chooseAutomation(): void {
 
     cy.get(this.cardSelector).each((item, index) => {
             //cy.wrap(index)
-            cy.wait(2500);
+            //cy.wait(2500);
             cy.wrap(item);
-            cy.contains('Edit location').click()
-            cy.wait(1660);
+
+        cy.intercept('https://staging.unifiedpractice.com/Public/Clinic/EditLocation?locationId=*&_=*').as('editClinicLocation2');
+            cy.contains('Edit location').click({force: true});
+
+        cy.wait('@editClinicLocation2');
+            //cy.wait(1660);
+            cy.get('#addClinicLocation').should('exist');
             basePage.setToOff('Clinic location is active?')
-            cy.wait(1660);
+            //cy.wait(1660);
+            cy.intercept('https://staging.unifiedpractice.com/Public/Clinic/EditLocation').as('editClinicLocation');
+            cy.intercept('https://staging.unifiedpractice.com/Public/Clinic/LocationList?_=*').as('getLocations');
             cy.get(basePage.rightButtonsSelector).eq(1).click({force:true})
+            cy.wait('@editClinicLocation');
+            cy.wait('@getLocations');
       });
-      cy.wait(1500)
+      //cy.wait(1500)
       cy.contains('Edit location').first().click({force:true});
-      cy.wait(1200)
+     cy.get('#addClinicLocation').should('exist');
+      //cy.wait(1200)
+
+     cy.intercept('https://staging.unifiedpractice.com/Public/Clinic/EditLocation').as('editClinicLocation');
+     cy.intercept('https://staging.unifiedpractice.com/Public/Clinic/LocationList?_=*').as('getLocations');
       basePage.setToOn('Clinic location is active?')
-      cy.wait(500)
+
+     cy.wait('@editClinicLocation');
+     cy.wait('@getLocations');
+      //cy.wait(500)
       cy.get(basePage.rightButtonsSelector).eq(1).click({force:true})
       cy.get(this.cardLocations).eq(0).not('inactive')
  }

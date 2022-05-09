@@ -17,6 +17,9 @@
     loginPPNCFPCCPE(): void {
         cy.get(this.username).type('PPNCFPCCPE');
         cy.get(this.password).type('password');
+        cy.intercept('https://staging.unifiedpractice.com/Public/Account/Login').as('loginRequest');
+        cy.contains('Login').click();
+        cy.wait('@loginRequest');
     }
 
 

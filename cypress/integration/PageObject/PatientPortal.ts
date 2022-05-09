@@ -8,14 +8,18 @@ class PatientPortal{
 
     openPP(): void {
         cy.clearCookies()
-        cy.wait(1500)
+        //cy.wait(1500)
+
+        cy.intercept('https://pp.api.staging.unifiedpractice.com/t/ppncfpccpe/organization').as('ppOrganization');
         cy.get('.label-pp-url').eq(1).invoke('removeAttr', 'target').click()
-        cy.clearCookies()
-        cy.wait(3500)
+        cy.clearCookies();
+
+        cy.wait('@ppOrganization');
+        //cy.wait(3500)
     }
 
     selectRadio(value: number): void {
-        cy.wait(2500);
+        //cy.wait(2500);
         cy.get(this.radioSelector).eq(value).click();
     }
 
@@ -33,7 +37,7 @@ class PatientPortal{
     }
 
     checkLogin() {
-        cy.wait(1500)
+        //cy.wait(1500)
         cy.get('.burger-menu').click();
         cy.get('.mat-menu-item').then(($el) => {
             if($el.length > 3){

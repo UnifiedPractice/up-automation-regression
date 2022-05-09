@@ -25,7 +25,9 @@ class SideBarNavigate{
     }
 
     selectPP(): void {
+        cy.intercept('https://staging.unifiedpractice.com/Public/Clinic/GetPatientPortalSettings').as('ppSettings')
         cy.get(this.level1Selector).eq(8).click();
+        cy.wait('@ppSettings');
     }
 
     selectCS(name: string) : void {
