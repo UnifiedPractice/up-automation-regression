@@ -17,7 +17,7 @@ class ClinicStaff extends BasePage {
 
  
 chooseService(name:string) : void {
-    cy.get('.cmtContent-update').contains(name).parent().find('.col-sm-1').click();
+    cy.get('.row.staff-row').contains(name).parent().contains('Details').click();
 }
 
 saveButton() : void {
@@ -25,28 +25,51 @@ saveButton() : void {
 }
 
 
-checkBoxSliderServiceSetOn(name: string): void {
-    cy.get(name).parent().click({force:true});
-}
+// checkBoxSliderServiceSetOn(name: string): void {
+//     cy.get(name).parent().check({force:true});
+// }
 
 
-markAllInactive () : void {
-  cy.wait(600).get('.js-linkToggleUserStatus').each((item) => {
+    //Please make sure that here you will use in quotation marks
+//the id of the checkbox you want to manipulate and not the text in front of it.
+//Because writing the project in a different way, this is an isolated
+//situation where the id must be used (with # in front)
+//For example : checkBoxSliderSetOn('#Service_IsTelehealth') and not
+//checkBoxSliderSetOn('Telemedicine Service')
+//The rule is mandatory for checkBoxSliderSetOff() method too.
+
+    checkBoxSliderSetOn(name: string): void {
+        cy.get(name).parent().then(($button) => {
+            if ($button.hasClass('redClass')) {
+                cy.get(name).parent().click({force:true});
+            }
+        })
+    }
+
+    checkBoxSliderSetOff(name: string): void {
+        cy.get(name).parent().then(($button) => {
+            if ($button.hasClass('greenClass')) {
+                cy.get(name).parent().click({force:true});
+            }
+        })
+    }
+
+    markAllInactive () : void {
+    cy.wait(800).get('.js-linkToggleUserStatus').each((item) => {
     const cardExists = item.text().includes('Mark user as inactive') 
     if (cardExists) {
       cy.wrap(item)
-      .contains('Mark user as inactive')
+          .contains('Mark user as inactive')
       .click({force:true})
     }    
   })
 }
 
-
 clickOnDropdownUnmarked(name: string){
-    cy.wait(1200).get(this.serviceSelector).parent().click();
+    cy.get(this.serviceSelector).parent().click();
     cy.get(`${this.serviceSelector} + .bootstrap-select .dropdown-menu li`).contains(name).then(($button) => {
       if ($button[0] && $button[0].parentElement && $button[0].parentElement.classList.value.indexOf('selected') == -1) {
-        cy.wrap($button).click({force: true});      
+        cy.wrap($button).click({force: true}).wait(800);
       }
     });
 

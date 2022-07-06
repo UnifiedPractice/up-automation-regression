@@ -21,14 +21,13 @@ describe('Automation test for UP-831', () => {
     //Start login process. It calls Patient Portal class from PatientPortal file and
     // for more easiness that class is attributed to login const
     it("UP-831", function () {
-        cy.log('Login to platform');
+
         login.goToStaging();
-        login.loginPPNCFPCCPE();
-        cy.contains('Login').click(); 
+        login.loginAutomation();
 
         navigate.selectCS('Clinic Staff');
-        clinicStaff.markUserActive('Automation')
-        clinicStaff.clickOnDetails('Automation')
+        clinicStaff.markUserActive('Automation Engineer')
+        clinicStaff.clickOnDetails('Automation Engineer')
         clinicServices.checkBoxSliderSetOff('#PractitionerInfo_AllowOnlineScheduling')
         clinicStaff.saveButton();
 
@@ -41,6 +40,14 @@ describe('Automation test for UP-831', () => {
         pp.selectLocation('Automation Location')
         pp.selectService('Automation with CCPE')
         pp.shouldNotBeVisible('Automation Engineer')
+
+        //Cleaning
+        pp.backtoEHR();
+        navigate.extendMenu();
+        navigate.selectCS('Clinic Staff');
+        clinicStaff.clickOnDetails('Automation Engineer')
+        clinicServices.checkBoxSliderSetOn('#PractitionerInfo_AllowOnlineScheduling')
+        clinicStaff.saveButton();
          })
 
 })

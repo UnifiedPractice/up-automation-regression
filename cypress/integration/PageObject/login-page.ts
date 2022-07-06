@@ -13,8 +13,19 @@
 
 
     loginPPNCFPCCPE(): void {
-        cy.wait(800).get(this.username).type('PPNCFPCCPE');
+        cy.intercept('https://staging.unifiedpractice.com/Public/Account/CollectPendoAndHubspotStats?_=*').as('login')
+        cy.get(this.username).type('PPNCFPCCPE');
         cy.get(this.password).type('password');
+        cy.contains('Login').click();
+        cy.wait('@login')
+    }
+
+    loginAutomation(): void{
+        cy.intercept('https://staging.unifiedpractice.com/Public/Account/CollectPendoAndHubspotStats?_=*').as('login')
+        cy.get(this.username).type('automationcypress');
+        cy.get(this.password).type('password');
+        cy.contains('Login').click();
+        cy.wait('@login')
     }
 
     

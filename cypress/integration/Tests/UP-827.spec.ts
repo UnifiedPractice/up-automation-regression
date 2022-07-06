@@ -22,14 +22,12 @@ describe('Automation test for UP-827', () => {
     // for more easiness that class is attributed to login const
     it("UP-827", function () {
 
-        cy.log('Login to platform');
         login.goToStaging();
-        login.loginPPNCFPCCPE();
-        cy.contains('Login').click(); 
+        login.loginAutomation();
 
         navigate.selectCS('Clinic Services');
         clinicServices.chooseService('Automation with CCPE');
-        drawerModal.clickOnDropdownUnmarked('John')
+        drawerModal.clickOnDropdownUnmarked('Automation Engineer')
         clinicServices.checkBoxSliderSetOn('#Service_IsActive');
         clinicServices.checkBoxSliderSetOn('#Service_AllowOnlineScheduling');
         drawerModal.saveButton();
@@ -42,7 +40,7 @@ describe('Automation test for UP-827', () => {
         pp.selectRadio(1);
         pp.selectLocation('Automation Location')
         pp.selectService('Automation with CCPE')
-        pp.shouldBeVisible('John')
+        pp.shouldBeVisible('Automation Engineer')
     })
 
 })

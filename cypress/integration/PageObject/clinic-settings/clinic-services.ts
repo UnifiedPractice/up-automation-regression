@@ -4,12 +4,21 @@ import BasePage from "../base-page";
 
 class ClinicServices extends BasePage {
 
- formSelector: string = '.form-group';
- sliderSelector: string = '.checkboxSlider';
+    formSelector: string = '.form-group';
+    sliderSelector: string = '.checkboxSlider';
+    private dropdownPractitionerSelector: string = '#SelectedPractitionersIds'
+    private dropdownRoomsSelector: string = '#SelectedRoomsIds'
+
+
 
 checkBoxSliderServiceSetOn(name: string): void {
     cy.get(name).parent().click({force:true});
 }
+
+    chooseService(name:string) : void {
+        cy.get('.cmtContent-update').contains(name).parent().find('.col-sm-1').click();
+    }
+
 
 //Please make sure that here you will use in quotation marks
 //the id of the checkbox you want to manipulate and not the text in front of it. 
@@ -34,6 +43,39 @@ checkBoxSliderSetOff(name: string): void {
         } 
     })
 }
+
+    clickOnDropdownMarkedPractitioners(name: string){
+        cy.get(this.dropdownPractitionerSelector).parent().click();
+        cy.get(`${this.dropdownPractitionerSelector} + .bootstrap-select .dropdown-menu li`).contains(name).then(($button) => {
+            if ($button[0] && $button[0].parentElement && $button[0].parentElement.classList.value.indexOf('selected') == 0) {
+                cy.wait(1000).wrap($button).click({force: true});
+            }
+        });
+
+    }
+
+    clickOnDropdownUnmarkedPractitioners(name: string){
+        cy.get(this.dropdownPractitionerSelector).parent().click();
+        cy.get(`${this.dropdownPractitionerSelector} + .bootstrap-select .dropdown-menu li`).contains(name).then(($button) => {
+            if ($button[0] && $button[0].parentElement && $button[0].parentElement.classList.value.indexOf('selected') == -1) {
+                cy.wait(1000).wrap($button).click({force: true});
+            }
+        });
+
+    }
+
+    clickOnDropdownUnmarkedRooms(name: string){
+        cy.get(this.dropdownRoomsSelector).parent().click();
+        cy.get(`${this.dropdownRoomsSelector} + .bootstrap-select .dropdown-menu li`).contains(name).then(($button) => {
+            if ($button[0] && $button[0].parentElement && $button[0].parentElement.classList.value.indexOf('selected') == -1) {
+                cy.wait(1000).wrap($button).click({force: true});
+            }
+        });
+
+    }
+
+
+
 }
 
 export default ClinicServices

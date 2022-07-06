@@ -22,14 +22,12 @@ describe('Automation test for UP-818', () => {
     // for more easiness that class is attributed to login const
     it("UP-818", function () {
 
-        cy.log('Login to platform');
         login.goToStaging();
-        login.loginPPNCFPCCPE();
-        cy.contains('Login').click(); 
+        login.loginAutomation();
 
         navigate.selectCS('Clinic Services');
         clinicServices.chooseService('Automation with CCPE');
-        drawerModal.clickOnDropdownMarked('John')
+        drawerModal.clickOnDropdownMarked('Automation Tests')
         clinicServices.checkBoxSliderSetOn('#Service_IsActive');
         clinicServices.checkBoxSliderSetOn('#Service_AllowOnlineScheduling')
         drawerModal.saveButton();

@@ -25,26 +25,19 @@ describe('Automation test for UP-802', () => {
     // for more easiness that class is attributed to login const
     it("UP-802", function () {
 
-        cy.log('Login to platform');
         login.goToStaging();
-        login.loginPPNCFPCCPE();
-        cy.contains('Login').click();
-    
+        login.loginAutomation();
 
-        cy.log('In Clinic Settings - Locations and rooms - Open one location that is inactive');
         navigate.selectCS('Locations');
         clinicLocations.chooseAutomation();
 
-        cy.log('Set the slider Clinic Location is active? (ON)');
         basePage.setToOff('Clinic location is active?');
         drawerModal.saveButton();
 
-        cy.log('Go to Clinic Settings - Patient Portal - Patient Portal URL');
         navigate.extendMenu();
         navigate.selectPP();
         pp.openPP();
 
-        cy.log('Have you been to any of our clinics before? (Select YES)');
         pp.checkLogin();
         pp.selectRadio(1);
         pp.shouldNotBeVisible ('Automation Location')

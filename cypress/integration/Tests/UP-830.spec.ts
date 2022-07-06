@@ -23,10 +23,9 @@ describe('Automation test for UP-830', () => {
     //Start login process. It calls Patient Portal class from PatientPortal file and
     // for more easiness that class is attributed to login const
     it("UP-830", function () {
-        cy.log('Login to platform');
+
         login.goToStaging();
-        login.loginPPNCFPCCPE();
-        cy.contains('Login').click(); 
+        login.loginAutomation();
 
         navigate.selectCS('Clinic Staff');
         clinicStaff.markUserActive('Automation')

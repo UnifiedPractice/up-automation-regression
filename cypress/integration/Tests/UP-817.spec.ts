@@ -22,11 +22,8 @@ describe('Automation test for UP-817', () => {
     // for more easiness that class is attributed to login const
     it("UP-817", function () {
 
-        cy.log('Login to platform');
         login.goToStaging();
-        login.loginPPNCFPCCPE();
-        cy.contains('Login').click(); 
-
+        login.loginAutomation();
 
         navigate.selectCS('Clinic Services');
         clinicServices.chooseService('Automation with CCPE');

@@ -15,13 +15,12 @@ describe('Automation test for UP-801', () => {
     const drawerModal = new DrawerModal();
 
 
-    // before(() => {
-    //     pp.waitForPageToLoad();
-    // });
+    let response;
     
     // For retain session and prevent logout during testing - it's a must have in all tests for prevent logout
     beforeEach(() => {
-        Cypress.Cookies.preserveOnce('ASP.NET_SessionId', 'sessionid', 'chatToken')
+        Cypress.Cookies.preserveOnce('ASP.NET_SessionId', 'sessionid', 'chatToken');
+
     })
     // End beforeEach
 
@@ -29,30 +28,26 @@ describe('Automation test for UP-801', () => {
     // for more easiness that class is attributed to login const
     it("UP-801", function () {
 
-        cy.log('Login to platform');
         login.goToStaging();
-        login.loginPPNCFPCCPE();
-        cy.contains('Login').click();
+        login.loginAutomation();
 
-    
-
-        cy.log('In Clinic Settings - Locations and rooms - Open one location that is inactive');
         navigate.selectCS('Locations');
         clinicLocations.chooseAutomation();
 
-        cy.log('Set the slider Clinic Location is active? (ON)');
         basePage.setToOn('Clinic location is active?');
-        drawerModal.cancelButton();
+        basePage.setToOn('Allow Online Scheduling?');
 
-        cy.log('Go to Clinic Settings - Patient Portal - Patient Portal URL');
+        drawerModal.saveButton();
+
         navigate.extendMenu();
+
         navigate.selectPP();
         pp.openPP();
 
         cy.log('Have you been to any of our clinics before? (Select YES)');
         pp.checkLogin();
         pp.selectRadio(1);
-        pp.shouldBeVisible ('Automation Location')
+        pp.shouldBeVisible('Automation Location')
       
     })
 

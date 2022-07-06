@@ -1,6 +1,7 @@
 /// <reference types="cypress" />
 
 import DrawerModal from "../drawer-modal";
+
  class ClinicLocations extends DrawerModal {
 
  private location: string = '.footer-left-button';
@@ -20,43 +21,44 @@ import DrawerModal from "../drawer-modal";
  }
 
 chooseAutomation(): void {
-
     cy.get('div.card').then($cards => {
-
-        const cardExists = $cards.text().includes('Automation Location') 
-      
+        const cardExists = $cards.text().includes('Automation Location')
         if (cardExists) {
-          cy.contains('div.card', 'Automation Location') 
-          .find(this.editLocationButton)
-          .click({force:true})
+            cy.intercept('https://staging.unifiedpractice.com/Public/Clinic/EditLocation?locationId=183&_=*').as('set')
+            cy.contains('div.card', 'Automation Location')
+            .find(this.editLocationButton)
+            .click({force:true})
+            cy.wait('@set')
         }
-      })
-      cy.wait(700);
+        })
+      //cy.wait(700);
     }
 
- remainOneActive() : void {
 
-    cy.get(this.cardSelector).each((item, index) => {
-            //cy.wait(2500).
-            cy.wrap(item);
-            cy.intercept({
-              method: 'GET',
-              path: 'https://staging.unifiedpractice.com/Public/Clinic/EditLocation?locationId=',
-            }).as('matchedUrl')
-            
-            cy.contains('Edit location').click()
-            cy.wait('@matchedUrl')
-            //cy.wait(1660);
+//The method can be improved by eliminating cy.wait(). At this time we could not introduce intercepts for api's
+//because it is a constantly repeating cycle and this would not be valid.
+//Another method has to be adopted for this.
+remainOneActive() : void {
+  cy.get(this.cardSelector).each((item, index) => {
+            cy.wait(600);
+            cy.wrap(item)
+            cy.get('.card-button.card-properties.footer-left-button').eq(0).click()
+            cy.wait(260);
             this.setToOff('Clinic location is active?')
-            //cy.wait(1660);
+            cy.intercept('https://staging.unifiedpractice.com/Public/Clinic/LocationList?_=*').as('loc')
             cy.get(this.saveButtonSelector).click({force:true})
-      });
-            cy.contains('Edit location').first().click({force:true});
-         
-            this.setToOn('Clinic location is active?')
-            cy.get(this.saveButtonSelector).click({force:true})
-            cy.get(this.cardLocations).eq(0).not('inactive')
- }
+            cy.wrap(item)
+            cy.wait('@loc')
+});
+    cy.wait(500)
+    cy.contains('Edit location').first().click({force:true});
+    cy.wait(500)
+    this.setToOn('Clinic location is active?')
+    cy.wait(500)
+    cy.get(this.saveButtonSelector).click({force:true})
+    cy.get(this.cardLocations).eq(0).not('inactive')
+}
+
 
 addNewLocation(): void { 
     cy.get(this.addNewLocationSelector).click();

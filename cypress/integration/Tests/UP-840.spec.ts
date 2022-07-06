@@ -8,15 +8,15 @@ import ClinicLocations from "../PageObject/clinic-settings/clinic-locations";
 import BasePage from "../PageObject/base-page";
 
 
-describe('Automation test for UP-832', () => {
+describe('Automation test for UP-840', () => {
     const login = new LoginPage();
     const pp = new PatientPortal() ;
     const navigate = new SideBarNavigate();
+    const clinicLocations = new ClinicLocations();
+    const drawerModal = new DrawerModal();
+    const basePage = new BasePage();
     const clinicServices = new ClinicServices();
     const clinicStaff = new ClinicStaff();
-    const drawerModal = new DrawerModal();
-    const clinicLocations = new ClinicLocations();
-    const basePage = new BasePage();
 
     // For retain session and prevent logout during testing - it's a must have in all tests for prevent logout
     beforeEach(() => {
@@ -24,12 +24,22 @@ describe('Automation test for UP-832', () => {
     })
     // End beforeEach
 
-    //Start login process. It calls Patient Portal class from PatientPortal file and
-    // for more easiness that class is attributed to login const
-    it("UP-832", function () {
+    it("UP-840", function () {
 
         login.goToStaging();
         login.loginAutomation();
+
+        navigate.selectCS('Clinic Staff');
+        clinicStaff.clickOnDetails('Automation Tests');
+        clinicStaff.checkBoxSliderSetOn('#PractitionerInfo_AllowOnlineScheduling')
+        clinicStaff.checkBoxSliderSetOn('#PractitionerInfo_AutoAcceptAppointments')
+        clinicStaff.saveButton();
+        navigate.extendMenu();
+        navigate.selectCS('Clinic Staff');
+        clinicStaff.clickOnDetails('Automation Engineer');
+        clinicStaff.checkBoxSliderSetOn('#PractitionerInfo_AllowOnlineScheduling')
+        clinicStaff.checkBoxSliderSetOn('#PractitionerInfo_AutoAcceptAppointments')
+        clinicStaff.saveButton();
 
         navigate.selectCS('Locations');
         clinicLocations.chooseAutomation();
@@ -37,42 +47,22 @@ describe('Automation test for UP-832', () => {
         basePage.setToOn('Allow Online Scheduling?');
         drawerModal.saveButton();
 
-        navigate.extendMenu();
-
-        navigate.selectCS('Clinic Staff');
-        clinicStaff.clickOnDetails('Automation Tests')
-        clinicServices.checkBoxSliderSetOn('#PractitionerInfo_AllowOnlineScheduling')
-        clinicServices.checkBoxSliderSetOn('#PractitionerInfo_AutoAcceptAppointments')
-        clinicStaff.saveButton();
-
-        navigate.extendMenu();
-
-        navigate.selectCS('Clinic Services')
+        navigate.selectCS('Clinic Services');
         clinicServices.chooseService('Automation with CCPE')
         clinicServices.checkBoxSliderSetOn('#Service_IsActive')
         clinicServices.checkBoxSliderSetOn('#Service_AllowOnlineScheduling')
         drawerModal.saveButton();
-        pp.shouldBeVisible('Clinic service saved')
 
-        navigate.extendMenu();
-
-        navigate.selectCS('Clinic Staff');
-        clinicStaff.markAllInactive();
-        navigate.extendMenu();
         navigate.selectPP();
+
+        pp.setToOn('Allow patients to book appointments online');
+        pp.setToOff('Allow existing patients to select “No Preference” for the provider')
+        pp.saveButton();
         pp.openPP();
-
         pp.checkLogin();
-        pp.selectRadio(1);
-        pp.selectLocation('Automation Location')
-        pp.selectService('Automation with CCPE')
-        pp.shouldBeVisible('Select an appointment date & time')
+        pp.proceedLogin();
+        pp.checkForNoPreferenceStateOff();
 
-        //Cleaning
-        pp.backtoEHR();
-        navigate.extendMenu();
-        navigate.selectCS('Clinic Staff');
-        clinicStaff.markUserActive('Automation Engineer')
-         })
+    })
 
 })

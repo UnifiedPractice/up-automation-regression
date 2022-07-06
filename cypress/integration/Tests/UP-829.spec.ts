@@ -20,13 +20,11 @@ describe('Automation test for UP-829', () => {
     // for more easiness that class is attributed to login const
     it("UP-829", function () {
 
-        cy.log('Login to platform');
         login.goToStaging();
-        login.loginPPNCFPCCPE();
-        cy.contains('Login').click(); 
+        login.loginAutomation();
 
         navigate.selectCS('Clinic Staff');
-        clinicStaff.markUserInactive('Automation')
+        clinicStaff.markUserInactive('Automation Engineer')
         
         navigate.extendMenu();
         navigate.selectPP();
@@ -37,6 +35,15 @@ describe('Automation test for UP-829', () => {
         pp.selectLocation('Automation Location')
         pp.selectService('Automation with CCPE')
         pp.shouldNotBeVisible('Automation Engineer')
-         })
+
+        //Cleaning
+        pp.backtoEHR();
+        navigate.extendMenu();
+        navigate.selectCS('Clinic Staff');
+        clinicStaff.markUserActive('Automation Engineer')
+
+
+
+    })
 
 })

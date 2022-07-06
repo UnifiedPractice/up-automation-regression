@@ -1,4 +1,15 @@
-/// <reference types="cypress" />
+
+const axios = require('axios').default;
+
+module.exports = (on, config) => {
+
+on('before:run', async () => {
+    await axios.get('https://staging.unifiedpractice.com/Public/Scripts/dist/vendor-es2015.dcc2a474d2fb925a6676.js').then((response) => {
+        config.env.CYPRESS_MY_VAR = response;
+    })
+});}
+
+
 // ***********************************************************
 // This example plugins/index.js can be used to load plugins
 //
@@ -16,7 +27,6 @@
  * @type {Cypress.PluginConfig}
  */
 // eslint-disable-next-line no-unused-vars
-module.exports = (on, config) => {
-  // `on` is used to hook into various events Cypress emits
-  // `config` is the resolved Cypress config
-}
+
+
+

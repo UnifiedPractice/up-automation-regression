@@ -1,17 +1,21 @@
+/// <reference types="cypress" />
+
 import BasePage from "./base-page";
  class DrawerModal extends BasePage {
 
     private dropDownPractitionerSelectorID: string = '#SelectedPractitionersIds';
+    private dropdownRoomSelector: string = '#SelectedRoomsIds';
     private checkMarkSelector: string = '.check-mark';
     cancelButtonSelector: string = '.button.no-select.pull-right';
     saveButtonSelector: string = '.button.default.no-select.pull-right';
+
 
     saveButton() : void {
         cy.get(this.saveButtonSelector).click({force:true});
     }
     
     cancelButton() : void {
-        cy.get(this.cancelButtonSelector).click({force:true});
+        cy.get(this.cancelButtonSelector).contains("Cancel").click({force:true});
     }
 
     clickOnDropdownMarked(name: string) {
@@ -22,11 +26,9 @@ import BasePage from "./base-page";
             cy.wrap($button).click({force: true});      
           }
         });
-
     }
 
-
-      clickOnDropdownMarkedTest() : void {
+    clickOnDropdownMarkedTest() : void {
         
         cy.get(this.dropDownPractitionerSelectorID).parent().click();
         cy.get(`${this.dropDownPractitionerSelectorID} + .bootstrap-select .dropdown-menu li`).then(($button) => {
@@ -52,6 +54,18 @@ import BasePage from "./base-page";
 
     }
 
-}
+    //It will be further developed for rooms that are already checked
+     clickOnDropdownUnmarkedRooms(name: string){
+         cy.get(this.dropdownRoomSelector).parent().click();
+         cy.get(`${this.dropdownRoomSelector} + .bootstrap-select .dropdown-menu li`).contains(name).then(($button) => {
+             if ($button[0] && $button[0].parentElement && $button[0].parentElement.classList.value.indexOf('selected') == -1) {
+                 cy.wait(1000).wrap($button).click({force: true});
+             }
+         });
+
+     }
+
+
+ }
 
 export default DrawerModal

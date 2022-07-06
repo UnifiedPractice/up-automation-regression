@@ -5,7 +5,7 @@ import ClinicStaff from "../PageObject/clinic-settings/clinic-staff"
 import ClinicServices from "../PageObject/clinic-settings/clinic-services"
 
 
-describe('Automation test for UP-833', () => {
+describe('Automation test for UP-834', () => {
     const login = new LoginPage();
     const pp = new PatientPortal() ;
     const navigate = new SideBarNavigate();
@@ -18,18 +18,18 @@ describe('Automation test for UP-833', () => {
     })
     // End beforeEach
 
-    it("UP-833", function () {
+    it("UP-834", function () {
 
         login.goToStaging();
         login.loginAutomation();
 
         navigate.selectPP();
 
-        pp.setToOn('Allow patients to book appointments online');
+        pp.setToOff('Allow patients to book appointments online');
         pp.saveButton();
         pp.openPP();
-        pp.shouldNotBeVisible('Please call us for booking an appointment.')
+        pp.shouldBeVisible('Please call us for booking an appointment.')
 
-         })
+    })
 
 })

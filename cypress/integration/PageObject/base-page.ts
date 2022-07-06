@@ -22,6 +22,7 @@ public sliderSelector: string = '.checkboxSlider';
         }
 
     setToOn(name: string): void {
+        cy.wait(1200)
         cy.get(this.formSelector).contains(name).parent().find(this.sliderSelector).then(($button) => {
             if ($button.hasClass('redClass')) {
                 cy.get(this.formSelector).contains(name).parent().find(this.sliderSelector).click({force:true});
@@ -29,12 +30,17 @@ public sliderSelector: string = '.checkboxSlider';
           })
     }
     
-     setToOff(name: string): void {
-        cy.get(this.formSelector).contains(name).parent().find(this.sliderSelector).then(($button) => {
+     setToOff(name: string): any {
+         cy.wait(1200)
+         cy.get(this.formSelector).contains(name).parent().find(this.sliderSelector).then(($button) => {
             if ($button.hasClass('greenClass')) {
                 cy.get(this.formSelector).contains(name).parent().find(this.sliderSelector).click({force:true});
             } 
           })
+     }
+
+     backtoEHR(): void{
+        cy.visit('https://staging.unifiedpractice.com/Public/Dashboard/Index')
      }
 
 
