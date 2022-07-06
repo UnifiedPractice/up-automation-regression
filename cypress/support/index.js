@@ -16,5 +16,20 @@
 // Import commands.js using ES2015 syntax:
 import './commands'
 
+let cachedResult = null;
+
+Cypress.Commands.add('readAndCacheApi', async (url) => {
+    if (!cachedResult) {
+        console.log('fetching')
+        const result = await fetch(url)
+        cachedResult = result
+        return cachedResult
+    } else {
+        console.log('using cache')
+        return cachedResult
+    }
+})
+
 // Alternatively you can use CommonJS syntax:
 // require('./commands')
+
