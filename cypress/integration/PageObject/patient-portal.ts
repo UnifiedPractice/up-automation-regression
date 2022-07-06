@@ -4,7 +4,6 @@ import {PP_API, PP_API_URL, FINAL_API, API_URL, API_BASEPP_URL, FINAL_API_STAGIN
 import BasePage from "./base-page";
 import 'cypress-wait-until';
 import { format, addDays} from 'date-fns';
-import { recurse } from 'cypress-recurse';
 const { uniqueNamesGenerator, Config, adjectives, colors } = require('unique-names-generator');
 
 class PatientPortal extends BasePage {
@@ -107,16 +106,16 @@ class PatientPortal extends BasePage {
 
     setToOff(name:string): void {
         cy.contains('div', name)
-            .parent() //Moves to parent div row
-            .within(() => { //scopes the commands within the above div row
+            .parent()
+            .within(() => {
                 cy.get('input[type="checkbox"]').uncheck({force: true})
             })
     }
 
     setToOn(name:string): void {
         cy.contains('div', name)
-            .parent() //Moves to parent div row
-            .within(() => { //scopes the commands within the above div row
+            .parent()
+            .within(() => {
                 cy.get('input[type="checkbox"]').check({force: true})
             })
     }
@@ -210,8 +209,6 @@ class PatientPortal extends BasePage {
     }
 
     textInBox(parent:string, value: string): void {
-        // cy.wait(1500)
-        // cy.get('.row').contains(parent).find('.form-control').click().type(value);
         cy.contains('div', parent)
             .parent() //Moves to parent div row
             .within(() => { //scopes the commands within the above div row

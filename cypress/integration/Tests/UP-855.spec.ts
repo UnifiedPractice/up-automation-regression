@@ -11,7 +11,7 @@ import BasePage from "../PageObject/base-page";
 import ClinicLocations from "../PageObject/clinic-settings/clinic-locations";
 
 
-describe('Automation test for UP-859', () => {
+describe('Automation test for UP-855', () => {
     const login = new LoginPage();
     const pp = new PatientPortal() ;
     const navigate = new SideBarNavigate();
@@ -29,10 +29,12 @@ describe('Automation test for UP-859', () => {
 
     //Start login process. It calls Patient Portal class from PatientPortal file and
     // for more easiness that class is attributed to login const
-    it("UP-859", function () {
+    it("UP-855", function () {
 
         login.goToStaging();
         login.loginAutomation();
+        //THE TEST IS FOLLOWING AN OLD FLOW STRUCTURE FOR CREATING A NEW ACCOUNT;
+        //THERE IS NO LONGER THE OPTION TO CHOOSE INSURANCE
 
         navigate.selectCS('Locations')
         clinicLocations.editLocation(0);
@@ -64,15 +66,14 @@ describe('Automation test for UP-859', () => {
         pp.openPP();
         pp.checkLogin();
         pp.createAccountProceed();
-        pp.completeAllForms();
 
-        //To be verified
-        // navigate.selectPP();
-        // pp.openPP();
-        // pp.checkLogin();
-        // pp.proceedLogin();
-        // pp.checkVisibilityUpcoming();
-        // pp.checkBookSimilarWithNoPractitionerAvailable();
+
+        navigate.selectPP();
+        pp.openPP();
+        pp.checkLogin();
+        pp.proceedLogin();
+        pp.checkVisibilityUpcoming();
+        pp.checkBookSimilarWithNoPractitionerAvailable();
 
         //Cleaning
 

@@ -24,7 +24,7 @@ describe('Automation test for UP-845', () => {
     })
     // End beforeEach
 
-    it("UP-845", function () {
+    it("UP-846", function () {
 
         login.goToStaging();
         login.loginAutomation();
@@ -55,15 +55,16 @@ describe('Automation test for UP-845', () => {
 
         navigate.selectPP();
 
-        pp.setToOn('Allow patients to book appointments online');
-        pp.textInBox('Minimum number of hours that an appointment can be scheduled into the future','24')
-        pp.saveButton();
+       pp.setToOn('Allow patients to book appointments online');
+       pp.textInBox('How far in the future can appointments be booked?','30')
+       pp.saveButton();
         pp.openPP();
         pp.checkLogin();
         pp.proceedLogin();
         pp.bookNewAppointmentASAP();
         pp.checkRoundAvailabilities();
-        // pp.checkTodayToBeHidden()
+        //THIS METHOD NEED TO BE IMPROVEMENT; CAN SOMETIMES FAIL THE TEST
+        pp.checkFeature30Days()
     })
 
 })

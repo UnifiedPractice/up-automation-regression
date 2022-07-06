@@ -29,28 +29,28 @@ describe('Automation test for UP-844', () => {
         login.goToStaging();
         login.loginAutomation();
 
-        // navigate.selectCS('Clinic Staff');
-        // clinicStaff.clickOnDetails('Automation Tests');
-        // clinicStaff.checkBoxSliderSetOn('#PractitionerInfo_AllowOnlineScheduling')
-        // clinicStaff.checkBoxSliderSetOn('#PractitionerInfo_AutoAcceptAppointments')
-        // clinicStaff.saveButton();
-        // navigate.extendMenu();
-        // navigate.selectCS('Clinic Staff');
-        // clinicStaff.clickOnDetails('Automation Engineer');
-        // clinicStaff.checkBoxSliderSetOn('#PractitionerInfo_AllowOnlineScheduling')
-        // clinicStaff.checkBoxSliderSetOn('#PractitionerInfo_AutoAcceptAppointments')
-        // clinicStaff.saveButton();
-        //
-        // navigate.selectCS('Locations');
-        // clinicLocations.chooseAutomation();
-        // basePage.setToOn('Clinic location is active?');
-        // basePage.setToOn('Allow Online Scheduling?');
-        // drawerModal.saveButton();
-        //
-        // navigate.selectCS('Clinic Services');
-        // clinicServices.chooseService('Automation with CCPE')
-        // clinicServices.checkBoxSliderSetOn('#Service_IsActive')
-        // clinicServices.checkBoxSliderSetOn('#Service_AllowOnlineScheduling')
+        navigate.selectCS('Clinic Staff');
+        clinicStaff.clickOnDetails('Automation Tests');
+        clinicStaff.checkBoxSliderSetOn('#PractitionerInfo_AllowOnlineScheduling')
+        clinicStaff.checkBoxSliderSetOn('#PractitionerInfo_AutoAcceptAppointments')
+        clinicStaff.saveButton();
+        navigate.extendMenu();
+        navigate.selectCS('Clinic Staff');
+        clinicStaff.clickOnDetails('Automation Engineer');
+        clinicStaff.checkBoxSliderSetOn('#PractitionerInfo_AllowOnlineScheduling')
+        clinicStaff.checkBoxSliderSetOn('#PractitionerInfo_AutoAcceptAppointments')
+        clinicStaff.saveButton();
+
+        navigate.selectCS('Locations');
+        clinicLocations.chooseAutomation();
+        basePage.setToOn('Clinic location is active?');
+        basePage.setToOn('Allow Online Scheduling?');
+        drawerModal.saveButton();
+
+        navigate.selectCS('Clinic Services');
+        clinicServices.chooseService('Automation with CCPE')
+        clinicServices.checkBoxSliderSetOn('#Service_IsActive')
+        clinicServices.checkBoxSliderSetOn('#Service_AllowOnlineScheduling')
         // drawerModal.saveButton();
 
         navigate.selectPP();
