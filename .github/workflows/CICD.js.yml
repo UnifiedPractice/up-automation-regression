@@ -26,6 +26,4 @@ jobs:
       - name: Cypress run
         uses: cypress-io/github-action@v2
         with:
-          start: npm run local:scheduler
-          wait-on: http://localhost:4200/#/
-          wait-on-timeout: 120
+          start: npm run 
