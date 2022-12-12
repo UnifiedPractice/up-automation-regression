@@ -3,8 +3,6 @@ import SideBarNavigate from "../PageObject/side-bar-menu"
 import PatientPortal from "../PageObject/patient-portal"
 import ClinicServices from "../PageObject/clinic-settings/clinic-services"
 import ClinicStaff from "../PageObject/clinic-settings/clinic-staff"
-import basePage from "../PageObject/base-page";
-import drawerModal from "../PageObject/drawer-modal";
 import DrawerModal from "../PageObject/drawer-modal";
 
 

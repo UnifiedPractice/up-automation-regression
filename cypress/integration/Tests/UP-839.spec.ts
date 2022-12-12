@@ -77,8 +77,6 @@ describe('Automation test for UP-839', () => {
         pp.setToOff('Allow existing patients to select “No Preference” for the provider')
         pp.saveButton();
 
-
-
     })
 
 })

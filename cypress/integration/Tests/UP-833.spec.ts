@@ -28,8 +28,9 @@ describe('Automation test for UP-833', () => {
         pp.setToOn('Allow patients to book appointments online');
         pp.saveButton();
         pp.openPP();
-        pp.shouldNotBeVisible('Please call us for booking an appointment.')
-
-         })
+        pp.checkLogin();
+        pp.proceedLogin();
+        pp.checkVisibilityBookAppointmentButton();
+    })
 
 })

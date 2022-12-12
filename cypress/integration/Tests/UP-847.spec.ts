@@ -40,6 +40,7 @@ describe('Automation test for UP-847', () => {
 
         clinicStaff.saveButton();
 
+        navigate.extendMenu();
         navigate.selectCS('Clinic Services')
         clinicServices.chooseService('Automation with CCPE')
         clinicServices.checkBoxSliderSetOn('#Service_IsActive')
@@ -47,9 +48,8 @@ describe('Automation test for UP-847', () => {
         clinicServices.clickOnDropdownMarkedPractitioners('Automation Tests')
         clinicServices.clickOnDropdownMarkedPractitioners('Automation Engineer')
         clinicServices.clickOnDropdownMarkedPractitioners('Automation Another')
-
-
         drawerModal.saveButton();
+
         navigate.extendMenu();
 
         navigate.selectPP();
@@ -60,8 +60,7 @@ describe('Automation test for UP-847', () => {
         pp.selectService('Automation with CCPE')
         pp.shouldBeVisible('No practitioner')
 
-        login.goToStaging();
-        login.loginAutomation();
+        pp.backtoEHR()
 
         navigate.selectCS('Clinic Services')
         clinicServices.chooseService('Automation with CCPE')

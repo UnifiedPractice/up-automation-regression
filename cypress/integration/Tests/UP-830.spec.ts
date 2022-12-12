@@ -2,8 +2,6 @@ import LoginPage from "../PageObject/login-page"
 import SideBarNavigate from "../PageObject/side-bar-menu"
 import PatientPortal from "../PageObject/patient-portal"
 import ClinicStaff from "../PageObject/clinic-settings/clinic-staff"
-import BasePage from "../PageObject/base-page"
-import { cli } from "cypress"
 import ClinicServices from "../PageObject/clinic-settings/clinic-services"
 
 

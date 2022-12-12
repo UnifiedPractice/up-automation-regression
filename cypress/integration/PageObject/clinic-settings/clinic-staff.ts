@@ -39,7 +39,7 @@ saveButton() : void {
 //The rule is mandatory for checkBoxSliderSetOff() method too.
 
     checkBoxSliderSetOn(name: string): void {
-        cy.get(name).parent().then(($button) => {
+        cy.wait(300).get(name).parent().then(($button) => {
             if ($button.hasClass('redClass')) {
                 cy.get(name).parent().click({force:true});
             }
@@ -47,7 +47,7 @@ saveButton() : void {
     }
 
     checkBoxSliderSetOff(name: string): void {
-        cy.get(name).parent().then(($button) => {
+        cy.wait(300).get(name).parent().then(($button) => {
             if ($button.hasClass('greenClass')) {
                 cy.get(name).parent().click({force:true});
             }

@@ -34,12 +34,16 @@ describe('Automation test for UP-845', () => {
         clinicStaff.checkBoxSliderSetOn('#PractitionerInfo_AllowOnlineScheduling')
         clinicStaff.checkBoxSliderSetOn('#PractitionerInfo_AutoAcceptAppointments')
         clinicStaff.saveButton();
+
         navigate.extendMenu();
+
         navigate.selectCS('Clinic Staff');
         clinicStaff.clickOnDetails('Automation Engineer');
         clinicStaff.checkBoxSliderSetOn('#PractitionerInfo_AllowOnlineScheduling')
         clinicStaff.checkBoxSliderSetOn('#PractitionerInfo_AutoAcceptAppointments')
         clinicStaff.saveButton();
+
+        navigate.extendMenu();
 
         navigate.selectCS('Locations');
         clinicLocations.chooseAutomation();
@@ -47,11 +51,15 @@ describe('Automation test for UP-845', () => {
         basePage.setToOn('Allow Online Scheduling?');
         drawerModal.saveButton();
 
+        navigate.extendMenu();
+
         navigate.selectCS('Clinic Services');
         clinicServices.chooseService('Automation with CCPE')
         clinicServices.checkBoxSliderSetOn('#Service_IsActive')
         clinicServices.checkBoxSliderSetOn('#Service_AllowOnlineScheduling')
         drawerModal.saveButton();
+
+        navigate.extendMenu();
 
         navigate.selectPP();
 
@@ -63,7 +71,7 @@ describe('Automation test for UP-845', () => {
         pp.proceedLogin();
         pp.bookNewAppointmentASAP();
         pp.checkRoundAvailabilities();
-        // pp.checkTodayToBeHidden()
+        pp.checkTodayToBeHidden()
     })
 
 })

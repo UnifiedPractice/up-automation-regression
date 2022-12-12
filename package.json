@@ -1,7 +1,9 @@
 {
   "devDependencies": {
-    "cypress": "^10.0.1",
+    "cypress": "^9.7.0",
+    "cypress-file-upload": "^5.0.8",
     "cypress-localstorage-commands": "^1.7.0",
+    "cypress-mochawesome-reporter": "^3.2.0",
     "cypress-recurse": "^1.20.0",
     "cypress-wait-until": "^1.7.2",
     "perfecto-cypress-reporter": "^0.0.12",
