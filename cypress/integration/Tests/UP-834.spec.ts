@@ -28,7 +28,17 @@ describe('Automation test for UP-834', () => {
         pp.setToOff('Allow patients to book appointments online');
         pp.saveButton();
         pp.openPP();
-        pp.shouldBeVisible('Please call us for booking an appointment.')
+        pp.checkLogin();
+        pp.proceedLogin();
+        pp.shouldNotBeVisible('Book Appointment')
+
+        //Clear
+        pp.backtoEHR();
+        navigate.extendMenu();
+        navigate.selectPP();
+        pp.setToOn('Allow patients to book appointments online');
+        pp.saveButton();
+
 
     })
 

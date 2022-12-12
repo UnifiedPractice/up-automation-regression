@@ -97,7 +97,6 @@ describe('Automation test for UP-853', () => {
         //Cleaning
 
         basePage.backtoEHR()
-
         navigate.selectCS('Clinic Staff')
         clinicStaff.clickOnDetails('Automation Engineer')
         clinicStaff.checkBoxSliderSetOn('#PractitionerInfo_AllowOnlineScheduling')

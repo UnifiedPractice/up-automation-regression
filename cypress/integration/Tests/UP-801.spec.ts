@@ -14,9 +14,6 @@ describe('Automation test for UP-801', () => {
     const basePage = new BasePage();
     const drawerModal = new DrawerModal();
 
-
-    let response;
-    
     // For retain session and prevent logout during testing - it's a must have in all tests for prevent logout
     beforeEach(() => {
         Cypress.Cookies.preserveOnce('ASP.NET_SessionId', 'sessionid', 'chatToken');
@@ -48,7 +45,7 @@ describe('Automation test for UP-801', () => {
         pp.checkLogin();
         pp.selectRadio(1);
         pp.shouldBeVisible('Automation Location')
-      
+
     })
 
 
@@ -58,7 +55,7 @@ describe('Automation test for UP-801', () => {
         //pp.loginCredentials('testalex12@test.com','password')
         //pp.pressLogin();
        // pp.checkSuccessLogin();
-    
+
 
           // END OF UP-801
 

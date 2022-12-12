@@ -81,7 +81,6 @@ describe('Automation test for UP-848', () => {
         //Cleaning
 
         basePage.backtoEHR()
-
         navigate.selectCS('Locations')
         clinicLocations.editLocation(0);
         basePage.setToOn('Clinic location is active?');

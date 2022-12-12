@@ -4,7 +4,6 @@ import PatientPortal from "../PageObject/patient-portal"
 import ClinicStaff from "../PageObject/clinic-settings/clinic-staff"
 import ClinicServices from "../PageObject/clinic-settings/clinic-services"
 
-
 describe('Automation test for UP-831', () => {
     const login = new LoginPage();
     const pp = new PatientPortal() ;

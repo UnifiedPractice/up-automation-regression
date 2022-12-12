@@ -51,7 +51,6 @@ describe('Automation test for UP-861', () => {
 
         navigate.extendMenu()
 
-
         navigate.selectCS('Clinic Services')
         clinicServices.chooseService('Automation with CCPE')
         clinicServices.checkBoxSliderSetOn('#Service_IsActive')
@@ -71,7 +70,6 @@ describe('Automation test for UP-861', () => {
         pp.checkLogin();
         pp.createAccountProceed();
         pp.cancelAppointment();
-
 
     })
 

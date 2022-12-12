@@ -80,7 +80,6 @@ describe('Automation test for UP-851', () => {
         //Cleaning
 
         basePage.backtoEHR()
-
         navigate.selectCS('Clinic Services')
         clinicServices.chooseService('Automation with CCPE')
         clinicServices.checkBoxSliderSetOn('#Service_IsActive')

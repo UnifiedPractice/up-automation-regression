@@ -51,7 +51,6 @@ describe('Automation test for UP-844', () => {
         clinicServices.chooseService('Automation with CCPE')
         clinicServices.checkBoxSliderSetOn('#Service_IsActive')
         clinicServices.checkBoxSliderSetOn('#Service_AllowOnlineScheduling')
-        // drawerModal.saveButton();
 
         navigate.selectPP();
 

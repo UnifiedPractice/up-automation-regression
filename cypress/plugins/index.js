@@ -1,13 +1,11 @@
+/// <reference types="cypress" />
 
-const axios = require('axios').default;
+
+//const axios = require('axios').default;
 
 module.exports = (on, config) => {
 
-on('before:run', async () => {
-    await axios.get('https://staging.unifiedpractice.com/Public/Scripts/dist/vendor-es2015.dcc2a474d2fb925a6676.js').then((response) => {
-        config.env.CYPRESS_MY_VAR = response;
-    })
-});}
+}
 
 
 // ***********************************************************
