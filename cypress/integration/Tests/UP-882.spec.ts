@@ -26,9 +26,10 @@ describe('Automation test for UP-882', () => {
 
         pp.openPP();
         pp.checkLogin();
-        pp.createAccountProceed();
-        pp.bookNewAppointmentASAP();
-        //pp.proceedLogin();
+        //pp.createAccountProceed();
+        //pp.bookNewAppointmentASAP();
+        pp.proceedLogin();
+        pp.selectCompleteFormsAndCompleteScreeningForms()
         //pp.selectCompleteFormsAndCompleteScreeningForms();
     })
 

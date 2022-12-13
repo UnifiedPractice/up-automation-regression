@@ -1019,18 +1019,27 @@ class PatientPortal extends BasePage {
         cy.wait('@forms')
         cy.contains('Forms').click({force:true})
         cy.get(this.burgerMenuSelector).click({force:true});
-        cy.get('btn-primary').click().wait(300);
-        cy.get('btn-primary').click().wait(300);
-        cy.get('btn-primary').click().wait(300);
-        cy.get('btn-primary').click().wait(300);
-        cy.get('btn-primary').click().wait(300);
-        cy.get('btn-primary').click().wait(300);
-        cy.wait(300).get('.select-box').eq(1).within(() =>
-                cy.get('.edit-col').eq(7).click({force: true}))
+        cy.wait(300).get('.select-box').eq(0).within(() =>
+            cy.get('.edit-col').eq(7).click({force: true})
+        )
+        cy.contains('Complete Forms').click()
         this.completeField('New Input', 'Test Message for Screening')
 
-        cy.contains('Save').click()
+        this.checkSaveContinueVisibility()
     }
+
+    checkSaveContinueVisibility(): void {
+        cy.wait(500)
+        cy.get('.pp-container').then($button => {
+            if($button.text().includes('Save & Continue')) {
+                cy.intercept('https://pp.api.staging.unifiedpractice.com/t/automation-cypress/Onboarding/medicalforms/*').as('upcomingscreening')
+                cy.contains('Save & Continue').click()
+                    cy.wait('@upcomingscreening')
+                    .then(() => this.checkSaveContinueVisibility())
+            }
+        })
+    }
+
 
     //STEP THAT HELPS TO DETERMINE THE EVOLUTION OF FORM COMPLETION; USEFUL FOR SCREENING FORMS
     checkFinalFormsWindow(): void {
