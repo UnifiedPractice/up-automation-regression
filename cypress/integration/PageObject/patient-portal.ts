@@ -44,6 +44,7 @@ class PatientPortal extends BasePage {
     private iconSelector : string = '.material-icons';
     public bookApointmentSelector : string = '.text-right';
     private uploadLiveChatSelector: string = '.rfu-file-upload-button';
+    private secondSelectBoxSelector
     private usernameLogin: string= 'automation3@email.com';
     private passwordLogin: string = 'password';
 
@@ -1018,14 +1019,28 @@ class PatientPortal extends BasePage {
         cy.wait('@forms')
         cy.contains('Forms').click({force:true})
         cy.get(this.burgerMenuSelector).click({force:true});
+        cy.get('btn-primary').click().wait(300);
+        cy.get('btn-primary').click().wait(300);
+        cy.get('btn-primary').click().wait(300);
+        cy.get('btn-primary').click().wait(300);
+        cy.get('btn-primary').click().wait(300);
+        cy.get('btn-primary').click().wait(300);
         cy.wait(300).get('.select-box').eq(1).within(() =>
-            cy.get('.edit-col').eq(7).click({force:true}))
-
+                cy.get('.edit-col').eq(7).click({force: true}))
         this.completeField('New Input', 'Test Message for Screening')
 
         cy.contains('Save').click()
     }
 
+    //STEP THAT HELPS TO DETERMINE THE EVOLUTION OF FORM COMPLETION; USEFUL FOR SCREENING FORMS
+    checkFinalFormsWindow(): void {
+        cy.get(this.boxSelector).then($box => {
+            const finalStep = $box.text().includes('Thank you!')
+            if (finalStep) {
+                cy.get('.row-md-radio').children().contains('Automation Location').click({force:true});
+            }
+        })
+    }
 
     // LIVE CHAT METHODS
 

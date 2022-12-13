@@ -36,14 +36,14 @@ describe('Automation test for UP-886', () => {
         pp.checkLogin();
         pp.createAccountProceed()
         pp.bookNewAppointmentASAP()
-        pp.selectCompleteFormsAndCompleteScreeningForms()
+        //pp.selectCompleteFormsAndCompleteScreeningForms()
 
         //Cleaning
 
         pp.backtoEHR();
         navigate.extendMenu()
         navigate.selectCS('Onboarding Forms');
-        onboardingForms.visibilityForAllScreeningForms();
+        //onboardingForms.visibilityForAllScreeningForms();
 
 
     })
