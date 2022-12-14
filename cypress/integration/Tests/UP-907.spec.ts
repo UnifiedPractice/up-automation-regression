@@ -39,6 +39,16 @@ describe('Automation test for UP-907', () => {
         pp.selectRadio(1);
         pp.selectLocation('Automation Location')
         pp.shouldNotBeVisible('Automation with CCPE')
+
+        //Cleaning
+
+        pp.backtoEHR();
+        navigate.extendMenu()
+        navigate.selectCS('Clinic Services');
+        clinicServices.chooseService('Automation with CCPE');
+        clinicServices.checkBoxSliderSetOn('#Service_IsActive');
+        clinicServices.checkBoxSliderSetOn('#Service_AllowOnlineScheduling');
+        drawerModal.saveButton();
     })
 
 })

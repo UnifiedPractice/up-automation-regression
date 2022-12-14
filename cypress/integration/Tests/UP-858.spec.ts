@@ -64,14 +64,6 @@ describe('Automation test for UP-858', () => {
         pp.checkLogin();
         pp.createAccountProceed();
 
-
-        navigate.selectPP();
-        pp.openPP();
-        pp.checkLogin();
-        pp.proceedLogin();
-        pp.checkVisibilityUpcoming();
-
-
     })
 
 })
