@@ -1,5 +1,5 @@
 
   {
-    "supportFile": "cypress/support/commands.ts",
+    "supportFile": "./cypress/support/commands.ts",
     "pageLoadTimeout": 140000
   }
