@@ -2,6 +2,6 @@
   {
     "supportFile": false,
     "pageLoadTimeout": 140000,
-    "fixturesFolder": "cypress/integration/Tests/",
-    "chromeWebSecurity": false
+    "testFiles": "**/*.spec.ts",
+    "browsers": "Chrome"
   }
