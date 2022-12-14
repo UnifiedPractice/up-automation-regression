@@ -25,3 +25,5 @@ jobs:
             node-version: '14.15'
         - name: Cypress run
           uses: cypress-io/github-action@v2
+          with:
+            browser: chrome
