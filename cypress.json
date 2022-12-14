@@ -2,6 +2,5 @@
   {
     "supportFile": false,
     "pageLoadTimeout": 140000,
-    "testFiles": "**/*.spec.ts",
-    "browsers": "Chrome"
+    "testFiles": "**/*.spec.ts"
   }
