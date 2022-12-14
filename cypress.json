@@ -2,5 +2,6 @@
   {
     "supportFile": false,
     "pageLoadTimeout": 140000,
-    "specPattern": "Tests/**/*.spec.ts"
+    "fixturesFolder": "Tests",
+    "chromeWebSecurity": false
   }
