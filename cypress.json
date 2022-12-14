@@ -2,6 +2,6 @@
   {
     "supportFile": false,
     "pageLoadTimeout": 140000,
-    "fixturesFolder": "Tests",
+    "fixturesFolder": "cypress/integration/Tests",
     "chromeWebSecurity": false
   }
