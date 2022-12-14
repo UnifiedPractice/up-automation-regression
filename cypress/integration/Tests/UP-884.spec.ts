@@ -3,6 +3,7 @@ import SideBarNavigate from "../PageObject/side-bar-menu"
 import PatientPortal from "../PageObject/patient-portal"
 import PatientList from "../PageObject/patient-list";
 import OnboardingForms from "../PageObject/clinic-settings/clinic-onboarding-forms";
+import ClinicStaff from "../PageObject/clinic-settings/clinic-staff";
 
 describe('Automation test for UP-884', () => {
     const login = new LoginPage();
@@ -10,6 +11,8 @@ describe('Automation test for UP-884', () => {
     const navigate = new SideBarNavigate();
     const patientList = new PatientList();
     const onboardingForms = new OnboardingForms();
+    const clinicStaff = new ClinicStaff();
+
 
     // For retain session and prevent logout during testing - it's a must have in all tests for prevent logout
     beforeEach(() => {
@@ -23,6 +26,15 @@ describe('Automation test for UP-884', () => {
 
         login.goToStaging();
         login.loginAutomation();
+
+        navigate.extendMenu()
+
+        navigate.extendMenu()
+        navigate.selectCS('Clinic Staff')
+        clinicStaff.clickOnDetails('Automation Engineer')
+        clinicStaff.checkBoxSliderSetOn('#PractitionerInfo_AllowOnlineScheduling')
+        clinicStaff.checkBoxSliderSetOn('#PractitionerInfo_AutoAcceptAppointments')
+        clinicStaff.saveButton();
 
         navigate.extendMenu()
 

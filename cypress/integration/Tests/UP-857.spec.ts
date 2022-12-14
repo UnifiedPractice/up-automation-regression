@@ -65,12 +65,6 @@ describe('Automation test for UP-857', () => {
         pp.createAccountProceed();
 
 
-        navigate.selectPP();
-        pp.openPP();
-        pp.checkLogin();
-        pp.proceedLogin();
-        pp.checkVisibilityUpcoming();
-
     })
 
 })
