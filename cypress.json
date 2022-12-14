@@ -2,5 +2,5 @@
   {
     "supportFile": false,
     "pageLoadTimeout": 140000,
-    "specPattern": "**.spec.ts"
+    "specPattern": "Tests/**/*.spec.ts"
   }
