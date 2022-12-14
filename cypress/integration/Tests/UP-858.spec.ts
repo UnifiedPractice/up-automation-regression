@@ -1,17 +1,13 @@
 import LoginPage from "../PageObject/login-page"
-import SideBarNavigate from "../PageObject/side-bar-menu"
-import PatientPortal from "../PageObject/patient-portal"
-import ClinicServices from "../PageObject/clinic-settings/clinic-services"
-import ClinicStaff from "../PageObject/clinic-settings/clinic-staff"
-import basePage from "../PageObject/base-page";
-import drawerModal from "../PageObject/drawer-modal";
+import PatientPortal from "../PageObject/patient-portal";
+import SideBarNavigate from "../PageObject/side-bar-menu";
+import ClinicServices from "../PageObject/clinic-settings/clinic-services";
+import ClinicStaff from "../PageObject/clinic-settings/clinic-staff";
 import DrawerModal from "../PageObject/drawer-modal";
-import patientPortal from "../PageObject/patient-portal";
-import BasePage from "../PageObject/base-page";
 import ClinicLocations from "../PageObject/clinic-settings/clinic-locations";
+import BasePage from "../PageObject/base-page";
 
-
-describe('Automation test for UP-860', () => {
+describe('Automation test for UP-858', () => {
     const login = new LoginPage();
     const pp = new PatientPortal() ;
     const navigate = new SideBarNavigate();
@@ -21,6 +17,7 @@ describe('Automation test for UP-860', () => {
     const clinicLocations = new ClinicLocations();
     const basePage = new BasePage();
 
+
     // For retain session and prevent logout during testing - it's a must have in all tests for prevent logout
     beforeEach(() => {
         Cypress.Cookies.preserveOnce('ASP.NET_SessionId', 'sessionid', 'chatToken')
@@ -29,25 +26,18 @@ describe('Automation test for UP-860', () => {
 
     //Start login process. It calls Patient Portal class from PatientPortal file and
     // for more easiness that class is attributed to login const
-    it("UP-860", function () {
+    it("UP-858", function () {
 
         login.goToStaging();
         login.loginAutomation();
+        //THE TEST IS FOLLOWING AN OLD FLOW STRUCTURE FOR CREATING A NEW ACCOUNT;
+        //THERE IS NO LONGER THE OPTION TO CHOOSE INSURANCE
 
         navigate.selectCS('Locations')
         clinicLocations.editLocation(0);
         basePage.setToOn('Clinic location is active?');
         basePage.setToOn('Allow Online Scheduling?');
         drawerModal.saveButton();
-
-        navigate.extendMenu()
-
-        navigate.selectCS('Clinic Staff')
-        clinicStaff.markUserActive('Automation Engineer')
-        clinicStaff.markUserActive('Automation Another')
-        clinicStaff.clickOnDetails('Automation Engineer')
-        clinicStaff.checkBoxSliderSetOn('#PractitionerInfo_AllowOnlineScheduling')
-        clinicStaff.saveButton();
 
         navigate.extendMenu()
 
@@ -62,16 +52,24 @@ describe('Automation test for UP-860', () => {
         drawerModal.saveButton();
         pp.shouldBeVisible('Clinic service saved')
 
-        navigate.extendMenu()
+        navigate.selectCS('Clinic Staff')
+        clinicStaff.clickOnDetails('Automation Engineer')
+        clinicStaff.checkBoxSliderSetOn('#PractitionerInfo_AllowOnlineScheduling')
+        clinicStaff.saveButton();
 
         navigate.selectPP();
         pp.setToOn('Allow patients to book appointments online')
-        pp.setToOn('Allow patient to cancel or reschedule an appointment online')
         pp.saveButton();
         pp.openPP();
         pp.checkLogin();
         pp.createAccountProceed();
-        pp.checkReschedule();
+
+
+        navigate.selectPP();
+        pp.openPP();
+        pp.checkLogin();
+        pp.proceedLogin();
+        pp.checkVisibilityUpcoming();
 
 
     })

@@ -45,7 +45,7 @@ class PatientPortal extends BasePage {
     public bookApointmentSelector : string = '.text-right';
     private uploadLiveChatSelector: string = '.rfu-file-upload-button';
     private secondSelectBoxSelector
-    private usernameLogin: string= 'automation3@email.com';
+    private usernameLogin: string= 'automation4@email.com';
     private passwordLogin: string = 'password';
 
     const randomName = uniqueNamesGenerator({
@@ -123,7 +123,7 @@ class PatientPortal extends BasePage {
     }
 
     proceedLogin() : void {
-        cy.get('.inp').eq(0).click().type('automation3@email.com');
+        cy.get('.inp').eq(0).click().type('automation4@email.com');
         cy.contains('Password').parent().click().type('password');
         cy.get(this.loginButtonSelector).click();
     }
@@ -410,7 +410,7 @@ class PatientPortal extends BasePage {
     }
 
     cancelAppointment(): void{
-        cy.contains('Cancel').eq(0).click({force:true});
+        cy.wait(1500).contains('Cancel').eq(0).click({force:true});
         cy.wait(500)
         cy.get('.textarea-modal').type('Reason for cancel text')
         cy.intercept('https://pp.api.staging.unifiedpractice.com/t/automation-cypress/Appointments/*/cancel').as('cancel')
@@ -560,7 +560,7 @@ class PatientPortal extends BasePage {
 
         //Emergency Contact Information
         this.completeField('Contact Name', 'Contact Name Test Field')
-        this.completeField('Email', 'automation3@email.com')
+        this.completeField('Email', 'automation4@email.com')
         this.completeField('Contact Phone Number', '+4012345678')
         this.completeField('Alternate Phone', '+4012345678')
         cy.get(this.secondArrowSelector).click();
@@ -698,7 +698,7 @@ class PatientPortal extends BasePage {
         cy.contains('Confirm New Password').next().click().type('passwordnew')
         cy.contains('Save').click();
 
-        cy.get('.inp').eq(0).click().type('automation3@email.com');
+        cy.get('.inp').eq(0).click().type('automation4@email.com');
         cy.contains('Password').parent().click().type('passwordnew');
         cy.get('.login-btn.mat-flat-button.mat-primary').click();
 
@@ -711,7 +711,7 @@ class PatientPortal extends BasePage {
         cy.contains('Confirm New Password').next().click().type('password')
         cy.contains('Save').click();
 
-        cy.get('.inp').eq(0).click().type('automation3@email.com');
+        cy.get('.inp').eq(0).click().type('automation4@email.com');
         cy.contains('Password').parent().click().type('password');
         cy.get('.login-btn.mat-flat-button.mat-primary').click();
 
@@ -720,7 +720,7 @@ class PatientPortal extends BasePage {
 
     forgotPassword() : void{
         cy.contains('Forgot password?').click();
-        cy.get(this.forgotFieldSelector).click().type('automation3@email.com')
+        cy.get(this.forgotFieldSelector).click().type('automation4@email.com')
         cy.contains('Send Me Instructions').click();
         cy.contains('Instructions Sent!').should('be.visible');
 
@@ -824,11 +824,11 @@ class PatientPortal extends BasePage {
         cy.contains('Forms').click({force:true})
         //cy.get(this.burgerMenuSelector).click({force:true});
 
-        cy.wait(300).get('.select-box').eq(1).within(() =>
+        cy.wait(2400).get('.select-box').eq(1).within(() =>
             cy.get('.edit-col').eq(2).click({force:true}))
 
         this.completeField('Contact Name', 'Contact Name Test Field')
-        this.completeField('Email', 'automation3@email.com')
+        this.completeField('Email', 'automation4@email.com')
         this.completeField('Contact Phone Number', '+4012345678')
         this.completeField('Alternate Phone', '+4012345678')
         cy.get(this.secondArrowSelector).click();
@@ -1019,7 +1019,7 @@ class PatientPortal extends BasePage {
         cy.wait('@forms')
         cy.contains('Forms').click({force:true})
         cy.get(this.burgerMenuSelector).click({force:true});
-        cy.wait(300).get('.select-box').eq(0).within(() =>
+        cy.wait(1100).get('.select-box').last().within(() =>
             cy.get('.edit-col').eq(7).click({force: true})
         )
         cy.contains('Complete Forms').click()
