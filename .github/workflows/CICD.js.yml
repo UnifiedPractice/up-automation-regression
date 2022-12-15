@@ -27,3 +27,8 @@ jobs:
           uses: cypress-io/github-action@v2
           with:
             browser: chrome
+        - name: Archive code coverage results
+          uses: actions/upload-artifact@v3
+          with:
+           name: code-coverage-report
+           path: /home/runner/work/up-automation-regression/up-automation-regression/cypress/
