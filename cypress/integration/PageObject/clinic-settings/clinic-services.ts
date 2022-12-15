@@ -39,7 +39,7 @@ checkBoxSliderSetOn(name: string): void {
 checkBoxSliderSetOff(name: string): void {
     cy.get(name).parent().then(($button) => {
         if ($button.hasClass('greenClass')) {
-            cy.get(name).parent().click({force:true});
+            cy.get(name).parent().wait(600).click({force:true});
         } 
     })
 }

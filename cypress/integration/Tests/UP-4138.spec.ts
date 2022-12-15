@@ -24,9 +24,9 @@ describe('Automation test for UP-4138', () => {
         navigate.extendMenu();
         navigate.selectPP();
 
-        // pp.setToOn('Allow patients to book appointments online');
-        // pp.setToOn('Chat for your patients available in Patient Portal')
-        // pp.saveButton();
+        pp.setToOn('Allow patients to book appointments online');
+        pp.setToOn('Chat for your patients available in Patient Portal')
+        pp.saveButton();
 
         pp.openPP();
         pp.checkLogin();

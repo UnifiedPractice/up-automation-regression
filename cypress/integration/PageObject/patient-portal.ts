@@ -213,12 +213,12 @@ class PatientPortal extends BasePage {
 
     bookNewAppointmentAutomationEngineer(): void {
         cy.contains('Upcoming Appointments').should('have.css', 'display', 'none');
-        cy.contains('Book Appointment').click({force:true});
+        cy.wait(300).contains('Book Appointment').click({force:true});
         this.checkLocationsNumber();
-        cy.contains('Automation with CCPE').click();
-        cy.contains('Automation Engineer').click();
+        cy.wait(300).contains('Automation with CCPE').click();
+        cy.wait(300).contains('Automation Engineer').click();
         this.checkAvailability();
-        cy.contains('Select an appointment').should('be.visible')
+        cy.wait(300).contains('Select an appointment').should('be.visible')
         cy.wait(500)
         cy.get(this.radioTabSelector).eq(Math.floor(Math.random() * this.radioTabSelector.length)).click({force:true})
         cy.contains('Confirm Appointment').click();
@@ -410,14 +410,15 @@ class PatientPortal extends BasePage {
     }
 
     cancelAppointment(): void{
-        cy.wait(1500).contains('Cancel').eq(0).click({force:true});
+        // cy.wait(1500).contains('Cancel').first().click({force:true});
+        cy.wait(1500).get('.cancel-icon').first().click({force:true});
         cy.wait(500)
         cy.get('.textarea-modal').type('Reason for cancel text')
         cy.intercept('https://pp.api.staging.unifiedpractice.com/t/automation-cypress/Appointments/*/cancel').as('cancel')
         cy.contains('Cancel Appointment').click()
         cy.wait('@cancel')
         cy.wait(500)
-        cy.contains('Cancel').should('not.be.visible')
+        //cy.contains('Cancel').should('not.be.visible')
     }
 
     cancelAppointmentUniversity(): void{
@@ -485,7 +486,7 @@ class PatientPortal extends BasePage {
         cy.wait(500)
         cy.get('a').eq(7).invoke('removeAttr', 'target').click()
         cy.get('a').eq(7).invoke('removeAttr', 'target').click()
-        cy.get('a').contains('Verify email').click()
+        cy.get('a').contains('Verify email').wait(800).click()
 
         //Complete all data for create a new account and go to dashboard
         this.completeField('First Name', 'Test First Name Field')
@@ -762,7 +763,8 @@ class PatientPortal extends BasePage {
         cy.contains('Forms').click({force:true})
         //cy.get(this.burgerMenuSelector).click({force:true});
 
-        cy.wait(300).get('.select-box').eq(1).within(() =>
+            cy.wait(3300)
+            cy.get('.select-box').eq(1).within(() =>
             cy.get('.edit-col').eq(0).click({force:true}))
 
         this.completeField('First Name', 'Automation ')
@@ -790,7 +792,8 @@ class PatientPortal extends BasePage {
         cy.contains('Forms').click({force:true})
         //cy.get(this.burgerMenuSelector).click({force:true});
 
-        cy.wait(300).get('.select-box').eq(1).within(() =>
+        cy.wait(3300)
+        cy.get('.select-box').eq(1).within(() =>
             cy.get('.edit-col').eq(1).click({force:true}))
 
         this.completeField('Street Address', 'Street Address Test Input')
@@ -903,7 +906,8 @@ class PatientPortal extends BasePage {
         cy.wait('@forms')
         cy.contains('Forms').click({force:true})
         //cy.get(this.burgerMenuSelector).click({force:true});
-        cy.wait(800).get('.select-box').eq(1).within(() =>
+        cy.wait(5300) //IDEAL TO IMPLEMENT AN INTERCEPT METHOD HERE
+            cy.get('.select-box').eq(1).within(() =>
             cy.get('.edit-col').eq(4).click({force:true}))
 
 
@@ -984,7 +988,8 @@ class PatientPortal extends BasePage {
         cy.contains('Forms').click({force:true})
         cy.get(this.burgerMenuSelector).click({force:true});
 
-        cy.wait(300).get('.select-box').eq(1).within(() =>
+        cy.wait(3500)
+        cy.get('.select-box').eq(1).within(() =>
             cy.get('.edit-col').eq(5).click({force:true}))
 
         cy.get('#switch-hadAccupunctureBefore').then(($ele) => {
@@ -1017,15 +1022,15 @@ class PatientPortal extends BasePage {
         cy.intercept('https://pp.api.staging.unifiedpractice.com/t/automation-cypress/Appointments?Direction=*').as('forms')
         cy.get(this.burgerMenuSelector).click({force:true});
         cy.wait('@forms')
-        cy.contains('Forms').click({force:true})
-        cy.get(this.burgerMenuSelector).click({force:true});
-        cy.wait(1100).get('.select-box').last().within(() =>
+        cy.wait(500).contains('Forms').click({force:true})
+       // cy.get(this.burgerMenuSelector).click();
+        cy.wait(3500).get('.select-box').last().within(() =>
             cy.get('.edit-col').eq(7).click({force: true})
         )
-        cy.contains('Complete Forms').click()
+        cy.contains('Complete Forms').click({force:true})
         this.completeField('New Input', 'Test Message for Screening')
-
-        this.checkSaveContinueVisibility()
+        cy.contains('Save & Continue').click()
+        //this.checkSaveContinueVisibility()
     }
 
     checkSaveContinueVisibility(): void {
@@ -1033,7 +1038,7 @@ class PatientPortal extends BasePage {
         cy.get('.pp-container').then($button => {
             if($button.text().includes('Save & Continue')) {
                 cy.intercept('https://pp.api.staging.unifiedpractice.com/t/automation-cypress/Onboarding/medicalforms/*').as('upcomingscreening')
-                cy.contains('Save & Continue').click()
+                cy.wait(300).contains('Save & Continue').click()
                     cy.wait('@upcomingscreening')
                     .then(() => this.checkSaveContinueVisibility())
             }
@@ -1066,9 +1071,9 @@ class PatientPortal extends BasePage {
     }
 
     openChatwithPractitioner(): void{
-        cy.wait(300).get(this.headerChatSelector).within(() =>
-            cy.get(this.iconSelector).click() )
-        cy.contains('Chat with your practitioner').click()
+        cy.wait(1200).get(this.headerChatSelector).within(() =>
+            cy.get(this.iconSelector).click())
+        cy.wait(500).contains('Chat with your practitioner').click()
     }
 
     checkMessageInEHR():void{
@@ -1080,7 +1085,7 @@ class PatientPortal extends BasePage {
     openChatwithFrontdesk(): void{
         cy.wait(300).get(this.headerChatSelector).within(() =>
             cy.get(this.iconSelector).click() )
-        cy.contains('Chat with front desk').click()
+        cy.wait(1000).contains('Chat with front desk').click()
     }
 
     sendMessageToPractitioner(): void{
