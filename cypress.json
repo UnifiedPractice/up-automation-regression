@@ -1,5 +1,6 @@
 
   {
-    "supportFile": "cypress/support/commands.ts",
-    "pageLoadTimeout": 140000
+    "supportFile": false,
+    "pageLoadTimeout": 140000,
+    "testFiles": "**/*.spec.ts"
   }
