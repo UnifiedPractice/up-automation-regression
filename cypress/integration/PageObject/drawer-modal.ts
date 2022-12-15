@@ -11,7 +11,7 @@ import BasePage from "./base-page";
 
 
     saveButton() : void {
-        cy.get(this.saveButtonSelector).click({force:true});
+        cy.get(this.saveButtonSelector).wait(500).click({force:true}).wait(500);
     }
     
     cancelButton() : void {

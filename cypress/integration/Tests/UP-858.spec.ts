@@ -37,7 +37,16 @@ describe('Automation test for UP-858', () => {
         clinicLocations.editLocation(0);
         basePage.setToOn('Clinic location is active?');
         basePage.setToOn('Allow Online Scheduling?');
-        drawerModal.saveButton();
+        drawerModal.saveButton()
+
+        navigate.extendMenu()
+
+        navigate.selectCS('Clinic Staff')
+        clinicStaff.markUserActive('Automation Engineer')
+        clinicStaff.markUserActive('Automation Another')
+        clinicStaff.clickOnDetails('Automation Engineer')
+        clinicStaff.checkBoxSliderSetOn('#PractitionerInfo_AllowOnlineScheduling')
+        clinicStaff.saveButton();
 
         navigate.extendMenu()
 

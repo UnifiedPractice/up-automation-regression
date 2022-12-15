@@ -65,7 +65,7 @@ describe('Automation test for UP-848', () => {
 
         navigate.selectCS('Locations')
         clinicLocations.editLocation(0);
-        basePage.setToOff('Clinic location is active?');
+        //basePage.setToOff('Clinic location is active?');
         basePage.setToOff('Allow Online Scheduling?');
         drawerModal.saveButton();
 

@@ -102,7 +102,7 @@ markUserInactive(name: string){
 }
 
 clickOnDetails(name : string){
-  cy.wait(800).get(this.staffSelector).contains(name).parent().contains('Details').click()
+  cy.wait(2800).get(this.staffSelector).contains(name).parent().contains('Details').click().wait(800)
 }
 
 }
