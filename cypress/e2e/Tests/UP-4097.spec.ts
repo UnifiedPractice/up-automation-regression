@@ -27,8 +27,8 @@ describe('Automation test for UP-4097', () => {
         login.loginAutomation();
 
         navigate.extendMenu();
-        navigate.selectPP();
 
+        navigate.selectPP();
         pp.setToOn('Allow patients to book appointments online');
         pp.saveButton();
 

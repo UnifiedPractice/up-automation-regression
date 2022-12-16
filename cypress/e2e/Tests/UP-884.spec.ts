@@ -25,11 +25,10 @@ describe('Automation test for UP-884', () => {
     it("UP-884", function () {
 
         login.goToStaging();
-        login.loginAutomation();
+        login.loginAutomation()
 
         navigate.extendMenu()
 
-        navigate.extendMenu()
         navigate.selectCS('Clinic Staff')
         clinicStaff.clickOnDetails('Automation Engineer')
         clinicStaff.checkBoxSliderSetOn('#PractitionerInfo_AllowOnlineScheduling')

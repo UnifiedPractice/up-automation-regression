@@ -38,6 +38,7 @@ describe('Automation test for UP-904', () => {
 
         //Check for logout from PP to avoid error
         navigate.extendMenu();
+
         navigate.selectPP()
         pp.setToOn('Allow patients to book appointments online')
         pp.setToOn('Allow patient to cancel or reschedule an appointment online')

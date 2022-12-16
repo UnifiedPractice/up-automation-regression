@@ -32,6 +32,7 @@ describe('Automation test for UP-858', () => {
         login.loginAutomation();
         //THE TEST IS FOLLOWING AN OLD FLOW STRUCTURE FOR CREATING A NEW ACCOUNT;
         //THERE IS NO LONGER THE OPTION TO CHOOSE INSURANCE
+        navigate.extendMenu();
 
         navigate.selectCS('Locations')
         clinicLocations.editLocation(0);

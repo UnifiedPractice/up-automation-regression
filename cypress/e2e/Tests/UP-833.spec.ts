@@ -23,6 +23,8 @@ describe('Automation test for UP-833', () => {
         login.goToStaging();
         login.loginAutomation();
 
+        navigate.extendMenu();
+
         navigate.selectPP();
 
         pp.setToOn('Allow patients to book appointments online');

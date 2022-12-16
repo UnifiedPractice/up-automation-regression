@@ -34,6 +34,8 @@ describe('Automation test for UP-896', () => {
         login.goToStaging();
         login.loginAutomation();
 
+        navigate.extendMenu();
+
         navigate.selectCS('Clinic Staff')
         clinicStaff.clickOnDetails('Automation Engineer')
         clinicStaff.checkBoxSliderSetOn('#PractitionerInfo_AllowOnlineScheduling')

@@ -25,6 +25,8 @@ describe('Automation test for UP-815', () => {
         login.goToStaging();
         login.loginAutomation();
 
+        navigate.extendMenu();
+
         navigate.selectCS('Clinic Services');
         clinicServices.chooseService('Automation with CCPE');
         clinicServices.checkBoxSliderSetOff('#Service_IsActive');

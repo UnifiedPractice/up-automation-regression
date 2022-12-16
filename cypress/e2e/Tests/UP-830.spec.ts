@@ -25,6 +25,8 @@ describe('Automation test for UP-830', () => {
         login.goToStaging();
         login.loginAutomation();
 
+        navigate.extendMenu();
+
         navigate.selectCS('Clinic Staff');
         clinicStaff.markUserActive('Automation')
         clinicStaff.clickOnDetails('Automation')

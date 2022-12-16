@@ -22,6 +22,7 @@ describe('Automation test for UP-4131', () => {
         login.loginAutomation();
 
         navigate.extendMenu();
+
         navigate.selectPP();
 
         pp.setToOn('Allow patients to book appointments online');

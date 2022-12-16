@@ -27,6 +27,8 @@ describe('Automation test for UP-905', () => {
         login.goToStaging();
         login.loginAutomation();
 
+        navigate.extendMenu();
+
         navigate.selectCS('Locations');
         clinicLocations.chooseAutomation();
 
