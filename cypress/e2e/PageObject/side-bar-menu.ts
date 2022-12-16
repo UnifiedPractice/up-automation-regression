@@ -7,13 +7,13 @@ class SideBarNavigate  {
     public arrowSelector: string = '.hamburger-arrow-left';
 
     selectCalendar() : void {
-        cy.get(this.level1Selector).eq(1).click();
+        cy.get(this.level1Selector).eq(1).click({force:true});
     }
 
     extendMenu() : void{
         cy.get('.navbar-header-left').then(($el) => {
             if ($el.hasClass('small')) {
-                cy.get(this.arrowSelector).click()
+                cy.get(this.arrowSelector).click({force:true})
             }
         })
     }
@@ -36,7 +36,7 @@ class SideBarNavigate  {
 
     selectCS(name: string) : void {
         
-        cy.get(this.level1Selector).eq(10).click();
+        cy.get(this.level1Selector).eq(10).click({force:true});
         cy.get(this.level2Selector).contains(name).click({force:true});
 
     }
