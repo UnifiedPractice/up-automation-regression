@@ -44,6 +44,8 @@ describe('Automation test for UP-837', () => {
         clinicStaff.checkBoxSliderSetOn('#PractitionerInfo_AutoAcceptAppointments')
         clinicStaff.saveButton();
 
+        navigate.extendMenu();
+
         navigate.selectCS('Locations');
         clinicLocations.chooseAutomation();
         basePage.setToOn('Clinic location is active?');
@@ -64,7 +66,7 @@ describe('Automation test for UP-837', () => {
 
         pp.checkVisibilityUpcoming();
 
-        pp.shouldBeVisible('Reschedule');
+        pp.checkRescheduleVisibility();
     })
 
 })

@@ -39,6 +39,15 @@ describe('Automation test for UP-859', () => {
 
         navigate.extendMenu()
 
+        navigate.selectCS('Clinic Staff')
+        clinicStaff.markUserActive('Automation Engineer')
+        clinicStaff.markUserActive('Automation Another')
+        clinicStaff.clickOnDetails('Automation Engineer')
+        clinicStaff.checkBoxSliderSetOn('#PractitionerInfo_AllowOnlineScheduling')
+        clinicStaff.saveButton();
+
+        navigate.extendMenu()
+
         navigate.selectCS('Clinic Services')
         clinicServices.chooseService('Automation with CCPE')
         clinicServices.checkBoxSliderSetOn('#Service_IsActive')

@@ -73,15 +73,6 @@ describe('Automation test for UP-860', () => {
         pp.createAccountProceed();
         pp.checkReschedule();
 
-        // navigate.selectPP();
-        // pp.openPP();
-        // pp.checkLogin();
-        // pp.proceedLogin();
-        // pp.checkVisibilityUpcoming();
-        // pp.checkBookSimilarWithNoPractitionerAvailable();
-
-        //Cleaning
-
 
     })
 

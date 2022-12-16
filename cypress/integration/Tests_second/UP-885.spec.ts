@@ -4,7 +4,7 @@ import PatientPortal from "../PageObject/patient-portal"
 import PatientList from "../PageObject/patient-list";
 import OnboardingForms from "../PageObject/clinic-settings/clinic-onboarding-forms";
 
-describe('Automation test for UP-886', () => {
+describe('Automation test for UP-885', () => {
     const login = new LoginPage();
     const pp = new PatientPortal() ;
     const navigate = new SideBarNavigate();
@@ -19,7 +19,7 @@ describe('Automation test for UP-886', () => {
 
     //Start login process. It calls Patient Portal class from PatientPortal file and
     // for more easiness that class is attributed to login const
-    it("UP-886", function () {
+    it("UP-885", function () {
 
         login.goToStaging();
         login.loginAutomation();
@@ -27,15 +27,15 @@ describe('Automation test for UP-886', () => {
         navigate.extendMenu()
 
         navigate.selectCS('Onboarding Forms');
-        onboardingForms.changeNewPatientScreeningForms();
+        onboardingForms.changeExistingPatientScreeningForms();
 
         navigate.extendMenu();
 
         navigate.selectPP();
         pp.openPP();
         pp.checkLogin();
-        pp.createAccountProceed()
-        pp.bookNewAppointmentASAP()
+        pp.proceedLogin();
+        pp.bookNewAppointmentASAPAutomationWithCCPE()
         pp.selectCompleteFormsAndCompleteScreeningForms()
 
         //Cleaning

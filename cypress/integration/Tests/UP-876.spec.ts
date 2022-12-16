@@ -51,7 +51,6 @@ describe('Automation test for UP-876', () => {
         navigate.selectAllClinicPatients();
         patientList.searchPatient('Automation Engineer')
         patientList.goToPersonalTab()
-        patientList.checkVisibilityPersonalDetails('Paracetamol'+getDayMonthHour)
 
     })
 
