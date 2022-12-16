@@ -44,6 +44,15 @@ describe('Automation test for UP-855', () => {
 
         navigate.extendMenu()
 
+        navigate.selectCS('Clinic Staff')
+        clinicStaff.markUserActive('Automation Engineer')
+        clinicStaff.markUserActive('Automation Another')
+        clinicStaff.clickOnDetails('Automation Engineer')
+        clinicStaff.checkBoxSliderSetOn('#PractitionerInfo_AllowOnlineScheduling')
+        clinicStaff.saveButton();
+
+        navigate.extendMenu()
+
         navigate.selectCS('Clinic Services')
         clinicServices.chooseService('Automation with CCPE')
         clinicServices.checkBoxSliderSetOn('#Service_IsActive')
@@ -55,10 +64,6 @@ describe('Automation test for UP-855', () => {
         drawerModal.saveButton();
         pp.shouldBeVisible('Clinic service saved')
 
-        navigate.selectCS('Clinic Staff')
-        clinicStaff.clickOnDetails('Automation Engineer')
-        clinicStaff.checkBoxSliderSetOn('#PractitionerInfo_AllowOnlineScheduling')
-        clinicStaff.saveButton();
 
         navigate.selectPP();
         pp.setToOn('Allow patients to book appointments online')
@@ -67,12 +72,6 @@ describe('Automation test for UP-855', () => {
         pp.checkLogin();
         pp.createAccountProceed();
 
-
-        navigate.selectPP();
-        pp.openPP();
-        pp.checkLogin();
-        pp.proceedLogin();
-        pp.checkVisibilityUpcoming();
 
 
 

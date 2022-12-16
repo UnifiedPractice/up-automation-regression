@@ -39,6 +39,16 @@ describe('Automation test for UP-857', () => {
         basePage.setToOn('Allow Online Scheduling?');
         drawerModal.saveButton();
 
+
+        navigate.extendMenu()
+
+        navigate.selectCS('Clinic Staff')
+        clinicStaff.markUserActive('Automation Engineer')
+        clinicStaff.markUserActive('Automation Another')
+        clinicStaff.clickOnDetails('Automation Engineer')
+        clinicStaff.checkBoxSliderSetOn('#PractitionerInfo_AllowOnlineScheduling')
+        clinicStaff.saveButton();
+
         navigate.extendMenu()
 
         navigate.selectCS('Clinic Services')
@@ -64,12 +74,6 @@ describe('Automation test for UP-857', () => {
         pp.checkLogin();
         pp.createAccountProceed();
 
-
-        navigate.selectPP();
-        pp.openPP();
-        pp.checkLogin();
-        pp.proceedLogin();
-        pp.checkVisibilityUpcoming();
 
     })
 

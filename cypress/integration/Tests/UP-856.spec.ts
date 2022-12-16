@@ -41,6 +41,15 @@ describe('Automation test for UP-856', () => {
 
         navigate.extendMenu()
 
+        navigate.selectCS('Clinic Staff')
+        clinicStaff.markUserActive('Automation Engineer')
+        clinicStaff.markUserActive('Automation Another')
+        clinicStaff.clickOnDetails('Automation Engineer')
+        clinicStaff.checkBoxSliderSetOn('#PractitionerInfo_AllowOnlineScheduling')
+        clinicStaff.saveButton();
+
+        navigate.extendMenu()
+
         navigate.selectCS('Clinic Services')
         clinicServices.chooseService('Automation with CCPE')
         clinicServices.checkBoxSliderSetOn('#Service_IsActive')
@@ -63,13 +72,6 @@ describe('Automation test for UP-856', () => {
         pp.openPP();
         pp.checkLogin();
         pp.createAccountProceed();
-
-
-        navigate.selectPP();
-        pp.openPP();
-        pp.checkLogin();
-        pp.proceedLogin();
-        pp.checkVisibilityUpcoming();
 
     })
 
