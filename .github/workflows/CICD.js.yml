@@ -12,7 +12,7 @@ on:
 jobs:
   
   run-automation-regression-tests:
-    runs-on: ubuntu-latest
+    runs-on: windows-latest
     steps:
         - run: git config --global url."https://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@github.com/".insteadOf https://github.com/
         - name: Checkout
@@ -27,9 +27,4 @@ jobs:
           uses: cypress-io/github-action@v2
           with:
             browser: chrome
-        - uses: actions/upload-artifact@v3
-          with:
-           name: my-artifact
-           path: |
-                 /home/runner/work/up-automation-regression/up-automation-regression/cypress/videos
-                 /home/runner/work/up-automation-regression/up-automation-regression/cypress/screenshots
+        
