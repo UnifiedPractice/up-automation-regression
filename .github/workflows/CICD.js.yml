@@ -27,4 +27,9 @@ jobs:
           uses: cypress-io/github-action@v2
           with:
             browser: chrome
-        
+        - #uses: actions/upload-artifact@v3
+          with:
+           name: my-artifacts
+           path: |
+                  D:\a\up-automation-regression\up-automation-regression\cypress\videos
+                  D:\a\up-automation-regression\up-automation-regression\cypress\screenshots
