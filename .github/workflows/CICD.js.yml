@@ -30,6 +30,6 @@ jobs:
         - #uses: actions/upload-artifact@v3
           with:
            name: my-artifacts
-           path: |
+           path: 
                   D:\a\up-automation-regression\up-automation-regression\cypress\videos
                   D:\a\up-automation-regression\up-automation-regression\cypress\screenshots
