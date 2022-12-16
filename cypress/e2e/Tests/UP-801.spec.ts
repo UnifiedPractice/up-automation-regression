@@ -28,6 +28,7 @@ describe('Automation test for UP-801', () => {
         login.goToStaging();
         login.loginAutomation();
 
+        navigate.extendMenu();
         navigate.selectCS('Locations');
         clinicLocations.chooseAutomation();
 
