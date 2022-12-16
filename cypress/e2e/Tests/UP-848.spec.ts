@@ -34,6 +34,8 @@ describe('Automation test for UP-848', () => {
         login.goToStaging();
         login.loginAutomation();
 
+        navigate.extendMenu();
+
         navigate.selectCS('Locations')
         clinicLocations.editLocation(0);
         basePage.setToOn('Clinic location is active?');

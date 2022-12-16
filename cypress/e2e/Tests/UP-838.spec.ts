@@ -27,6 +27,8 @@ describe('Automation test for UP-838', () => {
         login.goToStaging();
         login.loginAutomation();
 
+        navigate.extendMenu();
+
         navigate.selectCS('Clinic Staff');
         clinicStaff.markUserActive('Automation Engineer')
         clinicStaff.clickOnDetails('Automation Tests');

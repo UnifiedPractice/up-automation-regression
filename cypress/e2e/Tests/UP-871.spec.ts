@@ -21,6 +21,8 @@ describe('Automation test for UP-871', () => {
         login.goToStaging();
         login.loginAutomation();
 
+        navigate.extendMenu();
+
         navigate.extendMenu()
         navigate.selectPP();
         pp.openPP();

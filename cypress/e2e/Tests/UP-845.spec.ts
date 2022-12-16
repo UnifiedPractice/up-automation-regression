@@ -29,6 +29,8 @@ describe('Automation test for UP-845', () => {
         login.goToStaging();
         login.loginAutomation();
 
+        navigate.extendMenu();
+
         navigate.selectCS('Clinic Staff');
         clinicStaff.clickOnDetails('Automation Tests');
         clinicStaff.checkBoxSliderSetOn('#PractitionerInfo_AllowOnlineScheduling')

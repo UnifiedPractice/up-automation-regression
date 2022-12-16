@@ -22,8 +22,8 @@ describe('Automation test for UP-900', () => {
         login.loginAutomationUniversity();
 
         navigate.extendMenu();
-        navigate.selectPP();
 
+        navigate.selectPP();
         pp.setToOn('Allow patients to book appointments online');
         pp.saveButton();
 

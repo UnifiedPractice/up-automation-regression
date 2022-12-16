@@ -31,6 +31,8 @@ describe('Automation test for UP-832', () => {
         login.goToStaging();
         login.loginAutomation();
 
+        navigate.extendMenu();
+
         navigate.selectCS('Locations');
         clinicLocations.chooseAutomation();
         basePage.setToOn('Clinic location is active?');

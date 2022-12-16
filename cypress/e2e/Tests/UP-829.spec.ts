@@ -23,6 +23,8 @@ describe('Automation test for UP-829', () => {
         login.goToStaging();
         login.loginAutomation();
 
+        navigate.extendMenu();
+
         navigate.selectCS('Clinic Staff');
         clinicStaff.markUserInactive('Automation Engineer')
         

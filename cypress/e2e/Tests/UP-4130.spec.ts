@@ -22,8 +22,8 @@ describe('Automation test for UP-4130', () => {
         login.loginAutomation();
 
         navigate.extendMenu();
-        navigate.selectPP();
 
+        navigate.selectPP();
         pp.setToOn('Allow patients to book appointments online');
         pp.setToOn('Chat for your patients available in Patient Portal')
         pp.saveButton();

@@ -25,6 +25,8 @@ describe('Automation test for UP-827', () => {
         login.goToStaging();
         login.loginAutomation();
 
+        navigate.extendMenu();
+
         navigate.selectCS('Clinic Services');
         clinicServices.chooseService('Automation with CCPE');
         drawerModal.clickOnDropdownUnmarked('Automation Engineer')

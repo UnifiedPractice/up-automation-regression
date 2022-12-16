@@ -22,8 +22,8 @@ describe('Automation test for UP-901', () => {
         login.loginAutomationUniversity();
 
         navigate.extendMenu();
-        navigate.selectPP();
 
+        navigate.selectPP();
         pp.setToOn('Allow patients to book appointments online');
         pp.setToOn('Allow patient to cancel or reschedule an appointment online');
         pp.saveButton();

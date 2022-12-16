@@ -22,6 +22,8 @@ describe('Automation test for UP-810', () => {
         login.goToStaging();
         login.loginAutomation();
 
+        navigate.extendMenu();
+
         navigate.selectCS('Locations');
         clinicLocations.remainOneActive()
 
