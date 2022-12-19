@@ -1,8 +1,8 @@
 /// <reference types="cypress" />
 import { format } from 'date-fns'
-import PatientPortal from "./patient-portal";
+import SideBarNavigate from "../PageObject/side-bar-menu"
 export const getDayMonthHour: string = format(new Date(), "MMMMddhmm")
-//const pp = new PatientPortal() ;
+const navigate = new SideBarNavigate();
 
 
 class PatientList {
@@ -42,6 +42,27 @@ class PatientList {
         this.completeField('Last Name','Engineer'+getDayMonthHour);
         cy.get(this.emailField).click().clear().type('engineer'+getDayMonthHour+'@email.com');
         cy.contains('Save').click()
+    }
+
+    addNewPatientforMatchingError(): void {
+        cy.intercept('https://staging.unifiedpractice.com/Public/PatientManagement/AddPatient?_=*').as('patient');
+        cy.contains('Add Patient').click();
+        cy.wait('@patient')
+        this.completeField('First Name','Automation'+getDayMonthHour);
+        this.completeField('Last Name','Engineer'+getDayMonthHour);
+        cy.get(this.emailField).click().clear().type('engineer'+getDayMonthHour+'@email.com');
+        cy.contains('Save').click();
+
+        navigate.selectAllClinicPatients();
+
+        cy.wait(2500);
+        cy.contains('Add Patient').click();
+        cy.wait(1500);
+        this.completeField('First Name','Automation'+getDayMonthHour+'1');
+        this.completeField('Last Name','Engineer'+getDayMonthHour+'1');
+        cy.get(this.emailField).click().clear().type('engineer'+getDayMonthHour+'@email.com');
+        cy.contains('Save').click()
+
     }
 
     sendInviteForPP(): void {

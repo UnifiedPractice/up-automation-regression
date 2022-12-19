@@ -1,6 +1,7 @@
 import LoginPage from "../PageObject/login-page"
 import SideBarNavigate from "../PageObject/side-bar-menu"
 import PatientPortal from "../PageObject/patient-portal"
+import patientList from "../PageObject/patient-list";
 
 
 describe('Automation test for UP-4132', () => {

@@ -165,7 +165,27 @@ class PatientPortal extends BasePage {
             })
     }
 
-        checkAvailability(): void {
+    proceedForMatchingError(): void {
+        cy.contains('existing patient').click();
+        cy.contains('Automation with CCPE').click();
+        this.checkPractitionersNumber()
+        this.checkAvailability();
+        cy.contains('Select an appointment').should('be.visible')
+        cy.wait(700)
+        cy.get(this.radioTabSelector).eq(0).click({force:true})
+        cy.contains('Create Account').click();
+        cy.get('.email-input').click().type('engineer'+getDayMonthHour+'@email.com' );
+        cy.get('.mat-button-wrapper').contains('Create Account').click();
+
+        //Go to staging emails
+        cy.visit('https://staging.unifiedpractice.com/dirlisting/d379136412c1476d9397f9ee3b606448/notifications')
+        cy.contains('emails').invoke('removeAttr', 'target').click();
+        cy.wait(500)
+        cy.get('a').eq(7).invoke('removeAttr', 'target').click()
+        cy.get('a').eq(7).invoke('removeAttr', 'target').click()
+        cy.get('div').contains('the data entered does').should('be.visible')
+    }
+    checkAvailability(): void {
            this.interceptAndWaitForAvailabilities();
             cy.get(this.boxSelector).then($box => {
                 const noAvailability = $box.text().includes('No time slots available. Please change interval or select another practitioner.')
