@@ -31,4 +31,4 @@ jobs:
           uses: actions/upload-artifact@v2
           with:
             name: mp4-files
-            path: ./mp4_files
+            path: mp4_files
