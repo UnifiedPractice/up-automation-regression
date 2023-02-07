@@ -24,11 +24,14 @@ jobs:
           with:
             node-version: '14.15'
         - name: Cypress run
-          uses: cypress-io/github-action@v2
+          uses: cypress-io/github-action@v4.1.0
           with:
             browser: chrome
+
         - name: Upload MP4 files
           uses: actions/upload-artifact@v2
           with:
             name: mp4-files
             path: mp4_files
+
+
