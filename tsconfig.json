@@ -11,4 +11,9 @@
       "../../node_modules/cypress",
       "cypress/*/*.ts"
     ]
-  }
+  },
+      {
+  "videoRecording": true,
+  "videosFolder": "cypress/videos"
+}
+
