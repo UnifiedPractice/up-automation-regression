@@ -1,5 +1,10 @@
 import { defineConfig } from 'cypress'
 
+module.exports = {
+  projectId: "knaaie",
+  // The rest of the Cypress config options go here...
+}
+
 export default defineConfig({
   pageLoadTimeout: 140000,
   e2e: {
