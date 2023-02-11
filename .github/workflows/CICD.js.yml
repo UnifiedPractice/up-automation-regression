@@ -19,7 +19,7 @@ jobs:
 
     - name: Run cypress tests
       run: |
-        npx cypress run --record --key <your_cypress_record_key>
+        'npx cypress run --record --key <your_cypress_record_key>'
 
     - name: Upload video after each test
       run: |
