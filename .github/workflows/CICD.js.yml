@@ -27,3 +27,10 @@ jobs:
           uses: cypress-io/github-action@v2
           with:
             browser: chrome
+        - name: Upload videos
+          uses: actions/upload-artifact@v2
+          with:
+          name: mp4-videos-${{ env.GITHUB_RUN_ID }}
+          path: cypress/videos
+          target_path: mp4-videos-${{ env.GITHUB_RUN_ID }}
+
