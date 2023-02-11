@@ -3,8 +3,10 @@
 
 //const axios = require('axios').default;
 
-module.exports = (on, config) => {
+const { onFailure } = require('cypress-failed-log/src/on-failure')
 
+module.exports = (on, config) => {
+    onFailure(on, config)
 }
 
 
