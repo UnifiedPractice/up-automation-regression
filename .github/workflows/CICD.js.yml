@@ -1,34 +1,25 @@
-name: Cypress tests
+name: Cypress e2e tests
 
 on:
   push:
     branches:
       - main
-  pull_request:
-    branches:
-      - main
-
-env:
-  CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
 
 jobs:
-  cypress:
+  cypress-e2e-tests:
     runs-on: ubuntu-latest
 
     steps:
     - name: Checkout code
       uses: actions/checkout@v2
 
-    - name: Install dependencies
-      run: |
-        npm ci
-
-    - name: Save video after each test
-      run: |
-        CYPRESS_RECORD_KEY=${{ env.CYPRESS_RECORD_KEY }} npx cypress run
-
-    - name: Upload videos
-      uses: actions/upload-artifact@v2
+    - name: Setup Node.js
+      uses: actions/setup-node@v2
       with:
-        name: cypress-videos
-        path: cypress/videos
+        node-version: 14
+
+    - name: Install dependencies
+      run: npm ci
+
+    - name: Run cypress e2e tests
+      run: npx cypress run --browser chrome --config testFiles='**/*.e2e.js'
