@@ -11,7 +11,7 @@ class SideBarNavigate  {
     }
 
     extendMenu() : void{
-        cy.get('.navbar-header-left').then(($el) => {
+        cy.wait(3000).get('.navbar-header-left').then(($el) => {
             if ($el.hasClass('small')) {
                 cy.get(this.arrowSelector).click({force:true})
             }
@@ -30,7 +30,7 @@ class SideBarNavigate  {
 
     selectPP(): void {
        // cy.intercept('https://data.pendo.io/data/ptm.gif/',{statusCode: 200, fixture: 'avoid'}).as('url')
-        cy.get(this.level1Selector).eq(9).click()
+        cy.get(this.level1Selector).eq(9).click({force:true})
         cy.wait(2000)
     }
 

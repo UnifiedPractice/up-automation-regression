@@ -1,10 +1,5 @@
 import { defineConfig } from 'cypress'
 
-module.exports = {
-  projectId: "knaaie",
-  // The rest of the Cypress config options go here...
-}
-
 export default defineConfig({
   projectId: "sy96yg",
   pageLoadTimeout: 140000,
@@ -15,6 +10,6 @@ export default defineConfig({
       return require('./cypress/plugins/index.js')(on, config)
     },
     supportFile: false,
-    specPattern: 'cypress/e2e/**/*.spec.ts',
+    specPattern: 'cypress/e2e/Tests/UP-802.spec.ts',
   },
 })

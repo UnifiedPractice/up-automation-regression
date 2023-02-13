@@ -43,6 +43,15 @@ describe('Automation test for UP-802', () => {
         pp.checkLogin();
         pp.selectRadio(1);
         pp.shouldNotBeVisible ('Automation Location')
+
+        //Cleaning
+        pp.backtoEHR();
+        navigate.extendMenu();
+        navigate.selectCS('Locations');
+        clinicLocations.chooseAutomation();
+
+        basePage.setToOn('Clinic location is active?');
+        drawerModal.saveButton();
       
     })
 

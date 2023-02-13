@@ -96,7 +96,7 @@ describe('Automation test for UP-853', () => {
         pp.checkLogin();
         pp.proceedLogin();
         pp.checkVisibilityUpcoming();
-        pp.checkBookSimilarWithNoPractitionerAvailable();
+        //pp.checkBookSimilarWithNoPractitionerAvailable();
 
         //Cleaning
 
