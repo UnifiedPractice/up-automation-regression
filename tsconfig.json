@@ -6,7 +6,6 @@
     "types": ["cypress", "cypress-wait-until"],
     "baseUrl": ".",
 
-
   },
   "include": [
     "../../node_modules/cypress",
