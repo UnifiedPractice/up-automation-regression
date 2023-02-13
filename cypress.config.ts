@@ -1,6 +1,7 @@
 import { defineConfig } from 'cypress'
 
 export default defineConfig({
+  projectId: "sy96yg",
   pageLoadTimeout: 140000,
   e2e: {
     // We've imported your old cypress plugins here.
