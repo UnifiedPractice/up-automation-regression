@@ -30,7 +30,7 @@ class SideBarNavigate  {
 
     selectPP(): void {
        // cy.intercept('https://data.pendo.io/data/ptm.gif/',{statusCode: 200, fixture: 'avoid'}).as('url')
-        cy.get(this.level1Selector).eq(9).click({force:true})
+        cy.get(this.level1Selector).eq(9).click()
         cy.wait(2000)
     }
 

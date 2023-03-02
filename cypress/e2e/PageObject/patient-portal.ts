@@ -1080,7 +1080,7 @@ class PatientPortal extends BasePage {
     }
 
     openChat(): void{
-        cy.get(this.burgerMenuSelector).click().wait(1500);
+        cy.get(this.burgerMenuSelector).click().wait(2500);
         cy.wait(300).get('.mat-menu-content').within(() =>
             cy.contains('Chat').click().wait(1500) )
     }

@@ -10,6 +10,6 @@ export default defineConfig({
       return require('./cypress/plugins/index.js')(on, config)
     },
     supportFile: false,
-    specPattern: 'cypress/e2e/Tests/UP-802.spec.ts',
+    specPattern: 'cypress/e2e/Tests/*.spec.ts',
   },
 })
