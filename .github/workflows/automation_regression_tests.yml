@@ -18,6 +18,7 @@ jobs:
           browser: chrome
 
       - name: "Upload Cypress videos"
+        if: always()
         uses: actions/upload-artifact@v3
         with:
           name: cypress-videos
@@ -25,6 +26,7 @@ jobs:
           if-no-files-found: ignore
 
       - name: "Upload Cypress screenshots"
+        if: always()
         uses: actions/upload-artifact@v3
         with:
           name: cypress-screenshots
