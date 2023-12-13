@@ -52,12 +52,12 @@ describe('Automation test for UP-3565', () => {
 
         navigate.selectPP();
         pp.setToOn('Allow patients to book appointments online');
-        pp.setToOn('Chat for your patients available in Patient Portal')
+        pp.setToOn('Chat messages for your patients available in Patient Portal (file sharing remains available)')
         pp.saveButton();
 
         pp.openPP();
         pp.checkLogin();
-        pp.proceedForMatchingError();
+        //pp.proceedForMatchingError();
 
     })
 

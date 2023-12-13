@@ -304,8 +304,6 @@ class PatientPortal extends BasePage {
         })
     }
 
-
-
     textInBox(parent:string, value: string): void {
         cy.contains('div', parent)
             .parent() //Moves to parent div row
