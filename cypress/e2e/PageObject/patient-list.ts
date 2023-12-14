@@ -28,7 +28,7 @@ class PatientList {
         cy.get('#patientHint').click().type(name)
         cy.wait('@waiting')
         cy.wait(400)
-        cy.get('.patient-box').eq(0).click()
+        cy.get('.patient-box').eq(0).click().wait(1500)
         // cy.intercept('https://staging.unifiedpractice.com/Public/PatientManagement/PatientFileAppointmentsTab?patientId=*').as('visible')
         // cy.contains(name).should('be.visible')
         // cy.wait('@visible')

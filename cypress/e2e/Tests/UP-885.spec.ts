@@ -45,7 +45,6 @@ describe('Automation test for UP-885', () => {
         navigate.selectCS('Onboarding Forms');
         onboardingForms.visibilityForAllScreeningForms();
 
-
     })
 
 })

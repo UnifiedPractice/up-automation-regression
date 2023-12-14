@@ -57,7 +57,7 @@ class PatientPortal extends BasePage {
 
     openPP(): void {
         cy.intercept(`${FINAL_API_STAGING_PP()}`).as('ppOrganization');
-        cy.contains('https://pp.staging.unifiedpractice.com/automation').should('be.visible').get('.label-pp-url').eq(1).invoke('removeAttr', 'target').click()
+        cy.contains('https://pp.staging.unifiedpractice.com/automation-cypress').should('be.visible').get('.label-pp-url').eq(1).invoke('removeAttr', 'target').click()
         cy.wait(2000)
         cy.wait('@ppOrganization');
         //It is desired to eliminate this wait, but sometimes in tests the intercept is not enough
@@ -308,7 +308,7 @@ class PatientPortal extends BasePage {
         cy.contains('div', parent)
             .parent() //Moves to parent div row
             .within(() => { //scopes the commands within the above div row
-                cy.get('.form-control').click().clear().type(value);
+                cy.get('.form-control').click().type('{selectall}{backspace}').type(value);
             })
     }
 
@@ -421,7 +421,7 @@ class PatientPortal extends BasePage {
         cy.contains('Reschedule').eq(0).click();
         cy.wait(900)
         cy.get(this.radioTabSelector).eq(0).click({force:true})
-        cy.wait(500)
+        cy.wait(1900)
         cy.contains('Confirm Appointment').click();
         cy.contains('Your appointment was successfully rescheduled').should('be.visible');
         cy.contains('Dashboard').click()
@@ -493,9 +493,9 @@ class PatientPortal extends BasePage {
         cy.contains('Select an appointment').should('be.visible')
         cy.wait(700)
         cy.get(this.radioTabSelector).eq(0).click({force:true})
-        cy.contains('Create Account').click();
-        cy.get('.email-input').click().type('test' + (Math.floor(Math.random() * 1000)) + '@test.com' );
-        cy.get('.mat-button-wrapper').contains('Create Account').click();
+        cy.wait(1500).contains('Create Account').click();
+        cy.wait(1500).get('.email-input').click().type('test' + (Math.floor(Math.random() * 1000)) + '@test.com' );
+        cy.get('.mat-button-wrapper').contains('Create Account').click().wait(1500);
 
         //Go to staging emails
         cy.visit('https://staging.unifiedpractice.com/dirlisting/d379136412c1476d9397f9ee3b606448/notifications')
