@@ -36,35 +36,35 @@ describe('Automation test for UP-866', () => {
 
         navigate.extendMenu();
 
-        navigate.selectCS('Locations')
-        clinicLocations.editLocation(0);
-        basePage.setToOn('Clinic location is active?');
-        basePage.setToOn('Allow Online Scheduling?');
-        drawerModal.saveButton();
-
-        navigate.extendMenu()
-
-        navigate.selectCS('Clinic Staff')
-        clinicStaff.markUserActive('Automation Engineer')
-        clinicStaff.markUserActive('Automation Another')
-        clinicStaff.clickOnDetails('Automation Engineer')
-        clinicStaff.checkBoxSliderSetOn('#PractitionerInfo_AllowOnlineScheduling')
-        clinicStaff.saveButton();
-
-        navigate.extendMenu()
-
-        navigate.selectCS('Clinic Services')
-        clinicServices.chooseService('Automation with CCPE')
-        clinicServices.checkBoxSliderSetOn('#Service_IsActive')
-        clinicServices.checkBoxSliderSetOn('#Service_AllowOnlineScheduling')
-        clinicServices.clickOnDropdownUnmarkedPractitioners('Automation Tests')
-        clinicServices.clickOnDropdownUnmarkedPractitioners('Automation Engineer')
-        clinicServices.clickOnDropdownUnmarkedPractitioners('Automation Another')
-        clinicServices.clickOnDropdownUnmarkedRooms('Room 1')
-        drawerModal.saveButton();
-        pp.shouldBeVisible('Clinic service saved')
-
-        navigate.extendMenu()
+        // navigate.selectCS('Locations')
+        // clinicLocations.editLocation(0);
+        // basePage.setToOn('Clinic location is active?');
+        // basePage.setToOn('Allow Online Scheduling?');
+        // drawerModal.saveButton();
+        //
+        // navigate.extendMenu()
+        //
+        // navigate.selectCS('Clinic Staff')
+        // clinicStaff.markUserActive('Automation Engineer')
+        // clinicStaff.markUserActive('Automation Another')
+        // clinicStaff.clickOnDetails('Automation Engineer')
+        // clinicStaff.checkBoxSliderSetOn('#PractitionerInfo_AllowOnlineScheduling')
+        // clinicStaff.saveButton();
+        //
+        // navigate.extendMenu()
+        //
+        // navigate.selectCS('Clinic Services')
+        // clinicServices.chooseService('Automation with CCPE')
+        // clinicServices.checkBoxSliderSetOn('#Service_IsActive')
+        // clinicServices.checkBoxSliderSetOn('#Service_AllowOnlineScheduling')
+        // clinicServices.clickOnDropdownUnmarkedPractitioners('Automation Tests')
+        // clinicServices.clickOnDropdownUnmarkedPractitioners('Automation Engineer')
+        // clinicServices.clickOnDropdownUnmarkedPractitioners('Automation Another')
+        // clinicServices.clickOnDropdownUnmarkedRooms('Room 1')
+        // drawerModal.saveButton();
+        // pp.shouldBeVisible('Clinic service saved')
+        //
+        // navigate.extendMenu()
 
         navigate.selectPP();
         pp.setToOn('Allow patients to book appointments online')

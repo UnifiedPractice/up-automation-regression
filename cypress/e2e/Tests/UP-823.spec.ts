@@ -49,6 +49,18 @@ describe('Automation test for UP-823', () => {
         pp.selectLocation('Automation Location')
         pp.selectService('Automation with CCPE')
         pp.shouldNotBeVisible('Automation Engineer')
+
+        //Cleaning
+
+        pp.backtoEHR();
+        navigate.extendMenu()
+        navigate.selectCS('Clinic Staff')
+        clinicStaff.clickOnDetails('Automation Engineer')
+        clinicStaff.checkBoxSliderSetOn('#PractitionerInfo_AllowOnlineScheduling')
+        clinicStaff.checkBoxSliderSetOn('#PractitionerInfo_AutoAcceptAppointments')
+        clinicStaff.saveButton();
+
+
     })
 
 })

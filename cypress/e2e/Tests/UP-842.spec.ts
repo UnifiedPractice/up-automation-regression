@@ -65,6 +65,7 @@ describe('Automation test for UP-842', () => {
         pp.proceedLogin();
         pp.checkRoundAvailabilities();
         pp.setAvailabilitiesIntervalToCheckFor30Minutes();
+        pp.proceedFinishAppointmentAfterCheckInterval();
     })
 
 })

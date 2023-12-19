@@ -18,21 +18,21 @@ describe('Automation test for UP-4133', () => {
     // for more easiness that class is attributed to login const
     it("UP-4133", function () {
 
-        // login.goToStaging();
-        // login.loginAutomation();
-        //
-        // navigate.extendMenu();
-        // navigate.selectPP();
-        //
-        // pp.setToOn('Allow patients to book appointments online');
-        // pp.setToOn('Chat for your patients available in Patient Portal')
-        // pp.saveButton();
-        //
-        // pp.openPP();
-        // pp.checkLogin();
-        // pp.proceedLogin();
-        // pp.openChat();
-        // pp.openChatwithPractitioner()
+        login.goToStaging();
+        login.loginAutomation();
+
+        navigate.extendMenu();
+        navigate.selectPP();
+
+        pp.setToOn('Allow patients to book appointments online');
+        pp.setToOn('Chat messages for your patients available in Patient Portal (file sharing remains available)')
+        pp.saveButton();
+
+        pp.openPP();
+        pp.checkLogin();
+        pp.proceedLogin();
+        pp.openChat();
+        pp.openChatwithPractitioner()
 
     })
 

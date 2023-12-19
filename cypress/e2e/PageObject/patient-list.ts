@@ -66,8 +66,8 @@ class PatientList {
     }
 
     sendInviteForPP(): void {
-        cy.wait(400).get(this.sendInviteModalSelector).click();
-        cy.wait(400).get(this.sendInviteButtonSelector).click()
+        cy.wait(2600).get(this.sendInviteModalSelector).click();
+        cy.wait(1600).get(this.sendInviteButtonSelector).click()
     }
 
     validateNewPPAccountEmail(): void{
@@ -80,7 +80,7 @@ class PatientList {
         cy.get('a').eq(0).invoke('removeAttr', 'target').click()
         this.completeField('Password', 'password')
         this.completeField('Confirm Password', 'password')
-        cy.get(this.buttonPrimarySelector).click()
+        cy.wait(3000).get(this.buttonPrimarySelector).click()
     }
 
     completeField(name: string, content: any): void
@@ -101,8 +101,8 @@ class PatientList {
     }
 
     goToPersonalTab(): void{
-        cy.get(this.mainMenuPatientSelector).within(() =>
-            cy.wait(500).get(this.personalIdSelector).click({force:true})
+        cy.wait(3000).get(this.mainMenuPatientSelector).within(() =>
+            cy.wait(3500).get(this.personalIdSelector).click({force:true})
         )
 
     }

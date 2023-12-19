@@ -5,6 +5,7 @@ class OnboardingForms{
     private sectionSelector: string = '.upform';
     private idScreeningForm: string ='#servicesDropDown_583'
     private dropdownOpener: string = '.dropdown-menu.open'
+    private saveButton = 'Save & Continue';
 
     changeServiceOnScreeningForm(){
 

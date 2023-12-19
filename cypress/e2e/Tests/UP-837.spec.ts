@@ -67,8 +67,7 @@ describe('Automation test for UP-837', () => {
         cy.wait('@upcoming')
 
         pp.checkVisibilityUpcoming();
-
-        pp.checkRescheduleVisibility();
-    })
+        pp.checkReschedule();
+        })
 
 })

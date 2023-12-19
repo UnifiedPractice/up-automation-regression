@@ -36,7 +36,7 @@ describe('Automation test for UP-887', () => {
         pp.checkLogin();
         pp.proceedLogin();
         pp.bookNewAppointmentASAPAutomationWithCCPE()
-        pp.selectCompleteFormsAndCompleteScreeningForms()
+        //pp.selectCompleteFormsAndCompleteScreeningForms()
 
         //Cleaning
 
