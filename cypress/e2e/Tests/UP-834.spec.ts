@@ -12,12 +12,6 @@ describe('Automation test for UP-834', () => {
     const clinicStaff = new ClinicStaff();
     const clinicServices = new ClinicServices();
 
-    // For retain session and prevent logout during testing - it's a must have in all tests for prevent logout
-    //beforeEach(() => {
-        //cy.session('ASP.NET_SessionId', 'sessionid', 'chatToken')
-    //})
-    // End beforeEach
-
     it("UP-834", function () {
 
         login.goToStaging();
@@ -29,7 +23,7 @@ describe('Automation test for UP-834', () => {
 
         pp.setToOff('Allow patients to book appointments online');
         pp.saveButton();
-        pp.openPP();
+        pp.openPPwithoutActive();
         pp.checkLogin();
         pp.proceedLogin();
         pp.shouldNotBeVisible('Book Appointment')

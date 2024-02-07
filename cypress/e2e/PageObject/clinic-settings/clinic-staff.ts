@@ -14,6 +14,7 @@ class ClinicStaff extends BasePage {
  statusSelector: string = '.js-labelPersonStatus';
  statusTest: any;
  saveSelector: string = '.button.default';
+ sectionSelector: string ='.col-xs-12.col-md-1.col-sm-1';
 
  
 chooseService(name:string) : void {
@@ -21,7 +22,7 @@ chooseService(name:string) : void {
 }
 
 saveButton() : void {
-    cy.get(this.saveSelector).click({force:true});
+    cy.get(this.saveSelector).click({force:true}).wait(1500);
 }
 
 
@@ -85,10 +86,10 @@ clickOnDropdownMarked(name: string){
 }
 
 markUserActive(name: string){ 
-  cy.get(this.checkboxSelector).click().wait(800);
+  cy.get(this.checkboxSelector).click().wait(2500);
   cy.get(this.staffSelector).contains(name).then(($button) => {
     if ($button.parent().hasClass('inactive-user')) {
-        cy.get(this.staffSelector).contains(name).parent().find(this.actionSelector).click({force:true});
+        cy.wait(2500).get(this.staffSelector).contains(name).parent().find(this.actionSelector).click({force:true});
     } 
   })
 }
@@ -102,7 +103,9 @@ markUserInactive(name: string){
 }
 
 clickOnDetails(name : string){
-  cy.wait(2800).get(this.staffSelector).contains(name).parent().contains('Details').click().wait(800)
+  //cy.wait(2800).get(this.staffSelector).contains(name).parent().contains('Details').click().wait(800)
+    cy.wait(2800).get(this.staffSelector).contains(name).parent().contains(/Det(?:a|ls)/).click({force:true}).wait(800)
+
 }
 
 }

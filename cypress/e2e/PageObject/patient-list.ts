@@ -38,9 +38,10 @@ class PatientList {
         cy.intercept('https://staging.unifiedpractice.com/Public/PatientManagement/AddPatient?_=*').as('patient');
         cy.contains('Add Patient').click();
         cy.wait('@patient')
+        cy.wait(2000);
         this.completeField('First Name','Automation'+getDayMonthHour);
         this.completeField('Last Name','Engineer'+getDayMonthHour);
-        cy.get(this.emailField).click().clear().type('engineer'+getDayMonthHour+'@email.com');
+        cy.get(this.emailField).click().type('engineer'+getDayMonthHour+'@email.com');
         cy.contains('Save').click()
     }
 

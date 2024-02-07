@@ -13,6 +13,8 @@ import BasePage from "./base-page";
 import 'cypress-wait-until';
 import { format, addDays} from 'date-fns';
 import {getDayMonthHour} from "./patient-list";
+import base = Mocha.reporters.base;
+import basePage from "./base-page";
 const { uniqueNamesGenerator, Config, adjectives, colors } = require('unique-names-generator');
 export const confirm = Math.floor(Math.random() * 22)
 
@@ -57,6 +59,9 @@ class PatientPortal extends BasePage {
     });
 
     openPP(): void {
+        this.setToOn('Allow patients to book appointments online');
+        cy.wait(500);
+        cy.contains('Save').click().wait(1200);
         cy.intercept(`${FINAL_API_STAGING_PP()}`).as('ppOrganization');
         cy.contains('https://pp.staging.unifiedpractice.com/automation-cypress').should('be.visible').get('.label-pp-url').eq(1).invoke('removeAttr', 'target').click()
         cy.wait(2000)
@@ -65,6 +70,15 @@ class PatientPortal extends BasePage {
         cy.wait(1500)
     }
 
+    openPPwithoutActive(): void {
+        cy.contains('Save').click().wait(1200);
+        cy.intercept(`${FINAL_API_STAGING_PP()}`).as('ppOrganization');
+        cy.contains('https://pp.staging.unifiedpractice.com/automation-cypress').should('be.visible').get('.label-pp-url').eq(1).invoke('removeAttr', 'target').click()
+        cy.wait(2000)
+        cy.wait('@ppOrganization');
+        //It is desired to eliminate this wait, but sometimes in tests the intercept is not enough
+        cy.wait(1500)
+    }
     openPPUniveristy(): void {
         cy.intercept(`${FINAL_API_STAGING_PP_UNIVERSITY()}`).as('ppOrganization');
         cy.contains('https://pp.staging.unifiedpractice.com/automation-cypress-university').should('be.visible').get('.label-pp-url').eq(1).invoke('removeAttr', 'target').click()
@@ -104,15 +118,15 @@ class PatientPortal extends BasePage {
     }
     
     selectLocation(name: string) : void { 
-        cy.contains(name).click();
+        cy.wait(2500).contains(name).click();
     }
 
     selectService(name: string) : void { 
-        cy.contains(name).click();
+        cy.wait(2500).contains(name).click();
     }
 
     selectPractitioner(name: string) : void { 
-        cy.contains(name).click();
+        cy.wait(2500).contains(name).click();
     }
 
     pressLogin(): void {
@@ -147,7 +161,7 @@ class PatientPortal extends BasePage {
         }
 
         shouldNotBeVisible(name: string): void {
-            cy.wait(500).contains(name).should('not.exist')
+            cy.wait(2500).contains(name).should('not.exist')
         }
 
     setToOff(name:string): void {
@@ -187,7 +201,7 @@ class PatientPortal extends BasePage {
         cy.get('div').contains('the data entered does').should('be.visible')
     }
     checkAvailability(): void {
-        cy.wait(2500);
+        cy.wait(3500);
         this.interceptAndWaitForAvailabilities();
             cy.wait(2500)
             cy.get(this.boxSelector).then($box => {
@@ -270,7 +284,26 @@ class PatientPortal extends BasePage {
         cy.contains('Confirm Appointment').click();
         cy.wait(2500);
         cy.contains('Your appointment was successfully booked').should('be.visible');
-        cy.contains('Dashboard').click()
+        cy.contains('Dashboard').click();
+    }
+
+    bookNewAppointmentASAPonUniversities(): void {
+        cy.contains('Upcoming Appointments').should('have.css', 'display', 'none');
+        cy.contains('Book Appointment').click({force:true});
+        this.checkLocationsNumber();
+        cy.wait(3500)
+        cy.contains('Automation with CCPE').click();
+        cy.contains('Book with a licensed practitioner').click().wait(300);
+        this.checkPractitionersNumber();
+        cy.wait(2000);
+        this.checkAvailability();
+        this.searchAM();
+        cy.get(this.radioTabSelector).eq(0).click({force:true})
+        cy.wait(2400)
+        cy.contains('Confirm Appointment').click();
+        cy.wait(2500);
+        cy.contains('Your appointment was successfully booked').should('be.visible');
+        cy.contains('Dashboard').click();
     }
 
     bookNewAppointmentASAPAutomationWithCCPE(): void{
@@ -293,10 +326,10 @@ class PatientPortal extends BasePage {
     checkPractitionersNumber(): void {
         //this.interceptAndWaitForAvailabilities();
         cy.get(this.boxSelector).then($box => {
-            const moreThanOne = $box.text().includes('Select practitioner')
+            const moreThanOne = $box.text().includes('Book with a specific practitioner')
             if (moreThanOne) {
                // this.interceptAndWaitForAvailabilities();
-                cy.contains('Automation Engineer').click();
+                cy.wait(1000).contains('Automation Engineer').click();
             }
         })
     }
@@ -335,12 +368,14 @@ class PatientPortal extends BasePage {
 
     checkForNoPreferenceStateOn(): void{
         cy.contains('Upcoming Appointments').should('have.css', 'display', 'none');
-        cy.contains('Book Appointment').click({force:true});
+        cy.contains('Book Appointment').click({force:true}).wait(2500);
         this.checkLocationsNumber();
-        cy.contains('Automation with CCPE').click();
+        cy.wait(2500).contains('Automation with CCPE').click();
         cy.wait(1500).contains('have a preference').click();
+        this.checkAvailability();
+        cy.get(this.radioTabSelector).eq(0).click({force:true})
+        cy.contains('Confirm Appointment').click();
         cy.contains('Your appointment was successfully booked').should('be.visible');
-
     }
 
     checkForNoPreferenceStateOff(): void{
@@ -429,7 +464,6 @@ class PatientPortal extends BasePage {
     }
 
     searchAM(): void{
-
         cy.get('.md-radio-tab').eq(0).then(($el) => {
             const checkAM = $el.text().includes('AM')
             if(!checkAM){
@@ -544,7 +578,7 @@ class PatientPortal extends BasePage {
         this.completeField('Confirm Password', 'password')
         cy.get(this.checkboxSelector).click();
         cy.contains('Continue').click().wait(2800)
-        cy.contains('Appointment summary').should('be.visible')
+        cy.wait(3000).contains('Appointment summary').should('be.visible')
         cy.get(this.buttonPrimarySelector).click()
         cy.contains('Dashboard').click();
     }
@@ -611,7 +645,6 @@ class PatientPortal extends BasePage {
         cy.contains('Save').click()
 
         //Primary Physician Information
-
         this.completeField('Physician Name', 'Physician Name Test Field')
         this.completeField('Phone Number', '+4012345678')
         this.completeField('Specialty', 'Engineer')
@@ -691,11 +724,7 @@ class PatientPortal extends BasePage {
 
         cy.contains('Additional').should('be.visible')
         cy.contains('Save').click()
-
-
     }
-
-
 
     goToMyAccount() : void {
         cy.wait(1300).get(this.burgerMenuSelector).click();
@@ -893,15 +922,6 @@ class PatientPortal extends BasePage {
             }
         })
 
-        // cy.get(this.boxSelector).then( ($selectBox) =>{
-        //     const secondBoxExist = $selectBox.text().includes('Online Forms');
-        //     if (secondBoxExist) {
-        //         cy.wait(600).get(this.boxSelector).within(() =>
-        //             cy.get('.edit-col').eq(3).click({force: true}))
-        //     }
-        // })
-
-
         this.completeField('Physician Name', 'Physician Name Test Field')
         this.completeField('Phone Number', '+4012345678')
         this.completeField('Specialty', 'Engineer')
@@ -1064,9 +1084,6 @@ class PatientPortal extends BasePage {
         cy.contains('Complete Forms').click()
         this.checkSaveContinueVisibility()
 
-        // this.completeField('New Input', 'Test Message for Screening')
-        //
-        // this.checkSaveContinueVisibility()
     }
 
     checkSaveContinueVisibility(): void {
@@ -1101,8 +1118,8 @@ class PatientPortal extends BasePage {
     }
 
     openChat(): void{
-        cy.get(this.burgerMenuSelector).click().wait(4500);
-        cy.wait(2300).get('.mat-menu-content').within(() =>
+        cy.wait(3500).get(this.burgerMenuSelector).click().wait(4500);
+        cy.wait(3300).get('.mat-menu-content').within(() =>
             cy.contains('Chat').click().wait(8500) )
     }
 
@@ -1138,8 +1155,6 @@ class PatientPortal extends BasePage {
         cy.wait(2500).get('input[type=file]').selectFile('cypress/fixtures/images/imageforupload.png', { force: true })
         cy.wait(1500).get('.str-chat__send-button').click()
     }
-
-
 
 }
 

@@ -18,11 +18,6 @@ describe('Automation test for UP-844', () => {
     const clinicServices = new ClinicServices();
     const clinicStaff = new ClinicStaff();
 
-    // For retain session and prevent logout during testing - it's a must have in all tests for prevent logout
-    //beforeEach(() => {
-        //cy.session('ASP.NET_SessionId', 'sessionid', 'chatToken')
-    //})
-    // End beforeEach
 
     it("UP-844", function () {
 
