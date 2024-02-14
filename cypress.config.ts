@@ -1,7 +1,7 @@
 import { defineConfig } from 'cypress'
 
 export default defineConfig({
-  video: true,
+  video: false,
   projectId: "sy96yg",
   pageLoadTimeout: 140000,
   e2e: {

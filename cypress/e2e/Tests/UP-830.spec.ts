@@ -26,6 +26,14 @@ describe('Automation test for UP-830', () => {
         clinicStaff.saveButton();
 
         navigate.extendMenu();
+
+        navigate.selectCS('Clinic Staff');
+        clinicStaff.markUserActive('Automation Engineer')
+        clinicStaff.clickOnDetails('Automation Engineer')
+        clinicServices.checkBoxSliderSetOn('#PractitionerInfo_AllowOnlineScheduling')
+        clinicStaff.saveButton();
+
+        navigate.extendMenu();
         navigate.selectPP();
         pp.openPP();
 

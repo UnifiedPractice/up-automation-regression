@@ -553,7 +553,7 @@ class PatientPortal extends BasePage {
         cy.wait(700)
         cy.get(this.radioTabSelector).eq(0).click({force:true})
         cy.wait(1500).contains('Create Account').click();
-        cy.wait(1500).get('.email-input').click().type('test' + (Math.floor(Math.random() * 100000)) + '@test.com' );
+        cy.wait(1500).get('.email-input').click().type('test5' + (Math.floor(Math.random() * 9999999)) + '@test.com' );
         cy.get('.mat-button-wrapper').contains('Create Account').click().wait(1500);
 
         //Go to staging emails
