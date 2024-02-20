@@ -14,13 +14,12 @@ jobs:
   run-automation-regression-tests:
     runs-on: windows-latest
     steps:
+      - run: cypress run --grep "@my-tag"
       - run: git config --global url."https://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@github.com/".insteadOf https://github.com/
       - name: Checkout
         uses: actions/checkout@v4
         with:
           persist-credentials: false
-      - name: Run Cypress tests
-        run: cypress run --grep "@my-tag"
       - name: Cypress run
         uses: cypress-io/github-action@v6
         with:
