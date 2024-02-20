@@ -19,6 +19,8 @@ jobs:
         uses: actions/checkout@v4
         with:
           persist-credentials: false
+      - name: Run Cypress tests
+        run: cypress run --grep "@my-tag"
       - name: Cypress run
         uses: cypress-io/github-action@v6
         with:
