@@ -23,7 +23,6 @@ describe('Automation test for UP-855', () => {
 
  
     it("UP-855", function () {
-        cy.addTag('my-tag');
         login.goToStaging();
         login.loginAutomation();
         //THE TEST IS FOLLOWING AN OLD FLOW STRUCTURE FOR CREATING A NEW ACCOUNT;
