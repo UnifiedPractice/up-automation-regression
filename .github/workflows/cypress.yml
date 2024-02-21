@@ -12,9 +12,9 @@ jobs:
     runs-on: windows-latest
     needs: install
     strategy:
-        fail-fast: false
-    matrix:
-        containers: [1,2,3,4,5]
+       fail-fast: false
+       matrix:
+        containers: [1, 2, 3, 4, 5]
     steps:
       - run: git config --global url."https://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@github.com/".insteadOf https://github.com/
       - name: Checkout
