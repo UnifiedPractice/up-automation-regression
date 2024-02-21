@@ -573,7 +573,7 @@ class PatientPortal extends BasePage {
         cy.get(this.iconCalendarSelector).eq(1).click();
         this.chooseRandomDateFormsCalendar();
         cy.get(this.selectValueSelector).eq(1).click()
-        cy.get(this.fieldArrowSelector).eq(Math.floor(Math.random() * 3)+1).wait(700).click()
+        cy.wait(1000).get(this.fieldArrowSelector).eq(Math.floor(Math.random() * 3)+1).wait(700).click()
         this.completeField('Password', 'password')
         this.completeField('Confirm Password', 'password')
         cy.get(this.checkboxSelector).click();
