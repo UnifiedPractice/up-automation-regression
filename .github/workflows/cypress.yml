@@ -1,24 +1,30 @@
-name: Cypress Tests
+name: UP Automation regression
 
-on: push
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
 
 jobs:
-  install:
-    runs-on: ubuntu-22.04
+  
+  run-automation-regression-tests:
+    runs-on: windows-latest
     steps:
+      - run: git config --global url."https://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@github.com/".insteadOf https://github.com/
       - name: Checkout
         uses: actions/checkout@v4
-
-      - name: Cypress install
+        with:
+          persist-credentials: false
+      - name: Cypress run
         uses: cypress-io/github-action@v6
         with:
-          # Disable running of tests within install job
-          runTests: false
-          build: npm run build
-
-      - name: Save build folder
-        uses: actions/upload-artifact@v4
-        with:
-          name: build
-          if-no-files-found: error
-          path: dist
+          browser: electron
+          record: true
+          parallel: false
+        env:
+          # For recording and parallelization to work you must set your CYPRESS_RECORD_KEY
+          # in GitHub repo → Settings → Secrets → Actions
+          CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
+          # Creating a token https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/creating-a-personal-access-token
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
