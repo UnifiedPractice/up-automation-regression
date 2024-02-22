@@ -7,28 +7,37 @@ on:
     branches: [ main ]
 
 jobs:
-  
   run-automation-regression-tests:
     runs-on: windows-latest
     strategy:
       matrix:
-        instances: [1, 2, 3] # Specificăm 3 instanțe paralele
+        instances: [1, 2, 3] # Definim 3 instanțe paralele
     steps:
       - run: git config --global url."https://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@github.com/".insteadOf https://github.com/
+
       - name: Checkout
         uses: actions/checkout@v4
         with:
           persist-credentials: false
+
+      - name: Calculate test range
+        id: calculate_range
+        run: |
+          total_tests=90
+          tests_per_instance=30 # Definim câte teste să aibă fiecare instanță
+          start_test=$(((${{ matrix.instances }} - 1) * $tests_per_instance + 1))
+          end_test=$((start_test + tests_per_instance - 1))
+          echo "::set-output name=start_test::$start_test"
+          echo "::set-output name=end_test::$end_test"
+
       - name: Cypress run
         uses: cypress-io/github-action@v6
         with:
           browser: electron
           record: true
-          parallel: true # Setăm paralelizarea pe true
-          group: 'Instance ${{ matrix.instances }}' # Grupăm instanțele paralele
-          spec: cypress/e2e/Tests/*.spec.ts # Rulează toate fișierele .spec.ts din directorul cypress/e2e/Tests
+          parallel: true
+          group: 'Instance ${{ matrix.instances }}'
+          spec: cypress/e2e/Tests/UP-${{ steps.calculate_range.outputs.start_test }}.spec.ts-cypress/e2e/Tests/UP-${{ steps.calculate_range.outputs.end_test }}.spec.ts
         env:
-          # Pentru a permite înregistrarea și paralelizarea, trebuie să setezi CYPRESS_RECORD_KEY în GitHub repo → Settings → Secrets → Actions
           CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
-          # Crearea unui token: https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/creating-a-personal-access-token
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
