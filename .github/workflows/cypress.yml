@@ -21,7 +21,7 @@ jobs:
           record: true
           parallel: true
           group: 'Instance 1'
-          spec: cypress/e2e/Tests/UP-801.spec.ts
+          spec: UP-3565.spec.ts, UP-4097.spec.ts, UP-4130.spec.ts, UP-4131.spec.ts, UP-4132.spec.ts, UP-4133.spec.ts, UP-4135.spec.ts, UP-4138.spec.ts, UP-801.spec.ts, UP-802.spec.ts, UP-803.spec.ts, UP-810.spec.ts, UP-814.spec.ts, UP-815.spec.ts, UP-816.spec.ts
         env:
           CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
