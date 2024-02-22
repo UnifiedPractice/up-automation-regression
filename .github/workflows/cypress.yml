@@ -14,17 +14,6 @@ jobs:
         uses: actions/checkout@v4
         with:
           persist-credentials: false
-          
-      - name: Set test range for Instance 1
-        id: calc_range_1
-        run: |
-          total_tests=90
-          tests_per_instance=$((total_tests / 3))
-          start_test=$((($tests_per_instance * (1 - 1)) + 1))
-          end_test=$(($tests_per_instance * 1))
-          echo "::set-output name=start_test::$start_test"
-          echo "::set-output name=end_test::$end_test"
-          
       - name: Cypress run Instance 1
         uses: cypress-io/github-action@v6
         with:
@@ -32,10 +21,9 @@ jobs:
           record: true
           parallel: true
           group: 'Instance 1'
-          spec: cypress/e2e/Tests/UP-${{ steps.calc_range_1.outputs.start_test }}.spec.ts-cypress/e2e/Tests/UP-${{ steps.calc_range_1.outputs.end_test }}.spec.ts
+          spec: cypress/e2e/Tests/UP-3565.spec.ts-cypress/e2e/Tests/UP-829.spec.ts
         env:
           CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
   run-automation-regression-tests-instance-2:
     runs-on: windows-latest
@@ -44,17 +32,6 @@ jobs:
         uses: actions/checkout@v4
         with:
           persist-credentials: false
-          
-      - name: Set test range for Instance 2
-        id: calc_range_2
-        run: |
-          total_tests=90
-          tests_per_instance=$((total_tests / 3))
-          start_test=$((($tests_per_instance * (2 - 1)) + 1))
-          end_test=$(($tests_per_instance * 2))
-          echo "::set-output name=start_test::$start_test"
-          echo "::set-output name=end_test::$end_test"
-          
       - name: Cypress run Instance 2
         uses: cypress-io/github-action@v6
         with:
@@ -62,10 +39,9 @@ jobs:
           record: true
           parallel: true
           group: 'Instance 2'
-          spec: cypress/e2e/Tests/UP-${{ steps.calc_range_2.outputs.start_test }}.spec.ts-cypress/e2e/Tests/UP-${{ steps.calc_range_2.outputs.end_test }}.spec.ts
+          spec: cypress/e2e/Tests/UP-830.spec.ts-cypress/e2e/Tests/UP-875.spec.ts
         env:
           CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
   run-automation-regression-tests-instance-3:
     runs-on: windows-latest
@@ -74,17 +50,6 @@ jobs:
         uses: actions/checkout@v4
         with:
           persist-credentials: false
-          
-      - name: Set test range for Instance 3
-        id: calc_range_3
-        run: |
-          total_tests=90
-          tests_per_instance=$((total_tests / 3))
-          start_test=$((($tests_per_instance * (3 - 1)) + 1))
-          end_test=$(($tests_per_instance * 3))
-          echo "::set-output name=start_test::$start_test"
-          echo "::set-output name=end_test::$end_test"
-          
       - name: Cypress run Instance 3
         uses: cypress-io/github-action@v6
         with:
@@ -92,7 +57,6 @@ jobs:
           record: true
           parallel: true
           group: 'Instance 3'
-          spec: cypress/e2e/Tests/UP-${{ steps.calc_range_3.outputs.start_test }}.spec.ts-cypress/e2e/Tests/UP-${{ steps.calc_range_3.outputs.end_test }}.spec.ts
+          spec: cypress/e2e/Tests/UP-876.spec.ts-cypress/e2e/Tests/UP-907.spec.ts
         env:
           CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
