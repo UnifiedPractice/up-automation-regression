@@ -86,7 +86,7 @@ class PatientList {
 
     completeField(name: string, content: any): void
     {
-        cy.contains(name).next({force:true}).clear().type(content);
+        cy.contains(name).next({force:true}).type(content);
     }
 
     goToFormsTab(): void {
