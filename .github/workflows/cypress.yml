@@ -23,8 +23,8 @@ jobs:
       - name: Calculate test range
         id: calculate_range
         run: |
-          start_test=$(expr ${{ matrix.instances }} - 1 \* 30 + 1)
-          end_test=$(expr $start_test + 29)
+          $start_test = ($env:INSTANCE - 1) * 30 + 1
+          $end_test = $start_test + 29
           echo "::set-output name=start_test::$start_test"
           echo "::set-output name=end_test::$end_test"
 
@@ -37,5 +37,6 @@ jobs:
           group: 'Instance ${{ matrix.instances }}'
           spec: cypress/e2e/Tests/UP-*.spec.ts
         env:
+          INSTANCE: ${{ matrix.instances }}
           CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
