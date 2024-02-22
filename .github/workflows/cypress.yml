@@ -13,12 +13,20 @@ jobs:
       matrix:
         container: [1, 2, 3] # Define 3 parallel instances
     steps:
-      - run: git config --global url."https://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@github.com/".insteadOf https://github.com/
-      - name: Checkout
+      - name: Checkout code
         uses: actions/checkout@v4
         with:
           persist-credentials: false
-      - name: Cypress run (Parallel)
+      - name: Setup Cypress
+        uses: cypress-io/github-action@v6
+        with:
+          install: true
+          # Install additional Cypress dependencies if needed
+          # For example: cypress-image-snapshot, cypress-cucumber
+          # install-other-dependencies: true
+          # other-dependencies: ["cypress-image-snapshot", "cypress-cucumber"]
+
+      - name: Run Cypress tests (Parallel)
         uses: cypress-io/github-action@v6
         with:
           browser: electron
@@ -30,4 +38,11 @@ jobs:
             CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
             # Creating a token https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/creating-a-personal-access-token
             GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Upload test results (Optional)
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: Cypress Test Results
+          path: cypress/results
 
