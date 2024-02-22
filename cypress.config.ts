@@ -2,7 +2,7 @@ import { defineConfig } from 'cypress'
 
 export default defineConfig({
   video: false,
-  projectId: "sy96yg",
+  projectId: "hqze8x",
   pageLoadTimeout: 140000,
   e2e: {
     // We've imported your old cypress plugins here.
