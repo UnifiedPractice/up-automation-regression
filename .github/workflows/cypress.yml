@@ -22,7 +22,7 @@ jobs:
         uses: cypress-io/github-action@v2
         with:
           install: true
-          start: npm start # Specify your start command if needed
+          start: cypress open --config-file=cypress.config.ts # Actualizează comanda de start pentru a utiliza noul fișier de configurație
 
       - name: Run Cypress tests (Parallel)
         uses: cypress-io/github-action@v2
