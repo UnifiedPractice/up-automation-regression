@@ -21,7 +21,7 @@ jobs:
           record: true
           parallel: true
           group: 'Instance 1'
-          spec: UP-801.spec.ts
+          spec: cypress/e2e/Tests/UP-801.spec.ts
         env:
           CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -40,7 +40,7 @@ jobs:
           record: true
           parallel: true
           group: 'Instance 2'
-          spec: UP-802.spec.ts
+          spec: cypress/e2e/Tests/UP-802.spec.ts
         env:
           CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -59,7 +59,7 @@ jobs:
           record: true
           parallel: true
           group: 'Instance 3'
-          spec: UP-803.spec.ts
+          spec: cypress/e2e/Tests/UP-803.spec.ts
         env:
           CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
