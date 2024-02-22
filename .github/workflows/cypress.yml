@@ -7,9 +7,11 @@ on:
     branches: [ main ]
 
 jobs:
-  
   run-automation-regression-tests:
     runs-on: windows-latest
+    strategy:
+      matrix:
+        instance: [1, 2, 3, 4]  # Definim 4 instanțe pentru a rula în paralel
     steps:
       - run: git config --global url."https://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@github.com/".insteadOf https://github.com/
       - name: Checkout
@@ -22,6 +24,7 @@ jobs:
           browser: electron
           record: true
           parallel: true
+          group: ${{ matrix.instance }}  # Grupăm testele în funcție de instanța de rulare
         env:
           # For recording and parallelization to work you must set your CYPRESS_RECORD_KEY
           # in GitHub repo → Settings → Secrets → Actions
