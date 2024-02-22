@@ -7,35 +7,59 @@ on:
     branches: [ main ]
 
 jobs:
-  run-automation-regression-tests:
+  run-automation-regression-tests-instance-1:
     runs-on: windows-latest
-    strategy:
-      matrix:
-        instances: [1, 2, 3, 4, 5] # Specificăm 5 instanțe paralele
-        chunk: [1, 2, 3, 4, 5] # Specificăm numărul de chunk-uri corespunzător fiecărei instanțe
     steps:
-      - run: git config --global url."https://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@github.com/".insteadOf https://github.com/
       - name: Checkout
         uses: actions/checkout@v4
         with:
           persist-credentials: false
-      - name: Calculate test range
-        id: calculate_range
-        run: |
-          total_tests=90
-          tests_per_instance=$((total_tests / 5))
-          start_test=$(((${{ matrix.instances }} - 1) * $tests_per_instance + 1))
-          end_test=$((${start_test} + $tests_per_instance - 1))
-          echo "::set-output name=start_test::$start_test"
-          echo "::set-output name=end_test::$end_test"
       - name: Cypress run
         uses: cypress-io/github-action@v6
         with:
           browser: electron
           record: true
-          parallel: true # Activăm paralelizarea
-          group: 'Instance ${{ matrix.instances }}' # Grupăm instanțele paralele
-          spec: test${{ steps.calculate_range.outputs.start_test }}-${{ steps.calculate_range.outputs.end_test }}.js # Specificăm intervalul de fișiere de test pentru fiecare instanță
+          parallel: true
+          group: 'Instance 1'
+          spec: UP-801.spec.ts
+        env:
+          CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  run-automation-regression-tests-instance-2:
+    runs-on: windows-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - name: Cypress run
+        uses: cypress-io/github-action@v6
+        with:
+          browser: electron
+          record: true
+          parallel: true
+          group: 'Instance 2'
+          spec: UP-802.spec.ts
+        env:
+          CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  run-automation-regression-tests-instance-3:
+    runs-on: windows-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - name: Cypress run
+        uses: cypress-io/github-action@v6
+        with:
+          browser: electron
+          record: true
+          parallel: true
+          group: 'Instance 3'
+          spec: UP-803.spec.ts
         env:
           CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
