@@ -26,6 +26,7 @@ jobs:
           record: true
           parallel: true # Setăm paralelizarea pe true
           group: 'Instance ${{ matrix.instances }}' # Grupăm instanțele paralele
+          spec: cypress/e2e/Tests/*.spec.ts # Rulează toate fișierele .spec.ts din directorul cypress/e2e/Tests
         env:
           # Pentru a permite înregistrarea și paralelizarea, trebuie să setezi CYPRESS_RECORD_KEY în GitHub repo → Settings → Secrets → Actions
           CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
