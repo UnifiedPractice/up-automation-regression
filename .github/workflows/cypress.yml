@@ -23,10 +23,8 @@ jobs:
       - name: Calculate test range
         id: calculate_range
         run: |
-          total_tests=90
-          tests_per_instance=$((total_tests / 3)) # Definim câte teste să aibă fiecare instanță
-          start_test=$(((${{ matrix.instances }} - 1) * tests_per_instance + 1))
-          end_test=$((start_test + tests_per_instance - 1))
+          start_test=$(((${{ matrix.instances }} - 1) * 30 + 1))
+          end_test=$((start_test + 29))
           echo "::set-output name=start_test::$start_test"
           echo "::set-output name=end_test::$end_test"
 
