@@ -1,43 +1,26 @@
-name: UP Automation regression
+name: Parallel Cypress Tests
 
-on:
-  push:
-    branches: [ main ]
-  pull_request:
-    branches: [ main ]
+on: [push]
 
 jobs:
-  run-automation-regression-tests:
-    runs-on: windows-latest
+  test:
+    name: Cypress run
+    runs-on: ubuntu-20.04
     strategy:
+      fail-fast: false
       matrix:
-        instances: [1, 2, 3] # Definim 3 instanțe paralele
-      fail-fast: false # Continuăm rularea altor instanțe chiar dacă una eșuează
+        # run 3 copies of the current job in parallel
+        containers: [1, 2, 3]
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-        with:
-          persist-credentials: false
-
-      - name: Calculate test range
-        id: calculate_range
-        run: |
-          $total_tests=90
-          $tests_per_instance=($total_tests / 3)
-          $start_test=((${{ matrix.instances }} - 1) * $tests_per_instance + 1)
-          $end_test=($start_test + $tests_per_instance - 1)
-          echo "::set-output name=start_test::$start_test"
-          echo "::set-output name=end_test::$end_test"
-
+      
       - name: Cypress run
         uses: cypress-io/github-action@v6
         with:
-          browser: electron
           record: true
           parallel: true
-          group: 'Instance ${{ matrix.instances }}'
-          spec: |
-            cypress/e2e/Tests/UP-{$( echo ${{ steps.calculate_range.outputs.start_test }} )..$( echo ${{ steps.calculate_range.outputs.end_test }} )}.spec.ts
-        env:
-          CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
+          group: 'Actions example'
+        env:          
+          CYPRESS_RECORD_KEY: ${{ secrets.RECORD_KEY }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
