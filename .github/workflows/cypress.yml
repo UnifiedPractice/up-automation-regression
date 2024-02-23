@@ -11,6 +11,7 @@ jobs:
     runs-on: windows-latest
     steps:
       - uses: actions/checkout@v4
+
       - name: Cypress configuration
         run: |
           # Download your Cypress configuration file from repository secrets
@@ -30,6 +31,8 @@ jobs:
           parallel-group-size: 30  # Divide tests into groups of 30 each
           parallel-mode: "instance"  # Specify "instance" for Cypress Cloud execution
           record-key: ${{ secrets.CYPRESS_RECORD_KEY }}
-          env:
-            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
+      - name: Upload test results (optional)
+        # Leave this step empty if you don't have specific actions to perform for uploading test results
