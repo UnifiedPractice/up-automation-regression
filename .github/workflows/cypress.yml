@@ -7,32 +7,27 @@ on:
     branches: [ main ]
 
 jobs:
+  
   run-automation-regression-tests:
     runs-on: windows-latest
+    strategy:
+      matrix:
+        instance: [1, 2, 3] # Define a matrix of 3 instances
     steps:
-      - uses: actions/checkout@v4
-
-      - name: Cypress configuration
-        run: |
-          # Download your Cypress configuration file from repository secrets
-          curl -o cypress.config.js https://raw.githubusercontent.com/<user>/<repo>/master/cypress.config.js
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Install dependencies
-        run: npm install
-
-      - name: Cypress run (parallelized)
+      - run: git config --global url."https://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@github.com/".insteadOf https://github.com/
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - name: Cypress run
         uses: cypress-io/github-action@v6
         with:
           browser: electron
           record: true
           parallel: true
-          parallel-group-size: 30  # Divide tests into groups of 30 each
+          parallel-group-size: 30  # Specify the number of tests to run per group
           parallel-mode: "instance"  # Specify "instance" for Cypress Cloud execution
           record-key: ${{ secrets.CYPRESS_RECORD_KEY }}
         env:
+          CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Upload test results (optional)
-        run: echo "No action needed for uploading test results"
