@@ -12,7 +12,7 @@ jobs:
     runs-on: windows-latest
     strategy:
       matrix:
-        instance: [1, 2, 3] # Define a matrix of 3 instances
+        containers: [1, 2, 3] # Define a matrix of 3 instances
     steps:
       - run: git config --global url."https://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@github.com/".insteadOf https://github.com/
       - name: Checkout
@@ -25,8 +25,6 @@ jobs:
           browser: electron
           record: true
           parallel: true
-          parallel-group-size: 30  # Specify the number of tests to run per group
-          parallel-mode: "instance"  # Specify "instance" for Cypress Cloud execution
           record-key: ${{ secrets.CYPRESS_RECORD_KEY }}
         env:
           CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
