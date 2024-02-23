@@ -33,6 +33,3 @@ jobs:
           env:
             GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Upload test results (optional)
-        # Add steps to upload results to your preferred location
-
