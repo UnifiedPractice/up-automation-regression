@@ -1,65 +1,38 @@
-name: cypress/e2e/Tests/UP Automation regression
+name: UP Automation regression
 
 on:
   push:
-    branches: [main]
+    branches: [ main ]
   pull_request:
-    branches: [main]
+    branches: [ main ]
 
 jobs:
-  run-automation-regression-tests-instance-1:
+  run-automation-regression-tests:
     runs-on: windows-latest
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-        with:
-          persist-credentials: false
-      - name: Cypress run
-        uses: cypress-io/github-action@v6
-        with:
-          browser: electron
-          record: true
-          parallel: true
-          grocypress/e2e/Tests/UP: 'Instance 1'
-          spec: cypress/e2e/Tests/cypress/e2e/Tests/UP-3565.spec.ts,cypress/e2e/Tests/cypress/e2e/Tests/UP-4097.spec.ts,cypress/e2e/Tests/cypress/e2e/Tests/UP-4130.spec.ts,cypress/e2e/Tests/cypress/e2e/Tests/UP-4131.spec.ts,cypress/e2e/Tests/cypress/e2e/Tests/UP-4132.spec.ts,cypress/e2e/Tests/cypress/e2e/Tests/UP-4133.spec.ts,cypress/e2e/Tests/cypress/e2e/Tests/UP-4135.spec.ts,cypress/e2e/Tests/cypress/e2e/Tests/UP-4138.spec.ts,cypress/e2e/Tests/cypress/e2e/Tests/UP-801.spec.ts,cypress/e2e/Tests/cypress/e2e/Tests/UP-802.spec.ts,cypress/e2e/Tests/cypress/e2e/Tests/UP-803.spec.ts,cypress/e2e/Tests/cypress/e2e/Tests/UP-810.spec.ts,cypress/e2e/Tests/cypress/e2e/Tests/UP-814.spec.ts,cypress/e2e/Tests/cypress/e2e/Tests/UP-815.spec.ts,cypress/e2e/Tests/cypress/e2e/Tests/UP-816.spec.ts,cypress/e2e/Tests/cypress/e2e/Tests/UP-817.spec.ts,cypress/e2e/Tests/cypress/e2e/Tests/UP-818.spec.ts,cypress/e2e/Tests/cypress/e2e/Tests/UP-821.spec.ts,cypress/e2e/Tests/cypress/e2e/Tests/UP-822.spec.ts,cypress/e2e/Tests/cypress/e2e/Tests/UP-823.spec.ts,cypress/e2e/Tests/cypress/e2e/Tests/UP-827.spec.ts,cypress/e2e/Tests/cypress/e2e/Tests/UP-828.spec.ts,cypress/e2e/Tests/cypress/e2e/Tests/UP-829.spec.ts,cypress/e2e/Tests/cypress/e2e/Tests/UP-839.spec.ts
+      - uses: actions/checkout@v4
+      - name: Cypress configuration
+        run: |
+          # Download your Cypress configuration file from repository secrets
+          curl -o cypress.config.js https://raw.githubusercontent.com/<user>/<repo>/master/cypress.config.js
         env:
-          CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-  run-automation-regression-tests-instance-2:
-    runs-on: windows-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-        with:
-          persist-credentials: false
-      - name: Cypress run
-        uses: cypress-io/github-action@v6
-        with:
-          browser: electron
-          record: true
-          parallel: true
-          grocypress/e2e/Tests/UP: 'Instance 2'
-          spec: cypress/e2e/Tests/cypress/e2e/Tests/UP-840.spec.ts,cypress/e2e/Tests/cypress/e2e/Tests/UP-841.spec.ts,cypress/e2e/Tests/cypress/e2e/Tests/UP-842.spec.ts,cypress/e2e/Tests/cypress/e2e/Tests/UP-843.spec.ts,cypress/e2e/Tests/cypress/e2e/Tests/UP-844.spec.ts,cypress/e2e/Tests/cypress/e2e/Tests/UP-845.spec.ts,cypress/e2e/Tests/cypress/e2e/Tests/UP-846.spec.ts,cypress/e2e/Tests/cypress/e2e/Tests/UP-847.spec.ts,cypress/e2e/Tests/cypress/e2e/Tests/UP-848.spec.ts,cypress/e2e/Tests/cypress/e2e/Tests/UP-849.spec.ts,cypress/e2e/Tests/cypress/e2e/Tests/UP-850.spec.ts,cypress/e2e/Tests/cypress/e2e/Tests/UP-851.spec.ts,cypress/e2e/Tests/cypress/e2e/Tests/UP-852.spec.ts,cypress/e2e/Tests/cypress/e2e/Tests/UP-853.spec.ts
-        env:
-          CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Install dependencies
+        run: npm install
 
-  run-automation-regression-tests-instance-3:
-    runs-on: windows-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-        with:
-          persist-credentials: false
-      - name: Cypress run
+      - name: Cypress run (parallelized)
         uses: cypress-io/github-action@v6
         with:
           browser: electron
           record: true
           parallel: true
-          grocypress/e2e/Tests/UP: 'Instance 3'
-          spec: cypress/e2e/Tests/cypress/e2e/Tests/UP-855.spec.ts,cypress/e2e/Tests/cypress/e2e/Tests/UP-856.spec.ts,cypress/e2e/Tests/cypress/e2e/Tests/UP-857.spec.ts,cypress/e2e/Tests/cypress/e2e/Tests/UP-858.spec.ts,cypress/e2e/Tests/cypress/e2e/Tests/UP-859.spec.ts,cypress/e2e/Tests/cypress/e2e/Tests/UP-860.spec.ts,cypress/e2e/Tests/cypress/e2e/Tests/UP-861.spec.ts,cypress/e2e/Tests/cypress/e2e/Tests/UP-862.spec.ts,cypress/e2e/Tests/cypress/e2e/Tests/UP-863.spec.ts,cypress/e2e/Tests/cypress/e2e/Tests/UP-864.spec.ts,cypress/e2e/Tests/cypress/e2e/Tests/UP-865.spec.ts,cypress/e2e/Tests/cypress/e2e/Tests/UP-866.spec.ts,cypress/e2e/Tests/cypress/e2e/Tests/UP-867.spec.ts,cypress/e2e/Tests/cypress/e2e/Tests/UP-868.spec.ts,cypress/e2e/Tests/cypress/e2e/Tests/UP-869.spec.ts,cypress/e2e/Tests/cypress/e2e/Tests/UP-870.spec.ts,cypress/e2e/Tests/cypress/e2e/Tests/UP-871.spec.ts,cypress/e2e/Tests/cypress/e2e/Tests/UP-872.spec.ts,cypress/e2e/Tests/cypress/e2e/Tests/UP-873.spec.ts,cypress/e2e/Tests/cypress/e2e/Tests/UP-874.spec.ts,cypress/e2e/Tests/cypress/e2e/Tests/UP-875.spec.ts,cypress/e2e/Tests/cypress/e2e/Tests/UP-876.spec.ts,cypress/e2e/Tests/cypress/e2e/Tests/UP-877.spec.ts,cypress/e2e/Tests/cypress/e2e/Tests/UP-878.spec.ts,cypress/e2e/Tests/cypress/e2e/Tests/UP-879.spec.ts,cypress/e2e/Tests/cypress/e2e/Tests/UP-880.spec.ts,cypress/e2e/Tests/cypress/e2e/Tests/UP-881.spec.ts,cypress/e2e/Tests/cypress/e2e/Tests/UP-882.spec.ts,cypress/e2e/Tests/cypress/e2e/Tests/UP-883.spec.ts,cypress/e2e/Tests/cypress/e2e/Tests/UP-884.spec.ts,cypress/e2e/Tests/cypress/e2e/Tests/UP-885.spec.ts,cypress/e2e/Tests/cypress/e2e/Tests/UP-886.spec.ts,cypress/e2e/Tests/cypress/e2e/Tests/UP-887.spec.ts
-        env:
-          CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          parallel-group-size: 30  # Divide tests into groups of 30 each
+          parallel-mode: "instance"  # Specify "instance" for Cypress Cloud execution
+          record-key: ${{ secrets.CYPRESS_RECORD_KEY }}
+          env:
+            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Upload test results (optional)
+        # Add steps to upload results to your preferred location
+
