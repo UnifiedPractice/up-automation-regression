@@ -35,4 +35,4 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Upload test results (optional)
-        # Leave this step empty if you don't have specific actions to perform for uploading test results
+        run: echo "No action needed for uploading test results"
