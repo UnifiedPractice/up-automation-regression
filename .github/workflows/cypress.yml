@@ -10,9 +10,6 @@ jobs:
   
   run-automation-regression-tests:
     runs-on: windows-latest
-    strategy:
-      matrix:
-        containers: [1, 2, 3] # Define a matrix of 3 instances
     steps:
       - run: git config --global url."https://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@github.com/".insteadOf https://github.com/
       - name: Checkout
@@ -24,8 +21,10 @@ jobs:
         with:
           browser: electron
           record: true
-          parallel: true
-          record-key: ${{ secrets.CYPRESS_RECORD_KEY }}
+          parallel: false
         env:
+          # For recording and parallelization to work you must set your CYPRESS_RECORD_KEY
+          # in GitHub repo → Settings → Secrets → Actions
           CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
+          # Creating a token https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/creating-a-personal-access-token
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
