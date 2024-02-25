@@ -601,7 +601,7 @@ class PatientPortal extends BasePage {
         cy.get(this.iconCalendarSelector).eq(1).click()
         cy.get(this.calendarPeriodSelector).click()
         cy.get(this.calendarArrowSelector).click()
-        cy.get(this.yearTabSelector).eq(Math.floor(Math.random() * 22)+1).click().wait(300)
+        cy.get(this.yearTabSelector).eq(Math.floor(Math.random() * 22)+1).click({force:true}).wait(300)
         cy.get(this.selectValueSelector).eq(0).click()
         cy.get(this.fieldArrowSelector).eq(1).click()
         this.completeField('Occupation','Engineer Test Field')
