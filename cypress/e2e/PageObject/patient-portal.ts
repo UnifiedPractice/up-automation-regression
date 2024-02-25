@@ -108,8 +108,6 @@ class PatientPortal extends BasePage {
     //Need to be improved with intercept
     interceptAndWaitForAvailabilities(): void{
             cy.wait(500)
-            // cy.intercept('https://pp.api.staging.unifiedpractice.com/t/automation-cypress/Availabilities?LocationGuid=*').as('hour')
-            // cy.wait('@hour')
         }
 
     loginCredentials(email,password): void {
@@ -551,7 +549,7 @@ class PatientPortal extends BasePage {
         this.checkAvailability();
         cy.contains('Select an appointment').should('be.visible')
         cy.wait(700)
-        cy.get(this.radioTabSelector).eq(0).click({force:true})
+        cy.get(this.radioTabSelector).eq(1).click({force:true})
         cy.wait(1500).contains('Create Account').click();
         cy.wait(1500).get('.email-input').click().type('test5' + (Math.floor(Math.random() * 9999999)) + '@test.com' );
         cy.get('.mat-button-wrapper').contains('Create Account').click().wait(1500);
