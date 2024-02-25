@@ -777,9 +777,9 @@ class PatientPortal extends BasePage {
         cy.get(this.fieldArrowSelector).eq(1).click()
         this.completeField('Occupation','Engineer Test Field')
         cy.get(this.selectValueSelector).eq(1).click()
-        cy.get(this.fieldArrowSelector).eq(Math.floor(Math.random() * 2)+1).click()
+        cy.get(this.fieldArrowSelector).eq(Math.floor(Math.random() * 2)+1).click({force:true})
         cy.get(this.selectValueSelector).eq(2).click()
-        cy.get(this.fieldArrowSelector).eq(Math.floor(Math.random() * 2)+1).click()
+        cy.get(this.fieldArrowSelector).eq(Math.floor(Math.random() * 2)+1).click({force:true})
         cy.contains('Save').click()
     }
 
@@ -832,7 +832,7 @@ class PatientPortal extends BasePage {
         this.completeField('Contact Phone Number', '+4012345678')
         this.completeField('Alternate Phone', '+4012345678')
         cy.get(this.secondArrowSelector).click();
-        cy.get(this.fieldArrowSelector).eq(Math.floor(Math.random() * 9)+1).click()
+        cy.get(this.fieldArrowSelector).eq(Math.floor(Math.random() * 9)+1).click({force:true})
         cy.contains('Save').click()
     }
 
@@ -894,7 +894,7 @@ class PatientPortal extends BasePage {
     chooseRandomDateFormsCalendar() : void {
         cy.get(this.calendarPeriodSelector).click()
         cy.get(this.calendarArrowSelector).click()
-        cy.get(this.yearTabSelector).eq(Math.floor(Math.random() * 22)+1).click()
+        cy.get(this.yearTabSelector).eq(Math.floor(Math.random() * 22)+1).click({force:true})
     }
 
     selectCompleteFormsAndCompleteMedicalInformation() : void {
