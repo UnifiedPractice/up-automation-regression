@@ -606,9 +606,9 @@ class PatientPortal extends BasePage {
         cy.get(this.fieldArrowSelector).eq(1).click()
         this.completeField('Occupation','Engineer Test Field')
         cy.get(this.selectValueSelector).eq(1).click()
-        cy.get(this.fieldArrowSelector).eq(Math.floor(Math.random() * 2)+1).click()
+        cy.get(this.fieldArrowSelector).eq(Math.floor(Math.random() * 2)+1).click({force:true})
         cy.get(this.selectValueSelector).eq(2).click()
-        cy.get(this.fieldArrowSelector).eq(Math.floor(Math.random() * 2)+1).click()
+        cy.get(this.fieldArrowSelector).eq(Math.floor(Math.random() * 2)+1).click({force:true})
         cy.contains('Save').click()
 
         //Address & Contact Information
@@ -847,9 +847,9 @@ class PatientPortal extends BasePage {
         cy.get(this.fieldArrowSelector).eq(1).click()
         this.completeField('Occupation','Engineer Test Field')
         cy.get(this.selectValueSelector).eq(1).click()
-        cy.get(this.fieldArrowSelector).eq(Math.floor(Math.random() * 2)+1).click()
+        cy.get(this.fieldArrowSelector).eq(Math.floor(Math.random() * 2)+1).click({force:true})
         cy.get(this.selectValueSelector).eq(2).click()
-        cy.get(this.fieldArrowSelector).eq(Math.floor(Math.random() * 2)+1).click()
+        cy.get(this.fieldArrowSelector).eq(Math.floor(Math.random() * 2)+1).click({force:true})
         cy.contains('Save').click()
     }
 
