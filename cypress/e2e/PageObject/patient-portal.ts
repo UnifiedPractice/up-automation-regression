@@ -609,7 +609,7 @@ class PatientPortal extends BasePage {
         cy.get(this.fieldArrowSelector).eq(Math.floor(Math.random() * 2)+1).click({force:true})
         cy.get(this.selectValueSelector).eq(2).click()
         cy.get(this.fieldArrowSelector).eq(Math.floor(Math.random() * 2)+1).click({force:true})
-        cy.contains('Save').click()
+        cy.wait(200).contains('Save').click({force:true})
 
         //Address & Contact Information
         this.completeField('Street Address', 'Street Address Test Input')
@@ -833,7 +833,8 @@ class PatientPortal extends BasePage {
         //cy.get(this.burgerMenuSelector).click({force:true});
 
         cy.wait(300).get('.select-box').eq(1).within(() =>
-            cy.get('.edit-col').eq(0).click({force:true}))
+            cy.get('.edit-col').eq(0).click({force:true})
+            )
 
         this.completeField('First Name', 'Automation ')
         this.completeField('Middle Name', 'Engineer')
@@ -846,9 +847,9 @@ class PatientPortal extends BasePage {
         cy.get(this.selectValueSelector).eq(0).click()
         cy.get(this.fieldArrowSelector).eq(1).click()
         this.completeField('Occupation','Engineer Test Field')
-        cy.get(this.selectValueSelector).eq(1).click()
+        cy.get(this.selectValueSelector).eq(1).click({force:true})
         cy.get(this.fieldArrowSelector).eq(Math.floor(Math.random() * 2)+1).click({force:true})
-        cy.get(this.selectValueSelector).eq(2).click()
+        cy.get(this.selectValueSelector).eq(2).click({force:true})
         cy.get(this.fieldArrowSelector).eq(Math.floor(Math.random() * 2)+1).click({force:true})
         cy.contains('Save').click()
     }
@@ -861,7 +862,8 @@ class PatientPortal extends BasePage {
         //cy.get(this.burgerMenuSelector).click({force:true});
 
         cy.wait(800).get('.select-box').eq(1).within(() =>
-            cy.get('.edit-col').eq(1).click({force:true}))
+            cy.get('.edit-col').eq(1).click({force:true})
+            )
 
         this.completeField('Street Address', 'Street Address Test Input')
         this.completeField('Street Address Line 2', 'Street Address Test Input 2')
