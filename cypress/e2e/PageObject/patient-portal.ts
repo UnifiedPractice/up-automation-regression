@@ -337,7 +337,7 @@ class PatientPortal extends BasePage {
         cy.get(this.boxSelector).then($box => {
             const moreThanOne = $box.text().includes('Select a location')
             if (moreThanOne) {
-                cy.get('.row-md-radio').children().contains('Automation Location').click({force:true});
+                cy.wait(400).get('.row-md-radio').children().contains('Automation Location').click({force:true});
                 console.log('checkpract2')
             }
         })
@@ -598,16 +598,16 @@ class PatientPortal extends BasePage {
         this.completeField('Middle Name', this.randomName)
         this.completeField('Last Name',this.randomName)
 
-        cy.get(this.iconCalendarSelector).eq(1).click()
-        cy.get(this.calendarPeriodSelector).click()
-        cy.get(this.calendarArrowSelector).click()
+        cy.get(this.iconCalendarSelector).eq(1).click({force:true})
+        cy.get(this.calendarPeriodSelector).click({force:true})
+        cy.get(this.calendarArrowSelector).click({force:true})
         cy.get(this.yearTabSelector).eq(Math.floor(Math.random() * 22)+1).click({force:true}).wait(300)
-        cy.get(this.selectValueSelector).eq(0).click()
-        cy.get(this.fieldArrowSelector).eq(1).click()
+        cy.get(this.selectValueSelector).eq(0).click({force:true})
+        cy.get(this.fieldArrowSelector).eq(1).click({force:true})
         this.completeField('Occupation','Engineer Test Field')
-        cy.get(this.selectValueSelector).eq(1).click()
+        cy.get(this.selectValueSelector).eq(1).click({force:true})
         cy.get(this.fieldArrowSelector).eq(Math.floor(Math.random() * 2)+1).click({force:true})
-        cy.get(this.selectValueSelector).eq(2).click()
+        cy.get(this.selectValueSelector).eq(2).click({force:true})
         cy.get(this.fieldArrowSelector).eq(Math.floor(Math.random() * 2)+1).click({force:true})
         cy.wait(200).contains('Save').click({force:true})
 
@@ -616,12 +616,12 @@ class PatientPortal extends BasePage {
         this.completeField('Street Address Line 2', 'Street Address Test Input 2')
         //The completeField logic method cannot be used here
         cy.get('.form-control.ng-pristine').eq(0).click().clear().type('012345678')
-        cy.get(this.selectValueSelector).eq(1).click()
-        cy.get(this.fieldArrowSelector).eq(1).click()
+        cy.get(this.selectValueSelector).eq(1).click({force:true})
+        cy.get(this.fieldArrowSelector).eq(1).click({force:true})
 
         cy.get('.form-control.ng-pristine').eq(1).click().clear().type('012345678')
-        cy.get(this.selectValueSelector).eq(1).click()
-        cy.get(this.fieldArrowSelector).eq(2).click()
+        cy.get(this.selectValueSelector).eq(1).click({force:true})
+        cy.get(this.fieldArrowSelector).eq(2).click({force:true})
 
         cy.get(this.selectValueSelector).eq(2).click()
         cy.get(this.fieldArrowSelector).eq(2).click()
