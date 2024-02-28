@@ -583,7 +583,7 @@ class PatientPortal extends BasePage {
 
     completeField(name: string, content: any): void
     {
-        cy.contains(name).next({force:true}).clear().type(content);
+        cy.contains(name).next({force:true}).type(content);
     }
 
     //Method only for new accounts created
