@@ -725,8 +725,8 @@ class PatientPortal extends BasePage {
     }
 
     goToMyAccount() : void {
-        cy.wait(1300).get(this.burgerMenuSelector).click();
-        cy.contains('My Account').click();
+        cy.wait(1300).get(this.burgerMenuSelector).click({force:true});
+        cy.contains('My Account').click({force:true});
     }
 
     activateEmailNotifications() : void {
@@ -840,18 +840,18 @@ class PatientPortal extends BasePage {
         this.completeField('Middle Name', 'Engineer')
         this.completeField('Last Name', 'E')
 
-        cy.get(this.iconCalendarSelector).eq(1).click()
-        cy.get(this.calendarPeriodSelector).click()
-        cy.get(this.calendarArrowSelector).click()
+        cy.get(this.iconCalendarSelector).eq(1).click({force:true})
+        cy.get(this.calendarPeriodSelector).click({force:true})
+        cy.get(this.calendarArrowSelector).click({force:true})
         cy.get(this.yearTabSelector).eq(Math.floor(Math.random() * 22)+1).click().wait(300)
-        cy.get(this.selectValueSelector).eq(0).click()
-        cy.get(this.fieldArrowSelector).eq(1).click()
+        cy.get(this.selectValueSelector).eq(0).click({force:true})
+        cy.get(this.fieldArrowSelector).eq(1).click({force:true})
         this.completeField('Occupation','Engineer Test Field')
         cy.get(this.selectValueSelector).eq(1).click({force:true})
         cy.get(this.fieldArrowSelector).eq(Math.floor(Math.random() * 2)+1).click({force:true})
         cy.get(this.selectValueSelector).eq(2).click({force:true})
         cy.get(this.fieldArrowSelector).eq(Math.floor(Math.random() * 2)+1).click({force:true})
-        cy.contains('Save').click()
+        cy.contains('Save').click({force:true})
     }
 
     selectCompleteFormsAndCompleteContactInformation() : void {
@@ -869,24 +869,24 @@ class PatientPortal extends BasePage {
         this.completeField('Street Address Line 2', 'Street Address Test Input 2')
         //The completeField logic method cannot be used here
         cy.get('.form-control.ng-pristine').eq(0).click().clear().type('012345678')
-        cy.get(this.selectValueSelector).eq(1).click()
-        cy.get(this.fieldArrowSelector).eq(1).click()
+        cy.get(this.selectValueSelector).eq(1).click({force:true})
+        cy.get(this.fieldArrowSelector).eq(1).click({force:true})
 
         cy.get('.form-control.ng-pristine').eq(1).click().clear().type('012345678')
-        cy.get(this.selectValueSelector).eq(1).click()
-        cy.get(this.fieldArrowSelector).eq(2).click()
+        cy.get(this.selectValueSelector).eq(1).click({force:true})
+        cy.get(this.fieldArrowSelector).eq(2).click{force:true}
 
-        cy.get(this.selectValueSelector).eq(2).click()
-        cy.get(this.fieldArrowSelector).eq(2).click()
+        cy.get(this.selectValueSelector).eq(2).click({force:true})
+        cy.get(this.fieldArrowSelector).eq(2).click({force:true})
         this.completeField('State','Ilfov')
 
-        cy.get('.form-control.ng-pristine').eq(2).click()
+        cy.get('.form-control.ng-pristine').eq(2).click({force:true})
         this.completeField('City','Bucharest')
         this.completeField('Zip Code','123123')
         this.completeField('Fax Number','+39420329312')
-        cy.contains('Save').click()
+        cy.contains('Save').click({force:true})
         this.checkForDrawing()
-        this.checkFinalStepForms()
+        this.checkFinalStepForms({force:true})
     }
 
     selectCompleteFormsAndCompleteEmergencyInformation() : void {
@@ -902,8 +902,8 @@ class PatientPortal extends BasePage {
         this.completeField('Contact Phone Number', '+4012345678')
         this.completeField('Alternate Phone', '+4012345678')
         cy.get(this.secondArrowSelector).click();
-        cy.get(this.fieldArrowSelector).eq(Math.floor(Math.random() * 9)+1).click()
-        cy.contains('Save').click()
+        cy.get(this.fieldArrowSelector).eq(Math.floor(Math.random() * 9)+1).click({force:true})
+        cy.contains('Save').click({force:true})
     }
 
     selectCompleteFormsAndCompletePrimaryPhysicianInformation() : void {
