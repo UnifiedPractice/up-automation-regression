@@ -874,7 +874,7 @@ class PatientPortal extends BasePage {
 
         cy.get('.form-control.ng-pristine').eq(1).click().clear().type('012345678')
         cy.get(this.selectValueSelector).eq(1).click({force:true})
-        cy.get(this.fieldArrowSelector).eq(2).click{force:true}
+        cy.get(this.fieldArrowSelector).eq(2).click({force:true})
 
         cy.get(this.selectValueSelector).eq(2).click({force:true})
         cy.get(this.fieldArrowSelector).eq(2).click({force:true})
