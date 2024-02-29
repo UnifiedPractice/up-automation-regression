@@ -296,7 +296,7 @@ class PatientPortal extends BasePage {
         cy.wait(2000);
         this.checkAvailability();
         this.searchAM();
-        cy.get(this.radioTabSelector).eq(2).click({force:true})
+        cy.get(this.radioTabSelector).eq(15).click({force:true})
         cy.wait(2400)
         cy.contains('Confirm Appointment').click();
         cy.wait(2500);
@@ -623,8 +623,8 @@ class PatientPortal extends BasePage {
         cy.get(this.selectValueSelector).eq(1).click({force:true})
         cy.get(this.fieldArrowSelector).eq(2).click({force:true})
 
-        cy.get(this.selectValueSelector).eq(2).click()
-        cy.get(this.fieldArrowSelector).eq(2).click()
+        cy.get(this.selectValueSelector).eq(2).click({force:true})
+        cy.get(this.fieldArrowSelector).eq(2).click({force:true})
         this.completeField('State','Ilfov')
 
         cy.get('.form-control.ng-pristine').eq(2).click()
