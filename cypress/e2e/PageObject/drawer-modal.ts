@@ -20,7 +20,7 @@ import BasePage from "./base-page";
 
     clickOnDropdownMarked(name: string) {
         
-        cy.get(this.dropDownPractitionerSelectorID).parent().click();
+        cy.get(this.dropDownPractitionerSelectorID).parent().click({force: true});
         cy.get(`${this.dropDownPractitionerSelectorID} + .bootstrap-select .dropdown-menu li`).contains(name).then(($button) => {
           if ($button[0] && $button[0].parentElement && $button[0].parentElement.classList.value.indexOf('selected') > -1) {
             cy.wrap($button).click({force: true});      
