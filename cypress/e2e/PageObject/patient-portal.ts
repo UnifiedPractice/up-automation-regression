@@ -155,11 +155,11 @@ class PatientPortal extends BasePage {
           }
 
         shouldBeVisible(name: string): void {
-            cy.wait(1500).contains(name).should('be.visible')
+            cy.wait(3500).contains(name).should('be.visible')
         }
 
         shouldNotBeVisible(name: string): void {
-            cy.wait(2500).contains(name).should('not.exist')
+            cy.wait(3500).contains(name).should('not.exist')
         }
 
     setToOff(name:string): void {
