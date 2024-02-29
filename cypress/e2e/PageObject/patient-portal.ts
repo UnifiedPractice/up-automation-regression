@@ -296,7 +296,7 @@ class PatientPortal extends BasePage {
         cy.wait(2000);
         this.checkAvailability();
         this.searchAM();
-        cy.get(this.radioTabSelector).eq(0).click({force:true})
+        cy.get(this.radioTabSelector).eq(2).click({force:true})
         cy.wait(2400)
         cy.contains('Confirm Appointment').click();
         cy.wait(2500);
@@ -314,7 +314,7 @@ class PatientPortal extends BasePage {
         this.checkAvailability();
         cy.contains('Select an appointment').should('be.visible')
         cy.wait(400)
-        cy.get(this.radioTabSelector).eq(0).click({force:true})
+        cy.get(this.radioTabSelector).eq(2).click({force:true})
         cy.wait(1000)
         cy.contains('Confirm Appointment').click();
         cy.contains('Your appointment was successfully booked').should('be.visible');
@@ -583,7 +583,7 @@ class PatientPortal extends BasePage {
 
     completeField(name: string, content: any): void
     {
-        cy.contains(name).next({force:true}).type(content);
+        cy.contains(name).next().type(content);
     }
 
     //Method only for new accounts created
@@ -895,7 +895,7 @@ class PatientPortal extends BasePage {
         //cy.get(this.burgerMenuSelector).click({force:true});
 
         cy.wait(2400).get('.select-box').eq(1).within(() =>
-            cy.get('.edit-col').eq(2).click({force:true}))
+            cy.get('.edit-col').eq(2).click())
 
         this.completeField('Contact Name', 'Contact Name Test Field')
         this.completeField('Email', 'automation4@email.com')
