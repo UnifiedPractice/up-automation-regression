@@ -627,19 +627,19 @@ class PatientPortal extends BasePage {
         cy.get(this.fieldArrowSelector).eq(2).click({force:true})
         this.completeField('State','Ilfov')
 
-        cy.get('.form-control.ng-pristine').eq(2).click()
+        cy.get('.form-control.ng-pristine').eq(2).click({force:true})
         this.completeField('City','Bucharest')
         this.completeField('Zip Code','123123')
         this.completeField('Fax Number','+39420329312')
-        cy.contains('Save').click()
+        cy.contains('Save').click({force:true})
 
         //Emergency Contact Information
         this.completeField('Contact Name', 'Contact Name Test Field')
         this.completeField('Email', 'automation4@email.com')
         this.completeField('Contact Phone Number', '+4012345678')
         this.completeField('Alternate Phone', '+4012345678')
-        cy.get(this.secondArrowSelector).click();
-        cy.get(this.fieldArrowSelector).eq(Math.floor(Math.random() * 9)+1).click()
+        cy.get(this.secondArrowSelector).click({force:true});
+        cy.get(this.fieldArrowSelector).eq(Math.floor(Math.random() * 9)+1).click({force:true})
         cy.contains('Save').click()
 
         //Primary Physician Information
@@ -647,7 +647,7 @@ class PatientPortal extends BasePage {
         this.completeField('Phone Number', '+4012345678')
         this.completeField('Specialty', 'Engineer')
         this.completeField('Current Treatment Plan', 'Paracetamol')
-        cy.contains('Save').click()
+        cy.contains('Save').click({force:true})
 
         //Medical Information
 
