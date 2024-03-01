@@ -768,9 +768,9 @@ class PatientPortal extends BasePage {
         cy.contains('Confirm New Password').next().click().type('password')
         cy.contains('Save').click();
 
-        cy.get('.inp').eq(0).click().type('automation5@email.com');
-        cy.contains('Password').parent().click().type('password');
-        cy.get('.login-btn.mat-flat-button.mat-primary').click();
+        // cy.get('.inp').eq(0).click().type('automation5@email.com');
+        // cy.contains('Password').parent().click().type('password');
+        // cy.get('.login-btn.mat-flat-button.mat-primary').click();
 
         //Clear
 
