@@ -12,7 +12,6 @@ class BasePage {
 public formSelector: string = '.form-group';
 public sliderSelector: string = '.checkboxSlider';
 
-
     chooseService(name:string) : void {
         cy.get('.cmtContent-update').contains(name).parent().find('.col-sm-1').click();
         }
