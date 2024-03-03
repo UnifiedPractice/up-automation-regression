@@ -725,7 +725,7 @@ class PatientPortal extends BasePage {
     }
 
     goToMyAccount() : void {
-        cy.wait(1300).get(this.burgerMenuSelector).click({force:true});
+        cy.wait(3300).get(this.burgerMenuSelector).wait(1500).click();
         cy.contains('My Account').click({force:true});
     }
 
