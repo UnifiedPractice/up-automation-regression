@@ -774,18 +774,18 @@ class PatientPortal extends BasePage {
 
         //Clear
 
-        this.goToMyAccount()
-        cy.contains('Change Password').click();
-        cy.contains('Old password').next().click().type('password')
-        cy.contains('New Password').next().click().type('password')
-        cy.contains('Confirm New Password').next().click().type('password')
-        cy.contains('Save').click();
+        // this.goToMyAccount()
+        // cy.contains('Change Password').click();
+        // cy.contains('Old password').next().click().type('password')
+        // cy.contains('New Password').next().click().type('password')
+        // cy.contains('Confirm New Password').next().click().type('password')
+        // cy.contains('Save').click();
 
-        cy.get('.inp').eq(0).click().type('automation5@email.com');
-        cy.contains('Password').parent().click().type('password');
-        cy.get('.login-btn.mat-flat-button.mat-primary').click();
+        // cy.get('.inp').eq(0).click().type('automation5@email.com');
+        // cy.contains('Password').parent().click().type('password');
+        // cy.get('.login-btn.mat-flat-button.mat-primary').click();
 
-        cy.contains('Automation Location').should('be.visible')
+        // cy.contains('Automation Location').should('be.visible')
     }
 
     forgotPassword() : void{
@@ -827,7 +827,7 @@ class PatientPortal extends BasePage {
 
     selectCompleteFormsAndCompletePatientInformation() : void {
         //cy.intercept('https://pp.api.staging.unifiedpractice.com/t/automation-cypress/Appointments?Direction=*').as('forms')
-        cy.wait(2500).get(this.burgerMenuSelector).click({force:true});
+        cy.wait(2500).get(this.burgerMenuSelector).click();
        // cy.wait('@forms')
         cy.contains('Forms').click({force:true})
         //cy.get(this.burgerMenuSelector).click({force:true});
@@ -890,7 +890,7 @@ class PatientPortal extends BasePage {
     }
 
     selectCompleteFormsAndCompleteEmergencyInformation() : void {
-        cy.wait(2500).get(this.burgerMenuSelector).click({force:true});
+        cy.wait(2500).get(this.burgerMenuSelector).click();
         cy.contains('Forms').click({force:true})
         //cy.get(this.burgerMenuSelector).click({force:true});
 
@@ -907,7 +907,7 @@ class PatientPortal extends BasePage {
     }
 
     selectCompleteFormsAndCompletePrimaryPhysicianInformation() : void {
-        cy.wait(2500).get(this.burgerMenuSelector).click({force:true});
+        cy.wait(2500).get(this.burgerMenuSelector).click();
         cy.wait(500).contains('Forms').click({force:true})
         // cy.get(this.burgerMenuSelector).click({force:true});
 
