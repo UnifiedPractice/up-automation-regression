@@ -47,7 +47,7 @@ class PatientPortal extends BasePage {
     public bookApointmentSelector : string = '.text-right';
     private uploadLiveChatSelector: string = '.rfu-file-upload-button';
     private secondSelectBoxSelector
-    private usernameLogin: string= 'automation5@email.com';
+    private usernameLogin: string= 'automation6@email.com';
     private passwordLogin: string = 'password';
     private cancelButton: string = '.mat-icon.notranslate.mt-1.cancel-icon.mat-icon-no-color';
     private rescheduleButoon: string = '.mat-icon.notranslate.mr-1.material-icons.mat-icon-no-color';
@@ -136,7 +136,7 @@ class PatientPortal extends BasePage {
     }
 
     proceedLogin() : void {
-        cy.get('.inp').eq(0).click().type('automation5@email.com');
+        cy.get('.inp').eq(0).click().type('automation6@email.com');
         cy.contains('Password').parent().click().type('password');
         cy.get(this.loginButtonSelector).click().wait(1800);
     }
@@ -790,7 +790,7 @@ class PatientPortal extends BasePage {
 
     forgotPassword() : void{
         cy.contains('Forgot password?').click();
-        cy.get(this.forgotFieldSelector).click().type('automation5@email.com')
+        cy.get(this.forgotFieldSelector).click().type('automation6@email.com')
         cy.contains('Send Me Instructions').click();
         cy.contains('Instructions Sent!').should('be.visible');
 
@@ -826,11 +826,11 @@ class PatientPortal extends BasePage {
     }
 
     selectCompleteFormsAndCompletePatientInformation() : void {
-        //cy.intercept('https://pp.api.staging.unifiedpractice.com/t/automation-cypress/Appointments?Direction=*').as('forms')
+
         cy.wait(2500).get(this.burgerMenuSelector).click();
-       // cy.wait('@forms')
-        cy.contains('Forms').click({force:true})
-        //cy.get(this.burgerMenuSelector).click({force:true});
+        cy.get('.cdk-overlay-pane').within( () =>
+            cy.wait(4000).contains('Forms').wait(1500).click({force:true})
+        )
 
         cy.wait(300).get('.select-box').eq(1).within(() =>
             cy.get('.edit-col').eq(0).click({force:true})
@@ -855,14 +855,14 @@ class PatientPortal extends BasePage {
     }
 
     selectCompleteFormsAndCompleteContactInformation() : void {
-        //cy.intercept('https://pp.api.staging.unifiedpractice.com/t/automation-cypress/Appointments?Direction=*').as('forms')
-        cy.wait(2500).get(this.burgerMenuSelector).click({force:true});
-        //cy.wait('@forms')
-        cy.contains('Forms').click({force:true})
-        //cy.get(this.burgerMenuSelector).click({force:true});
+
+        cy.wait(2500).get(this.burgerMenuSelector).click();
+        cy.get('.cdk-overlay-pane').within( () =>
+            cy.wait(4000).contains('Forms').wait(1500).click({force:true})
+        )
 
         cy.wait(800).get('.select-box').eq(1).within(() =>
-            cy.get('.edit-col').eq(1).click({force:true})
+            cy.get('.edit-col').eq(1).click({force:true}).wait(1000)
             )
 
         this.completeField('Street Address', 'Street Address Test Input')
@@ -890,9 +890,11 @@ class PatientPortal extends BasePage {
     }
 
     selectCompleteFormsAndCompleteEmergencyInformation() : void {
+
         cy.wait(2500).get(this.burgerMenuSelector).click();
-        cy.contains('Forms').click({force:true})
-        //cy.get(this.burgerMenuSelector).click({force:true});
+        cy.get('.cdk-overlay-pane').within( () =>
+            cy.wait(4000).contains('Forms').wait(1500).click({force:true})
+        )
 
         cy.wait(2400).get('.select-box').eq(1).within(() =>
             cy.get('.edit-col').eq(2).click())
@@ -907,9 +909,11 @@ class PatientPortal extends BasePage {
     }
 
     selectCompleteFormsAndCompletePrimaryPhysicianInformation() : void {
+
         cy.wait(2500).get(this.burgerMenuSelector).click();
-        cy.wait(500).contains('Forms').click({force:true})
-        // cy.get(this.burgerMenuSelector).click({force:true});
+        cy.get('.cdk-overlay-pane').within( () =>
+            cy.wait(4000).contains('Forms').wait(1500).click({force:true})
+        )
 
         cy.get('.pp-container').then( ($selectBox) =>{
             const secondBoxExist = $selectBox.text().includes('Thanks');
@@ -957,14 +961,13 @@ class PatientPortal extends BasePage {
     }
 
     selectCompleteFormsAndCompleteMedicalInformation() : void {
-        //cy.intercept('https://pp.api.staging.unifiedpractice.com/t/automation-cypress/Appointments?Direction=*').as('forms')
-        cy.wait(2000).get(this.burgerMenuSelector).click({force:true});
-        //cy.wait('@forms')
-        cy.contains('Forms').click({force:true})
-        //cy.get(this.burgerMenuSelector).click({force:true});
+        cy.wait(2500).get(this.burgerMenuSelector).click();
+        cy.get('.cdk-overlay-pane').within( () =>
+            cy.wait(4000).contains('Forms').wait(1500).click({force:true})
+        )
+
         cy.wait(1400).get('.select-box').eq(1).within(() =>
             cy.get('.edit-col').eq(4).click({force:true}))
-
 
         //Check medications slider is set to on; if not, proceed
         cy.get('#switch-showMedication').then(($ele) => {
@@ -1037,11 +1040,11 @@ class PatientPortal extends BasePage {
     }
 
     selectCompleteFormsAndCompleteAdditionalInformation() : void {
-        //cy.intercept('https://pp.api.staging.unifiedpractice.com/t/automation-cypress/Appointments?Direction=*').as('forms')
-        cy.wait(2000).get(this.burgerMenuSelector).click({force:true});
-        //cy.wait('@forms')
-        cy.wait(2000).contains('Forms').click({force:true})
-        cy.get(this.burgerMenuSelector).click({force:true});
+
+        cy.wait(2500).get(this.burgerMenuSelector).click();
+        cy.get('.cdk-overlay-pane').within( () =>
+            cy.wait(4000).contains('Forms').wait(1500).click({force:true})
+        )
 
         cy.wait(900).get('.select-box').eq(1).within(() =>
             cy.get('.edit-col').eq(5).click({force:true}))
@@ -1073,11 +1076,12 @@ class PatientPortal extends BasePage {
 
 
     selectCompleteFormsAndCompleteScreeningForms() : void {
-        //cy.intercept('https://pp.api.staging.unifiedpractice.com/t/automation-cypress/Appointments?Direction=*').as('forms')
-        cy.wait(2500).get(this.burgerMenuSelector).click({force:true});
-        //cy.wait('@forms')
-        cy.contains('Forms').click({force:true})
-        cy.get(this.burgerMenuSelector).click({force:true});
+
+        cy.wait(2500).get(this.burgerMenuSelector).click();
+        cy.get('.cdk-overlay-pane').within( () =>
+            cy.wait(4000).contains('Forms').wait(1500).click({force:true})
+        )
+
         cy.wait(1100).get('.select-box').last().within(() =>
             cy.wait(2000).get('.edit-col').eq(7).click({force: true}).wait(1500)
         )
@@ -1097,7 +1101,6 @@ class PatientPortal extends BasePage {
             }
         })
     }
-
 
     //STEP THAT HELPS TO DETERMINE THE EVOLUTION OF FORM COMPLETION; USEFUL FOR SCREENING FORMS
     checkFinalFormsWindow(): void {
