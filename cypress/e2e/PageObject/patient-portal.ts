@@ -944,7 +944,7 @@ class PatientPortal extends BasePage {
             const checkCompleteFormsExist= $box.text().includes('Complete Forms');
 
             if (checkSaveButtonExist || checkCompleteFormsExist) {
-                cy.wait(2000).get(".btn.btn-primary").click({force:true}).wait(8500)
+                cy.wait(6000).get(".btn.btn-primary").click({force:true}).wait(8500)
                     .then(() => this.checkFinalStepForms())
             }
             })
