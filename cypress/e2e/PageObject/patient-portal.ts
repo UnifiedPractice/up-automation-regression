@@ -583,7 +583,7 @@ class PatientPortal extends BasePage {
 
     completeField(name: string, content: any): void
     {
-        cy.contains(name).next().type(content, { force: true });
+        cy.contains(name).next().clear().type(content, { force: true });
     }
 
     //Method only for new accounts created
@@ -827,10 +827,7 @@ class PatientPortal extends BasePage {
 
     selectCompleteFormsAndCompletePatientInformation() : void {
 
-        cy.wait(2500).get(this.burgerMenuSelector).click();
-        cy.get('.cdk-overlay-pane').within( () =>
-            cy.wait(4000).contains('Forms').wait(1500).click({force:true})
-        )
+        this.selectFormsfromMenu()
 
         cy.wait(300).get('.select-box').eq(1).within(() =>
             cy.get('.edit-col').eq(0).click({force:true})
@@ -854,12 +851,16 @@ class PatientPortal extends BasePage {
         cy.contains('Save').click({force:true})
     }
 
+    selectFormsfromMenu(): void{
+        cy.wait(2500).get(this.burgerMenuSelector).click()
+        cy.get('.cdk-overlay-pane').within( () =>
+            cy.contains('Forms').click({force:true}).wait(25000)
+        )
+    }
+
     selectCompleteFormsAndCompleteContactInformation() : void {
 
-        cy.wait(2500).get(this.burgerMenuSelector).click();
-        cy.get('.cdk-overlay-pane').within( () =>
-            cy.wait(4000).contains('Forms').wait(1500).click({force:true})
-        )
+        this.selectFormsfromMenu()
 
         cy.wait(800).get('.select-box').eq(1).within(() =>
             cy.get('.edit-col').eq(1).click({force:true}).wait(1000)
@@ -883,7 +884,7 @@ class PatientPortal extends BasePage {
         cy.get('.form-control.ng-pristine').eq(2).click({force:true})
         this.completeField('City','Bucharest')
         this.completeField('Zip Code','123123')
-        this.completeField('Fax Number','+39420329312')
+        this.completeField('Fax Number','39420329312')
         cy.contains('Save').click({force:true})
         this.checkForDrawing()
         this.checkFinalStepForms({force:true})
@@ -891,10 +892,7 @@ class PatientPortal extends BasePage {
 
     selectCompleteFormsAndCompleteEmergencyInformation() : void {
 
-        cy.wait(2500).get(this.burgerMenuSelector).click();
-        cy.get('.cdk-overlay-pane').within( () =>
-            cy.wait(4000).contains('Forms').wait(1500).click({force:true})
-        )
+        this.selectFormsfromMenu()
 
         cy.wait(2400).get('.select-box').eq(1).within(() =>
             cy.get('.edit-col').eq(2).click())
@@ -910,10 +908,7 @@ class PatientPortal extends BasePage {
 
     selectCompleteFormsAndCompletePrimaryPhysicianInformation() : void {
 
-        cy.wait(2500).get(this.burgerMenuSelector).click();
-        cy.get('.cdk-overlay-pane').within( () =>
-            cy.wait(4000).contains('Forms').wait(1500).click({force:true})
-        )
+        this.selectFormsfromMenu()
 
         cy.get('.pp-container').then( ($selectBox) =>{
             const secondBoxExist = $selectBox.text().includes('Thanks');
@@ -945,13 +940,14 @@ class PatientPortal extends BasePage {
 
     checkFinalStepForms() : void{
         cy.get(this.boxSelector).then(($box) => {
-            const checkSaveButtonExist= $box.text().includes('Save');
-            if (checkSaveButtonExist) {
-                cy.contains('Continue').click({force:true})
+            const checkSaveButtonExist= $box.text().includes('Save & Continue');
+            const checkCompleteFormsExist= $box.text().includes('Complete Forms');
+
+            if (checkSaveButtonExist || checkCompleteFormsExist) {
+                cy.wait(2000).get(".btn.btn-primary").click({force:true}).wait(8500)
                     .then(() => this.checkFinalStepForms())
             }
             })
-
     }
 
     chooseRandomDateFormsCalendar() : void {
@@ -961,10 +957,8 @@ class PatientPortal extends BasePage {
     }
 
     selectCompleteFormsAndCompleteMedicalInformation() : void {
-        cy.wait(2500).get(this.burgerMenuSelector).click();
-        cy.get('.cdk-overlay-pane').within( () =>
-            cy.wait(4000).contains('Forms').wait(1500).click({force:true})
-        )
+
+        this.selectFormsfromMenu()
 
         cy.wait(1400).get('.select-box').eq(1).within(() =>
             cy.get('.edit-col').eq(4).click({force:true}))
@@ -1041,10 +1035,7 @@ class PatientPortal extends BasePage {
 
     selectCompleteFormsAndCompleteAdditionalInformation() : void {
 
-        cy.wait(2500).get(this.burgerMenuSelector).click();
-        cy.get('.cdk-overlay-pane').within( () =>
-            cy.wait(4000).contains('Forms').wait(1500).click({force:true})
-        )
+        this.selectFormsfromMenu()
 
         cy.wait(900).get('.select-box').eq(1).within(() =>
             cy.get('.edit-col').eq(5).click({force:true}))
@@ -1077,10 +1068,7 @@ class PatientPortal extends BasePage {
 
     selectCompleteFormsAndCompleteScreeningForms() : void {
 
-        cy.wait(2500).get(this.burgerMenuSelector).click();
-        cy.get('.cdk-overlay-pane').within( () =>
-            cy.wait(4000).contains('Forms').wait(1500).click({force:true})
-        )
+        this.selectFormsfromMenu()
 
         cy.wait(1100).get('.select-box').last().within(() =>
             cy.wait(2000).get('.edit-col').eq(7).click({force: true}).wait(1500)
