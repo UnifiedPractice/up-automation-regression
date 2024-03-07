@@ -136,7 +136,7 @@ class PatientPortal extends BasePage {
     }
 
     proceedLogin() : void {
-        cy.get('.inp').eq(0).click().type('automation6@email.com');
+        cy.wait(5000).get('.inp').eq(0).click().type('automation6@email.com');
         cy.contains('Password').parent().click().type('password');
         cy.get(this.loginButtonSelector).click().wait(1800);
     }
@@ -353,7 +353,7 @@ class PatientPortal extends BasePage {
 
     //Another intercept would be ideal in this method
     checkVisibilityUpcoming(): void {
-        cy.wait(2500)
+        cy.wait(7500)
         cy.get('.mat-flat-button.mat-primary.mat-button-base').then($button => {
             if($button.text().includes('Show more upcoming')) {
                 cy.intercept('https://pp.api.staging.unifiedpractice.com/t/automation-cypress/Appointments?Direction=2&Take=6&Skip=*').as('upcoming')
