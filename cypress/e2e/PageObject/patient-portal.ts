@@ -583,7 +583,7 @@ class PatientPortal extends BasePage {
 
     completeField(name: string, content: any): void
     {
-        cy.contains(name).next().clear().type(content, { force: true });
+        cy.contains(name).next().type(content, { force: true });
     }
 
     //Method only for new accounts created
@@ -630,7 +630,7 @@ class PatientPortal extends BasePage {
         cy.get('.form-control.ng-pristine').eq(2).click({force:true})
         this.completeField('City','Bucharest')
         this.completeField('Zip Code','123123')
-        this.completeField('Fax Number','+39420329312')
+        this.completeField('Fax Number','39420329312')
         cy.contains('Save').click({force:true})
 
         //Emergency Contact Information
