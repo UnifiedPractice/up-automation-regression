@@ -199,6 +199,7 @@ class PatientPortal extends BasePage {
         cy.get('div').contains('the data entered does').should('be.visible')
     }
     checkAvailability(): void {
+        cy.contains('Next week').click();
         cy.wait(3500);
         this.interceptAndWaitForAvailabilities();
             cy.wait(2500)
