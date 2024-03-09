@@ -208,7 +208,7 @@ class PatientPortal extends BasePage {
                     //this.interceptAndWaitForAvailabilities();
                     cy.wait(2500);
                     cy.contains('Next week').click();
-                    cy.wait(2500);
+                    cy.wait(7500);
                 }
         }
             )}
@@ -277,7 +277,7 @@ class PatientPortal extends BasePage {
         cy.wait(2000);
         this.checkAvailability();
         this.searchAM();
-        cy.get(this.radioTabSelector).eq(15).click({force:true})
+        cy.get(this.radioTabSelector).eq(5).click({force:true})
         cy.wait(2400)
         cy.contains('Confirm Appointment').click();
         cy.wait(2500);
@@ -296,7 +296,7 @@ class PatientPortal extends BasePage {
         cy.wait(2000);
         this.checkAvailability();
         this.searchAM();
-        cy.get(this.radioTabSelector).eq(15).click({force:true})
+        cy.get(this.radioTabSelector).eq(5).click({force:true})
         cy.wait(2400)
         cy.contains('Confirm Appointment').click();
         cy.wait(2500);
@@ -314,7 +314,7 @@ class PatientPortal extends BasePage {
         this.checkAvailability();
         cy.contains('Select an appointment').should('be.visible')
         cy.wait(400)
-        cy.get(this.radioTabSelector).eq(15).click({force:true})
+        cy.get(this.radioTabSelector).eq(5).click({force:true})
         cy.wait(1000)
         cy.contains('Confirm Appointment').click();
         cy.contains('Your appointment was successfully booked').should('be.visible');
