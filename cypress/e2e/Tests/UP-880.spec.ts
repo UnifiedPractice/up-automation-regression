@@ -9,14 +9,7 @@ describe('Automation test for UP-880', () => {
     const navigate = new SideBarNavigate();
     const patientList = new PatientList();
 
-    // For retain session and prevent logout during testing - it's a must have in all tests for prevent logout
-    //beforeEach(() => {
-        //cy.session('ASP.NET_SessionId', 'sessionid', 'chatToken')
-    //})
-    // End beforeEach
-
-    //Start login process. It calls Patient Portal class from PatientPortal file and
-    // for more easiness that class is attributed to login const
+ 
     it("UP-880", function () {
 
         login.goToStaging();

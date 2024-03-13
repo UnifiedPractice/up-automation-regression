@@ -14,15 +14,6 @@ describe('Automation test for UP-802', () => {
     const basePage = new BasePage();
     const drawerModal = new DrawerModal();
 
-
-    // For retain session and prevent logout during testing - it's a must have in all tests for prevent logout
-    //beforeEach(() => {
-        //cy.session('ASP.NET_SessionId', 'sessionid', 'chatToken')
-    //})
-    // End beforeEach
-
-    //Start login process. It calls Patient Portal class from PatientPortal file and
-    // for more easiness that class is attributed to login const
     it("UP-802", function () {
 
         login.goToStaging();
@@ -43,6 +34,15 @@ describe('Automation test for UP-802', () => {
         pp.checkLogin();
         pp.selectRadio(1);
         pp.shouldNotBeVisible ('Automation Location')
+
+        //Cleaning
+        pp.backtoEHR();
+        navigate.extendMenu();
+        navigate.selectCS('Locations');
+        clinicLocations.chooseAutomation();
+
+        basePage.setToOn('Clinic location is active?');
+        drawerModal.saveButton();
       
     })
 

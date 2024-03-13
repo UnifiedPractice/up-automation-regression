@@ -13,6 +13,8 @@ import BasePage from "./base-page";
 import 'cypress-wait-until';
 import { format, addDays} from 'date-fns';
 import {getDayMonthHour} from "./patient-list";
+import base = Mocha.reporters.base;
+import basePage from "./base-page";
 const { uniqueNamesGenerator, Config, adjectives, colors } = require('unique-names-generator');
 export const confirm = Math.floor(Math.random() * 22)
 
@@ -45,9 +47,10 @@ class PatientPortal extends BasePage {
     public bookApointmentSelector : string = '.text-right';
     private uploadLiveChatSelector: string = '.rfu-file-upload-button';
     private secondSelectBoxSelector
-    private usernameLogin: string= 'automation4@email.com';
+    private usernameLogin: string= 'automation6@email.com';
     private passwordLogin: string = 'password';
-
+    private cancelButton: string = '.mat-icon.notranslate.mt-1.cancel-icon.mat-icon-no-color';
+    private rescheduleButoon: string = '.mat-icon.notranslate.mr-1.material-icons.mat-icon-no-color';
     const randomName = uniqueNamesGenerator({
         dictionaries: [adjectives, colors],
         length: 2,
@@ -56,14 +59,26 @@ class PatientPortal extends BasePage {
     });
 
     openPP(): void {
+        this.setToOn('Allow patients to book appointments online');
+        cy.wait(500);
+        cy.contains('Save').click().wait(1200);
         cy.intercept(`${FINAL_API_STAGING_PP()}`).as('ppOrganization');
-        cy.contains('https://pp.staging.unifiedpractice.com/automation').should('be.visible').get('.label-pp-url').eq(1).invoke('removeAttr', 'target').click()
+        cy.contains('https://pp.staging.unifiedpractice.com/automation-cypress').should('be.visible').get('.label-pp-url').eq(1).invoke('removeAttr', 'target').click()
         cy.wait(2000)
         cy.wait('@ppOrganization');
         //It is desired to eliminate this wait, but sometimes in tests the intercept is not enough
         cy.wait(1500)
     }
 
+    openPPwithoutActive(): void {
+        cy.contains('Save').click().wait(1200);
+        cy.intercept(`${FINAL_API_STAGING_PP()}`).as('ppOrganization');
+        cy.contains('https://pp.staging.unifiedpractice.com/automation-cypress').should('be.visible').get('.label-pp-url').eq(1).invoke('removeAttr', 'target').click()
+        cy.wait(2000)
+        cy.wait('@ppOrganization');
+        //It is desired to eliminate this wait, but sometimes in tests the intercept is not enough
+        cy.wait(1500)
+    }
     openPPUniveristy(): void {
         cy.intercept(`${FINAL_API_STAGING_PP_UNIVERSITY()}`).as('ppOrganization');
         cy.contains('https://pp.staging.unifiedpractice.com/automation-cypress-university').should('be.visible').get('.label-pp-url').eq(1).invoke('removeAttr', 'target').click()
@@ -93,8 +108,6 @@ class PatientPortal extends BasePage {
     //Need to be improved with intercept
     interceptAndWaitForAvailabilities(): void{
             cy.wait(500)
-            // cy.intercept('https://pp.api.staging.unifiedpractice.com/t/automation-cypress/Availabilities?LocationGuid=*').as('hour')
-            // cy.wait('@hour')
         }
 
     loginCredentials(email,password): void {
@@ -103,15 +116,15 @@ class PatientPortal extends BasePage {
     }
     
     selectLocation(name: string) : void { 
-        cy.contains(name).click();
+        cy.wait(2500).contains(name).click();
     }
 
     selectService(name: string) : void { 
-        cy.contains(name).click();
+        cy.wait(2500).contains(name).click();
     }
 
     selectPractitioner(name: string) : void { 
-        cy.contains(name).click();
+        cy.wait(2500).contains(name).click();
     }
 
     pressLogin(): void {
@@ -123,9 +136,9 @@ class PatientPortal extends BasePage {
     }
 
     proceedLogin() : void {
-        cy.get('.inp').eq(0).click().type('automation4@email.com');
+        cy.wait(5000).get('.inp').eq(0).click().type('automation6@email.com');
         cy.contains('Password').parent().click().type('password');
-        cy.get(this.loginButtonSelector).click();
+        cy.get(this.loginButtonSelector).click().wait(1800);
     }
 
     checkLogin() {
@@ -142,11 +155,11 @@ class PatientPortal extends BasePage {
           }
 
         shouldBeVisible(name: string): void {
-            cy.wait(1500).contains(name).should('be.visible')
+            cy.wait(3500).contains(name).should('be.visible')
         }
 
         shouldNotBeVisible(name: string): void {
-            cy.wait(500).contains(name).should('not.exist')
+            cy.wait(3500).contains(name).should('not.exist')
         }
 
     setToOff(name:string): void {
@@ -165,14 +178,38 @@ class PatientPortal extends BasePage {
             })
     }
 
-        checkAvailability(): void {
-           this.interceptAndWaitForAvailabilities();
+    proceedForMatchingError(): void {
+        cy.contains('existing patient').click();
+        cy.contains('Automation with CCPE').click();
+        this.checkPractitionersNumber()
+        this.checkAvailability();
+        cy.contains('Select an appointment').should('be.visible')
+        cy.wait(700)
+        cy.get(this.radioTabSelector).eq(0).click({force:true})
+        cy.contains('Create Account').click();
+        cy.get('.email-input').click().type('engineer'+getDayMonthHour+'@email.com' );
+        cy.get('.mat-button-wrapper').contains('Create Account').click();
+
+        //Go to staging emails
+        cy.visit('https://staging.unifiedpractice.com/dirlisting/d379136412c1476d9397f9ee3b606448/notifications')
+        cy.contains('emails').invoke('removeAttr', 'target').click();
+        cy.wait(500)
+        cy.get('a').eq(7).invoke('removeAttr', 'target').click()
+        cy.get('a').eq(7).invoke('removeAttr', 'target').click()
+        cy.get('div').contains('the data entered does').should('be.visible')
+    }
+    checkAvailability(): void {
+        cy.contains('Next week').click();
+        cy.wait(3500);
+        this.interceptAndWaitForAvailabilities();
+            cy.wait(2500)
             cy.get(this.boxSelector).then($box => {
                 const noAvailability = $box.text().includes('No time slots available. Please change interval or select another practitioner.')
                 if (noAvailability) {
                     //this.interceptAndWaitForAvailabilities();
-                    cy.wait(700)
+                    cy.wait(2500);
                     cy.contains('Next week').click();
+                    cy.wait(7500);
                 }
         }
             )}
@@ -184,12 +221,14 @@ class PatientPortal extends BasePage {
             cy.contains('Upcoming Appointments').should('have.css', 'display', 'none');
             cy.contains('Book Appointment').click({force:true});
             this.checkLocationsNumber();
-            cy.contains('Automation with CCPE').click();
+            cy.wait(2000).contains('Automation with CCPE').click();
             this.checkPractitionersNumber();
             this.checkAvailability();
             cy.contains('Select an appointment').should('be.visible')
             cy.wait(500)
-            cy.get(this.radioTabSelector).eq(Math.floor(Math.random() * this.radioTabSelector.length)).click({force:true})
+            // cy.get(this.radioTabSelector).eq(Math.floor(Math.random() * this.radioTabSelector.length)).click({force:true})
+            cy.get(this.radioTabSelector).eq(0).click({force:true})
+
             cy.contains('Confirm Appointment').click();
             cy.contains('Your appointment was successfully booked').should('be.visible');
             cy.contains('Dashboard').click()
@@ -204,7 +243,8 @@ class PatientPortal extends BasePage {
         this.checkAvailability();
         cy.contains('Select an appointment').should('be.visible')
         cy.wait(500)
-        cy.get(this.radioTabSelector).eq(Math.floor(Math.random() * this.radioTabSelector.length)).click({force:true})
+        //cy.get(this.radioTabSelector).eq(Math.floor(Math.random() * this.radioTabSelector.length)).click({force:true})
+        cy.get(this.radioTabSelector).eq(0).click({force:true})
         cy.contains('Confirm Appointment').click();
         cy.contains('Your appointment was successfully booked').should('be.visible');
         cy.contains('Dashboard').click()
@@ -215,12 +255,14 @@ class PatientPortal extends BasePage {
         cy.contains('Upcoming Appointments').should('have.css', 'display', 'none');
         cy.contains('Book Appointment').click({force:true});
         this.checkLocationsNumber();
-        cy.contains('Automation with CCPE').click();
-        cy.contains('Automation Engineer').click();
+        cy.wait(2000).contains('Automation with CCPE').click();
+        cy.wait(2000).contains('Automation Engineer').click();
         this.checkAvailability();
+        cy.wait(2500)
         cy.contains('Select an appointment').should('be.visible')
         cy.wait(500)
-        cy.get(this.radioTabSelector).eq(Math.floor(Math.random() * this.radioTabSelector.length)).click({force:true})
+        //cy.get(this.radioTabSelector).eq(Math.floor(Math.random() * this.radioTabSelector.length)).click({force:true})
+        cy.get(this.radioTabSelector).eq(0).click({force:true})
         cy.contains('Confirm Appointment').click();
         cy.contains('Your appointment was successfully booked').should('be.visible');
         cy.contains('Dashboard').click()
@@ -230,29 +272,50 @@ class PatientPortal extends BasePage {
         cy.contains('Upcoming Appointments').should('have.css', 'display', 'none');
         cy.contains('Book Appointment').click({force:true});
         this.checkLocationsNumber();
-        cy.wait(500)
+        cy.wait(3500)
         cy.contains('Automation with CCPE').click();
         this.checkPractitionersNumber();
+        cy.wait(2000);
         this.checkAvailability();
         this.searchAM();
-        cy.get(this.radioTabSelector).eq(0).click({force:true})
-        cy.wait(1400)
+        cy.get(this.radioTabSelector).eq(5).click({force:true})
+        cy.wait(2400)
         cy.contains('Confirm Appointment').click();
+        cy.wait(2500);
         cy.contains('Your appointment was successfully booked').should('be.visible');
-        cy.contains('Dashboard').click()
+        cy.contains('Dashboard').click();
+    }
+
+    bookNewAppointmentASAPonUniversities(): void {
+        cy.contains('Upcoming Appointments').should('have.css', 'display', 'none');
+        cy.contains('Book Appointment').click({force:true});
+        this.checkLocationsNumber();
+        cy.wait(3500)
+        cy.contains('Automation with CCPE').click();
+        cy.contains('Book with a licensed practitioner').click().wait(300);
+        this.checkPractitionersNumber();
+        cy.wait(2000);
+        this.checkAvailability();
+        this.searchAM();
+        cy.get(this.radioTabSelector).eq(5).click({force:true})
+        cy.wait(2400)
+        cy.contains('Confirm Appointment').click();
+        cy.wait(2500);
+        cy.contains('Your appointment was successfully booked').should('be.visible');
+        cy.contains('Dashboard').click();
     }
 
     bookNewAppointmentASAPAutomationWithCCPE(): void{
         cy.contains('Upcoming Appointments').should('have.css', 'display', 'none');
         cy.contains('Book Appointment').click({force:true});
         this.checkLocationsNumber();
-        cy.wait(500)
+        cy.wait(2500)
         cy.contains('Automation with CCPE').click();
         this.checkPractitionersNumber();
         this.checkAvailability();
         cy.contains('Select an appointment').should('be.visible')
         cy.wait(400)
-        cy.get(this.radioTabSelector).eq(0).click({force:true})
+        cy.get(this.radioTabSelector).eq(5).click({force:true})
         cy.wait(1000)
         cy.contains('Confirm Appointment').click();
         cy.contains('Your appointment was successfully booked').should('be.visible');
@@ -262,41 +325,36 @@ class PatientPortal extends BasePage {
     checkPractitionersNumber(): void {
         //this.interceptAndWaitForAvailabilities();
         cy.get(this.boxSelector).then($box => {
-            const moreThanOne = $box.text().includes('Select practitioner')
+            const moreThanOne = $box.text().includes('Book with a specific practitioner')
             if (moreThanOne) {
                // this.interceptAndWaitForAvailabilities();
-                cy.contains('Automation Engineer').click();
+                cy.wait(1000).contains('Automation Engineer').click();
             }
         })
     }
 
     checkLocationsNumber(): void {
         cy.wait(800)
-        console.log('checkprac1')
-        //this.interceptAndWaitForAvailabilities();
         cy.get(this.boxSelector).then($box => {
             const moreThanOne = $box.text().includes('Select a location')
             if (moreThanOne) {
-                // this.interceptAndWaitForAvailabilities();
-                cy.get('.row-md-radio').children().contains('Automation Location').click({force:true});
+                cy.wait(400).get('.row-md-radio').children().contains('Automation Location').click({force:true});
                 console.log('checkpract2')
             }
         })
     }
 
-
-
     textInBox(parent:string, value: string): void {
         cy.contains('div', parent)
             .parent() //Moves to parent div row
             .within(() => { //scopes the commands within the above div row
-                cy.get('.form-control').click().clear().type(value);
+                cy.get('.form-control').click().type('{selectall}{backspace}').type(value);
             })
     }
 
     //Another intercept would be ideal in this method
     checkVisibilityUpcoming(): void {
-        cy.wait(1500)
+        cy.wait(7500)
         cy.get('.mat-flat-button.mat-primary.mat-button-base').then($button => {
             if($button.text().includes('Show more upcoming')) {
                 cy.intercept('https://pp.api.staging.unifiedpractice.com/t/automation-cypress/Appointments?Direction=2&Take=6&Skip=*').as('upcoming')
@@ -309,10 +367,14 @@ class PatientPortal extends BasePage {
 
     checkForNoPreferenceStateOn(): void{
         cy.contains('Upcoming Appointments').should('have.css', 'display', 'none');
-        cy.contains('Book Appointment').click({force:true});
+        cy.contains('Book Appointment').click({force:true}).wait(2500);
         this.checkLocationsNumber();
-        cy.contains('Automation with CCPE').click();
-        cy.contains('have a preference').should('be.visible')
+        cy.wait(2500).contains('Automation with CCPE').click();
+        cy.wait(1500).contains('have a preference').click();
+        this.checkAvailability();
+        cy.get(this.radioTabSelector).eq(0).click({force:true})
+        cy.contains('Confirm Appointment').click();
+        cy.contains('Your appointment was successfully booked').should('be.visible');
     }
 
     checkForNoPreferenceStateOff(): void{
@@ -333,27 +395,38 @@ class PatientPortal extends BasePage {
         cy.contains('Book Appointment').click({force:true});
         cy.wait(400)
         this.checkLocationsNumber();
-        cy.wait(400)
+        cy.wait(2400)
         cy.contains('Automation with CCPE').click();
+        cy.wait(2400)
         this.checkPractitionersNumber();
         this.checkAvailability();
         cy.contains('Select an appointment').should('be.visible')
     }
 
+    proceedFinishAppointmentAfterCheckInterval(): void{
+        cy.wait(2500);
+        cy.get(this.radioTabSelector).eq(0).click({force:true})
+        cy.contains('Confirm Appointment').click();
+        cy.contains('Your appointment was successfully booked').should('be.visible');
+        cy.contains('Dashboard').click()
+    }
     setAvailabilitiesIntervalToCheckFor30Minutes(): void {
-        cy.wait(500)
+        cy.wait(500);
         cy.contains(':00').should('be.visible');
         cy.contains(':30').should('be.visible');
         cy.contains(':15').should('not.exist');
         cy.contains(':45').should('not.exist');
+        cy.wait(2500);
+
     }
 
     setAvailabilitiesIntervalToCheckFor15Minutes(): void {
-        cy.wait(500)
+        cy.wait(500);
         cy.contains(':00').should('be.visible');
         cy.contains(':30').should('be.visible');
         cy.contains(':15').should('be.visible');
         cy.contains(':45').should('be.visible');
+        cy.wait(2500);
     }
 
     setAvailabilitiesIntervalToCheckFor60Minutes(): void {
@@ -361,6 +434,8 @@ class PatientPortal extends BasePage {
         cy.contains(':30').should('not.exist');
         cy.contains(':15').should('not.exist');
         cy.contains(':45').should('not.exist');
+        cy.wait(2500);
+
     }
 
     checkTodayToBeHidden(): void{
@@ -371,7 +446,6 @@ class PatientPortal extends BasePage {
     checkFeature30Days(): void{
         const today = new Date();
         var featureDay = format ( addDays (today, 30), "MMMM dd")
-
         cy.get('.calendar-row').then(($el) => {
             const oneMonth = $el.text().includes(featureDay)
             console.log($el.text())
@@ -389,7 +463,6 @@ class PatientPortal extends BasePage {
     }
 
     searchAM(): void{
-
         cy.get('.md-radio-tab').eq(0).then(($el) => {
             const checkAM = $el.text().includes('AM')
             if(!checkAM){
@@ -400,17 +473,20 @@ class PatientPortal extends BasePage {
     }
 
     checkReschedule(): void{
-        cy.contains('Reschedule').eq(0).click();
-        cy.wait(900)
+        cy.get(this.rescheduleButoon).eq(0).click({force:true});
+        cy.wait(2900)
+        this.checkAvailability();
+        cy.wait(5500)
         cy.get(this.radioTabSelector).eq(0).click({force:true})
-        cy.wait(500)
-        cy.contains('Confirm Appointment').click();
-        cy.contains('Your appointment was successfully rescheduled').should('be.visible');
+        cy.wait(5500)
+        cy.contains('Confirm Appointment').click().wait(1500);
+        cy.contains('Your appointment was successfully booked').should('be.visible');
         cy.contains('Dashboard').click()
     }
 
     cancelAppointment(): void{
-        cy.wait(1500).contains('Cancel').eq(0).click({force:true});
+        //cy.wait(3500).contains('Cancel').eq(0).click({force:true});
+        cy.wait(2500).get(this.cancelButton).eq(0).click({force:true});
         cy.wait(500)
         cy.get('.textarea-modal').type('Reason for cancel text')
         cy.intercept('https://pp.api.staging.unifiedpractice.com/t/automation-cypress/Appointments/*/cancel').as('cancel')
@@ -421,7 +497,7 @@ class PatientPortal extends BasePage {
     }
 
     cancelAppointmentUniversity(): void{
-        cy.contains('Cancel').eq(0).click({force:true});
+        cy.wait(2500).get(this.cancelButton).eq(0).click({force:true});
         cy.wait(2500)
         cy.get('.textarea-modal').type('Reason for cancel text')
         cy.intercept('https://pp.api.staging.unifiedpractice.com/t/automation-cypress-university/Appointments/*/cancel').as('cancel')
@@ -474,10 +550,10 @@ class PatientPortal extends BasePage {
         this.checkAvailability();
         cy.contains('Select an appointment').should('be.visible')
         cy.wait(700)
-        cy.get(this.radioTabSelector).eq(0).click({force:true})
-        cy.contains('Create Account').click();
-        cy.get('.email-input').click().type('test' + (Math.floor(Math.random() * 1000)) + '@test.com' );
-        cy.get('.mat-button-wrapper').contains('Create Account').click();
+        cy.get(this.radioTabSelector).eq(1).click({force:true})
+        cy.wait(1500).contains('Create Account').click();
+        cy.wait(1500).get('.email-input').click().type('test5' + (Math.floor(Math.random() * 9999999)) + '@test.com' );
+        cy.get('.mat-button-wrapper').contains('Create Account').click().wait(1500);
 
         //Go to staging emails
         cy.visit('https://staging.unifiedpractice.com/dirlisting/d379136412c1476d9397f9ee3b606448/notifications')
@@ -496,19 +572,19 @@ class PatientPortal extends BasePage {
         cy.get(this.iconCalendarSelector).eq(1).click();
         this.chooseRandomDateFormsCalendar();
         cy.get(this.selectValueSelector).eq(1).click()
-        cy.get(this.fieldArrowSelector).eq(Math.floor(Math.random() * 3)+1).click()
+        cy.wait(1000).get(this.fieldArrowSelector).eq(Math.floor(Math.random() * 3)+1).wait(700).click()
         this.completeField('Password', 'password')
         this.completeField('Confirm Password', 'password')
         cy.get(this.checkboxSelector).click();
-        cy.contains('Continue').click().wait(800)
-        cy.contains('Appointment summary').should('be.visible')
+        cy.contains('Continue').click().wait(2800)
+        cy.wait(3000).contains('Appointment summary').should('be.visible')
         cy.get(this.buttonPrimarySelector).click()
         cy.contains('Dashboard').click();
     }
 
     completeField(name: string, content: any): void
     {
-        cy.contains(name).next({force:true}).clear().type(content);
+        cy.contains(name).next().type(content, { force: true });
     }
 
     //Method only for new accounts created
@@ -523,57 +599,56 @@ class PatientPortal extends BasePage {
         this.completeField('Middle Name', this.randomName)
         this.completeField('Last Name',this.randomName)
 
-        cy.get(this.iconCalendarSelector).eq(1).click()
-        cy.get(this.calendarPeriodSelector).click()
-        cy.get(this.calendarArrowSelector).click()
-        cy.get(this.yearTabSelector).eq(Math.floor(Math.random() * 22)+1).click().wait(300)
-        cy.get(this.selectValueSelector).eq(0).click()
-        cy.get(this.fieldArrowSelector).eq(1).click()
+        cy.get(this.iconCalendarSelector).eq(1).click({force:true})
+        cy.get(this.calendarPeriodSelector).click({force:true})
+        cy.get(this.calendarArrowSelector).click({force:true})
+        cy.get(this.yearTabSelector).eq(Math.floor(Math.random() * 22)+1).click({force:true}).wait(300)
+        cy.get(this.selectValueSelector).eq(0).click({force:true})
+        cy.get(this.fieldArrowSelector).eq(1).click({force:true})
         this.completeField('Occupation','Engineer Test Field')
-        cy.get(this.selectValueSelector).eq(1).click()
-        cy.get(this.fieldArrowSelector).eq(Math.floor(Math.random() * 2)+1).click()
-        cy.get(this.selectValueSelector).eq(2).click()
-        cy.get(this.fieldArrowSelector).eq(Math.floor(Math.random() * 2)+1).click()
-        cy.contains('Save').click()
+        cy.get(this.selectValueSelector).eq(1).click({force:true})
+        cy.get(this.fieldArrowSelector).eq(Math.floor(Math.random() * 2)+1).click({force:true})
+        cy.get(this.selectValueSelector).eq(2).click({force:true})
+        cy.get(this.fieldArrowSelector).eq(Math.floor(Math.random() * 2)+1).click({force:true})
+        cy.wait(200).contains('Save').click({force:true})
 
         //Address & Contact Information
         this.completeField('Street Address', 'Street Address Test Input')
         this.completeField('Street Address Line 2', 'Street Address Test Input 2')
         //The completeField logic method cannot be used here
         cy.get('.form-control.ng-pristine').eq(0).click().clear().type('012345678')
-        cy.get(this.selectValueSelector).eq(1).click()
-        cy.get(this.fieldArrowSelector).eq(1).click()
+        cy.get(this.selectValueSelector).eq(1).click({force:true})
+        cy.get(this.fieldArrowSelector).eq(1).click({force:true})
 
         cy.get('.form-control.ng-pristine').eq(1).click().clear().type('012345678')
-        cy.get(this.selectValueSelector).eq(1).click()
-        cy.get(this.fieldArrowSelector).eq(2).click()
+        cy.get(this.selectValueSelector).eq(1).click({force:true})
+        cy.get(this.fieldArrowSelector).eq(2).click({force:true})
 
-        cy.get(this.selectValueSelector).eq(2).click()
-        cy.get(this.fieldArrowSelector).eq(2).click()
+        cy.get(this.selectValueSelector).eq(2).click({force:true})
+        cy.get(this.fieldArrowSelector).eq(2).click({force:true})
         this.completeField('State','Ilfov')
 
-        cy.get('.form-control.ng-pristine').eq(2).click()
+        cy.get('.form-control.ng-pristine').eq(2).click({force:true})
         this.completeField('City','Bucharest')
         this.completeField('Zip Code','123123')
-        this.completeField('Fax Number','+39420329312')
-        cy.contains('Save').click()
+        this.completeField('Fax Number','39420329312')
+        cy.contains('Save').click({force:true})
 
         //Emergency Contact Information
         this.completeField('Contact Name', 'Contact Name Test Field')
         this.completeField('Email', 'automation4@email.com')
         this.completeField('Contact Phone Number', '+4012345678')
         this.completeField('Alternate Phone', '+4012345678')
-        cy.get(this.secondArrowSelector).click();
-        cy.get(this.fieldArrowSelector).eq(Math.floor(Math.random() * 9)+1).click()
+        cy.get(this.secondArrowSelector).click({force:true});
+        cy.get(this.fieldArrowSelector).eq(Math.floor(Math.random() * 9)+1).click({force:true})
         cy.contains('Save').click()
 
         //Primary Physician Information
-
         this.completeField('Physician Name', 'Physician Name Test Field')
         this.completeField('Phone Number', '+4012345678')
         this.completeField('Specialty', 'Engineer')
         this.completeField('Current Treatment Plan', 'Paracetamol')
-        cy.contains('Save').click()
+        cy.contains('Save').click({force:true})
 
         //Medical Information
 
@@ -648,15 +723,11 @@ class PatientPortal extends BasePage {
 
         cy.contains('Additional').should('be.visible')
         cy.contains('Save').click()
-
-
     }
 
-
-
     goToMyAccount() : void {
-        cy.wait(1300).get(this.burgerMenuSelector).click();
-        cy.contains('My Account').click();
+        cy.wait(3300).get(this.burgerMenuSelector).wait(1500).click();
+        cy.contains('My Account').click({force:true});
     }
 
     activateEmailNotifications() : void {
@@ -694,33 +765,33 @@ class PatientPortal extends BasePage {
     changePassword() : void {
         cy.contains('Change Password').click();
         cy.contains('Old password').next().click().type('password')
-        cy.contains('New Password').next().click().type('passwordnew')
-        cy.contains('Confirm New Password').next().click().type('passwordnew')
-        cy.contains('Save').click();
-
-        cy.get('.inp').eq(0).click().type('automation4@email.com');
-        cy.contains('Password').parent().click().type('passwordnew');
-        cy.get('.login-btn.mat-flat-button.mat-primary').click();
-
-        //Clear
-
-        this.goToMyAccount()
-        cy.contains('Change Password').click();
-        cy.contains('Old password').next().click().type('passwordnew')
         cy.contains('New Password').next().click().type('password')
         cy.contains('Confirm New Password').next().click().type('password')
         cy.contains('Save').click();
 
-        cy.get('.inp').eq(0).click().type('automation4@email.com');
-        cy.contains('Password').parent().click().type('password');
-        cy.get('.login-btn.mat-flat-button.mat-primary').click();
+        // cy.get('.inp').eq(0).click().type('automation5@email.com');
+        // cy.contains('Password').parent().click().type('password');
+        // cy.get('.login-btn.mat-flat-button.mat-primary').click();
 
-        cy.contains('Automation Location').should('be.visible')
+        //Clear
+
+        // this.goToMyAccount()
+        // cy.contains('Change Password').click();
+        // cy.contains('Old password').next().click().type('password')
+        // cy.contains('New Password').next().click().type('password')
+        // cy.contains('Confirm New Password').next().click().type('password')
+        // cy.contains('Save').click();
+
+        // cy.get('.inp').eq(0).click().type('automation5@email.com');
+        // cy.contains('Password').parent().click().type('password');
+        // cy.get('.login-btn.mat-flat-button.mat-primary').click();
+
+        // cy.contains('Automation Location').should('be.visible')
     }
 
     forgotPassword() : void{
         cy.contains('Forgot password?').click();
-        cy.get(this.forgotFieldSelector).click().type('automation4@email.com')
+        cy.get(this.forgotFieldSelector).click().type('automation6@email.com')
         cy.contains('Send Me Instructions').click();
         cy.contains('Instructions Sent!').should('be.visible');
 
@@ -756,92 +827,89 @@ class PatientPortal extends BasePage {
     }
 
     selectCompleteFormsAndCompletePatientInformation() : void {
-        cy.intercept('https://pp.api.staging.unifiedpractice.com/t/automation-cypress/Appointments?Direction=*').as('forms')
-        cy.get(this.burgerMenuSelector).click({force:true});
-        cy.wait('@forms')
-        cy.contains('Forms').click({force:true})
-        //cy.get(this.burgerMenuSelector).click({force:true});
+
+        this.selectFormsfromMenu()
 
         cy.wait(300).get('.select-box').eq(1).within(() =>
-            cy.get('.edit-col').eq(0).click({force:true}))
+            cy.get('.edit-col').eq(0).click({force:true})
+            )
 
         this.completeField('First Name', 'Automation ')
         this.completeField('Middle Name', 'Engineer')
         this.completeField('Last Name', 'E')
 
-        cy.get(this.iconCalendarSelector).eq(1).click()
-        cy.get(this.calendarPeriodSelector).click()
-        cy.get(this.calendarArrowSelector).click()
+        cy.get(this.iconCalendarSelector).eq(1).click({force:true})
+        cy.get(this.calendarPeriodSelector).click({force:true})
+        cy.get(this.calendarArrowSelector).click({force:true})
         cy.get(this.yearTabSelector).eq(Math.floor(Math.random() * 22)+1).click().wait(300)
-        cy.get(this.selectValueSelector).eq(0).click()
-        cy.get(this.fieldArrowSelector).eq(1).click()
+        cy.get(this.selectValueSelector).eq(0).click({force:true})
+        cy.get(this.fieldArrowSelector).eq(1).click({force:true})
         this.completeField('Occupation','Engineer Test Field')
-        cy.get(this.selectValueSelector).eq(1).click()
-        cy.get(this.fieldArrowSelector).eq(Math.floor(Math.random() * 2)+1).click()
-        cy.get(this.selectValueSelector).eq(2).click()
-        cy.get(this.fieldArrowSelector).eq(Math.floor(Math.random() * 2)+1).click()
-        cy.contains('Save').click()
+        cy.get(this.selectValueSelector).eq(1).click({force:true})
+        cy.get(this.fieldArrowSelector).eq(Math.floor(Math.random() * 2)+1).click({force:true})
+        cy.get(this.selectValueSelector).eq(2).click({force:true})
+        cy.get(this.fieldArrowSelector).eq(Math.floor(Math.random() * 2)+1).click({force:true})
+        cy.contains('Save').click({force:true})
+    }
+
+    selectFormsfromMenu(): void{
+        cy.wait(2500).get(this.burgerMenuSelector).click()
+        cy.get('.cdk-overlay-pane').within( () =>
+            cy.contains('Forms').click({force:true}).wait(25000)
+        )
     }
 
     selectCompleteFormsAndCompleteContactInformation() : void {
-        cy.intercept('https://pp.api.staging.unifiedpractice.com/t/automation-cypress/Appointments?Direction=*').as('forms')
-        cy.get(this.burgerMenuSelector).click({force:true});
-        cy.wait('@forms')
-        cy.contains('Forms').click({force:true})
-        //cy.get(this.burgerMenuSelector).click({force:true});
 
-        cy.wait(300).get('.select-box').eq(1).within(() =>
-            cy.get('.edit-col').eq(1).click({force:true}))
+        this.selectFormsfromMenu()
+
+        cy.wait(800).get('.select-box').eq(1).within(() =>
+            cy.get('.edit-col').eq(1).click({force:true}).wait(1000)
+            )
 
         this.completeField('Street Address', 'Street Address Test Input')
         this.completeField('Street Address Line 2', 'Street Address Test Input 2')
         //The completeField logic method cannot be used here
         cy.get('.form-control.ng-pristine').eq(0).click().clear().type('012345678')
-        cy.get(this.selectValueSelector).eq(1).click()
-        cy.get(this.fieldArrowSelector).eq(1).click()
+        cy.get(this.selectValueSelector).eq(1).click({force:true})
+        cy.get(this.fieldArrowSelector).eq(1).click({force:true})
 
         cy.get('.form-control.ng-pristine').eq(1).click().clear().type('012345678')
-        cy.get(this.selectValueSelector).eq(1).click()
-        cy.get(this.fieldArrowSelector).eq(2).click()
+        cy.get(this.selectValueSelector).eq(1).click({force:true})
+        cy.get(this.fieldArrowSelector).eq(2).click({force:true})
 
-        cy.get(this.selectValueSelector).eq(2).click()
-        cy.get(this.fieldArrowSelector).eq(2).click()
+        cy.get(this.selectValueSelector).eq(2).click({force:true})
+        cy.get(this.fieldArrowSelector).eq(2).click({force:true})
         this.completeField('State','Ilfov')
 
-        cy.get('.form-control.ng-pristine').eq(2).click()
+        cy.get('.form-control.ng-pristine').eq(2).click({force:true})
         this.completeField('City','Bucharest')
         this.completeField('Zip Code','123123')
-        this.completeField('Fax Number','+39420329312')
-        cy.contains('Save').click()
+        this.completeField('Fax Number','39420329312')
+        cy.contains('Save').click({force:true})
         this.checkForDrawing()
-        this.checkFinalStepForms()
+        this.checkFinalStepForms({force:true})
     }
 
     selectCompleteFormsAndCompleteEmergencyInformation() : void {
-        cy.intercept('https://pp.api.staging.unifiedpractice.com/t/automation-cypress/Appointments?Direction=*').as('forms')
-        cy.get(this.burgerMenuSelector).click({force:true});
-        cy.wait('@forms')
-        cy.contains('Forms').click({force:true})
-        //cy.get(this.burgerMenuSelector).click({force:true});
+
+        this.selectFormsfromMenu()
 
         cy.wait(2400).get('.select-box').eq(1).within(() =>
-            cy.get('.edit-col').eq(2).click({force:true}))
+            cy.get('.edit-col').eq(2).click())
 
         this.completeField('Contact Name', 'Contact Name Test Field')
         this.completeField('Email', 'automation4@email.com')
         this.completeField('Contact Phone Number', '+4012345678')
         this.completeField('Alternate Phone', '+4012345678')
         cy.get(this.secondArrowSelector).click();
-        cy.get(this.fieldArrowSelector).eq(Math.floor(Math.random() * 9)+1).click()
-        cy.contains('Save').click()
+        cy.get(this.fieldArrowSelector).eq(Math.floor(Math.random() * 9)+1).click({force:true})
+        cy.contains('Save').click({force:true})
     }
 
     selectCompleteFormsAndCompletePrimaryPhysicianInformation() : void {
-        cy.intercept('https://pp.api.staging.unifiedpractice.com/t/automation-cypress/Appointments?Direction=*').as('forms')
-        cy.get(this.burgerMenuSelector).click({force:true});
-        cy.wait('@forms')
-        cy.contains('Forms').click({force:true})
-        // cy.get(this.burgerMenuSelector).click({force:true});
+
+        this.selectFormsfromMenu()
 
         cy.get('.pp-container').then( ($selectBox) =>{
             const secondBoxExist = $selectBox.text().includes('Thanks');
@@ -853,15 +921,6 @@ class PatientPortal extends BasePage {
                     cy.get('.edit-col').eq(3).click({force: true}))
             }
         })
-
-        // cy.get(this.boxSelector).then( ($selectBox) =>{
-        //     const secondBoxExist = $selectBox.text().includes('Online Forms');
-        //     if (secondBoxExist) {
-        //         cy.wait(600).get(this.boxSelector).within(() =>
-        //             cy.get('.edit-col').eq(3).click({force: true}))
-        //     }
-        // })
-
 
         this.completeField('Physician Name', 'Physician Name Test Field')
         this.completeField('Phone Number', '+4012345678')
@@ -882,13 +941,14 @@ class PatientPortal extends BasePage {
 
     checkFinalStepForms() : void{
         cy.get(this.boxSelector).then(($box) => {
-            const checkSaveButtonExist= $box.text().includes('Save');
-            if (checkSaveButtonExist) {
-                cy.contains('Continue').click({force:true})
+            const checkSaveButtonExist= $box.text().includes('Save & Continue');
+            const checkCompleteFormsExist= $box.text().includes('Complete Forms');
+
+            if (checkSaveButtonExist || checkCompleteFormsExist) {
+                cy.get(".btn.btn-primary").click({force:true})
                     .then(() => this.checkFinalStepForms())
             }
             })
-
     }
 
     chooseRandomDateFormsCalendar() : void {
@@ -898,14 +958,11 @@ class PatientPortal extends BasePage {
     }
 
     selectCompleteFormsAndCompleteMedicalInformation() : void {
-        cy.intercept('https://pp.api.staging.unifiedpractice.com/t/automation-cypress/Appointments?Direction=*').as('forms')
-        cy.get(this.burgerMenuSelector).click({force:true});
-        cy.wait('@forms')
-        cy.contains('Forms').click({force:true})
-        //cy.get(this.burgerMenuSelector).click({force:true});
-        cy.wait(800).get('.select-box').eq(1).within(() =>
-            cy.get('.edit-col').eq(4).click({force:true}))
 
+        this.selectFormsfromMenu()
+
+        cy.wait(1400).get('.select-box').eq(1).within(() =>
+            cy.get('.edit-col').eq(4).click({force:true}))
 
         //Check medications slider is set to on; if not, proceed
         cy.get('#switch-showMedication').then(($ele) => {
@@ -978,13 +1035,10 @@ class PatientPortal extends BasePage {
     }
 
     selectCompleteFormsAndCompleteAdditionalInformation() : void {
-        cy.intercept('https://pp.api.staging.unifiedpractice.com/t/automation-cypress/Appointments?Direction=*').as('forms')
-        cy.get(this.burgerMenuSelector).click({force:true});
-        cy.wait('@forms')
-        cy.contains('Forms').click({force:true})
-        cy.get(this.burgerMenuSelector).click({force:true});
 
-        cy.wait(300).get('.select-box').eq(1).within(() =>
+        this.selectFormsfromMenu()
+
+        cy.wait(900).get('.select-box').eq(1).within(() =>
             cy.get('.edit-col').eq(5).click({force:true}))
 
         cy.get('#switch-hadAccupunctureBefore').then(($ele) => {
@@ -1014,22 +1068,19 @@ class PatientPortal extends BasePage {
 
 
     selectCompleteFormsAndCompleteScreeningForms() : void {
-        cy.intercept('https://pp.api.staging.unifiedpractice.com/t/automation-cypress/Appointments?Direction=*').as('forms')
-        cy.get(this.burgerMenuSelector).click({force:true});
-        cy.wait('@forms')
-        cy.contains('Forms').click({force:true})
-        cy.get(this.burgerMenuSelector).click({force:true});
+
+        this.selectFormsfromMenu()
+
         cy.wait(1100).get('.select-box').last().within(() =>
-            cy.get('.edit-col').eq(7).click({force: true})
+            cy.wait(2000).get('.edit-col').eq(7).click({force: true}).wait(1500)
         )
         cy.contains('Complete Forms').click()
-        this.completeField('New Input', 'Test Message for Screening')
-
         this.checkSaveContinueVisibility()
+
     }
 
     checkSaveContinueVisibility(): void {
-        cy.wait(500)
+        cy.wait(3500)
         cy.get('.pp-container').then($button => {
             if($button.text().includes('Save & Continue')) {
                 cy.intercept('https://pp.api.staging.unifiedpractice.com/t/automation-cypress/Onboarding/medicalforms/*').as('upcomingscreening')
@@ -1039,7 +1090,6 @@ class PatientPortal extends BasePage {
             }
         })
     }
-
 
     //STEP THAT HELPS TO DETERMINE THE EVOLUTION OF FORM COMPLETION; USEFUL FOR SCREENING FORMS
     checkFinalFormsWindow(): void {
@@ -1060,15 +1110,15 @@ class PatientPortal extends BasePage {
     }
 
     openChat(): void{
-        cy.get(this.burgerMenuSelector).click().wait(1500);
-        cy.wait(300).get('.mat-menu-content').within(() =>
-            cy.contains('Chat').click().wait(1500) )
+        cy.wait(3500).get(this.burgerMenuSelector).click().wait(4500);
+        cy.wait(3300).get('.mat-menu-content').within(() =>
+            cy.contains('Chat').click().wait(8500) )
     }
 
     openChatwithPractitioner(): void{
-        cy.wait(300).get(this.headerChatSelector).within(() =>
-            cy.get(this.iconSelector).click() )
-        cy.contains('Chat with your practitioner').click()
+        cy.wait(5300).get(this.headerChatSelector).within(() =>
+            cy.wait(4500).get(this.iconSelector).click({force:true}) )
+        cy.wait(2000).contains('Chat with your practitioner').click({force:true})
     }
 
     checkMessageInEHR():void{
@@ -1079,8 +1129,8 @@ class PatientPortal extends BasePage {
 
     openChatwithFrontdesk(): void{
         cy.wait(300).get(this.headerChatSelector).within(() =>
-            cy.get(this.iconSelector).click() )
-        cy.contains('Chat with front desk').click()
+            cy.get(this.iconSelector).click({force:true}) )
+        cy.wait(2000).contains('Chat with front desk').click({force:true})
     }
 
     sendMessageToPractitioner(): void{
@@ -1097,8 +1147,6 @@ class PatientPortal extends BasePage {
         cy.wait(2500).get('input[type=file]').selectFile('cypress/fixtures/images/imageforupload.png', { force: true })
         cy.wait(1500).get('.str-chat__send-button').click()
     }
-
-
 
 }
 

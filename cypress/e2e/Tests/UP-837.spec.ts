@@ -20,12 +20,6 @@ describe('Automation test for UP-837', () => {
     const clinicStaff = new ClinicStaff();
 
 
-    // For retain session and prevent logout during testing - it's a must have in all tests for prevent logout
-    //beforeEach(() => {
-        //cy.session('ASP.NET_SessionId', 'sessionid', 'chatToken')
-    //})
-    // End beforeEach
-
     it("UP-837", function () {
 
         login.goToStaging();
@@ -67,8 +61,7 @@ describe('Automation test for UP-837', () => {
         cy.wait('@upcoming')
 
         pp.checkVisibilityUpcoming();
-
-        pp.checkRescheduleVisibility();
-    })
+        pp.checkReschedule();
+        })
 
 })

@@ -1,6 +1,8 @@
 import { defineConfig } from 'cypress'
 
 export default defineConfig({
+  video: false,
+  projectId: "hqze8x",
   pageLoadTimeout: 140000,
   e2e: {
     // We've imported your old cypress plugins here.
@@ -9,6 +11,6 @@ export default defineConfig({
       return require('./cypress/plugins/index.js')(on, config)
     },
     supportFile: false,
-    specPattern: 'cypress/e2e/**/*.spec.ts',
+    specPattern: 'cypress/e2e/Tests/*.spec.ts',
   },
 })

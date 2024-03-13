@@ -5,6 +5,7 @@ import ClinicStaff from "../PageObject/clinic-settings/clinic-staff"
 import DrawerModal from "../PageObject/drawer-modal";
 import ClinicLocations from "../PageObject/clinic-settings/clinic-locations";
 import BasePage from "../PageObject/base-page";
+import ClinicServices from "../PageObject/clinic-settings/clinic-services";
 
 
 describe('Automation test for UP-838', () => {
@@ -15,12 +16,8 @@ describe('Automation test for UP-838', () => {
     const drawerModal = new DrawerModal();
     const basePage = new BasePage();
     const clinicStaff = new ClinicStaff();
+    const clinicServices = new ClinicServices();
 
-    // For retain session and prevent logout during testing - it's a must have in all tests for prevent logout
-    //beforeEach(() => {
-        //cy.session('ASP.NET_SessionId', 'sessionid', 'chatToken')
-    //})
-    // End beforeEach
 
     it("UP-838", function () {
 
@@ -47,6 +44,13 @@ describe('Automation test for UP-838', () => {
         basePage.setToOn('Clinic location is active?');
         basePage.setToOn('Allow Online Scheduling?');
         drawerModal.saveButton();
+
+        navigate.selectCS('Clinic Services')
+        clinicServices.chooseService('Automation with CCPE')
+        clinicServices.checkBoxSliderSetOn('#Service_IsActive')
+        clinicServices.checkBoxSliderSetOn('#Service_AllowOnlineScheduling')
+        drawerModal.saveButton();
+        navigate.extendMenu();
 
         navigate.selectPP();
 

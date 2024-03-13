@@ -1,8 +1,8 @@
 /// <reference types="cypress" />
 import { format } from 'date-fns'
-import PatientPortal from "./patient-portal";
+import SideBarNavigate from "../PageObject/side-bar-menu"
 export const getDayMonthHour: string = format(new Date(), "MMMMddhmm")
-//const pp = new PatientPortal() ;
+const navigate = new SideBarNavigate();
 
 
 class PatientList {
@@ -28,7 +28,7 @@ class PatientList {
         cy.get('#patientHint').click().type(name)
         cy.wait('@waiting')
         cy.wait(400)
-        cy.get('.patient-box').eq(0).click()
+        cy.get('.patient-box').eq(0).click().wait(1500)
         // cy.intercept('https://staging.unifiedpractice.com/Public/PatientManagement/PatientFileAppointmentsTab?patientId=*').as('visible')
         // cy.contains(name).should('be.visible')
         // cy.wait('@visible')
@@ -38,15 +38,37 @@ class PatientList {
         cy.intercept('https://staging.unifiedpractice.com/Public/PatientManagement/AddPatient?_=*').as('patient');
         cy.contains('Add Patient').click();
         cy.wait('@patient')
+        cy.wait(2000);
         this.completeField('First Name','Automation'+getDayMonthHour);
         this.completeField('Last Name','Engineer'+getDayMonthHour);
-        cy.get(this.emailField).click().clear().type('engineer'+getDayMonthHour+'@email.com');
+        cy.get(this.emailField).click().type('engineer'+getDayMonthHour+'@email.com');
         cy.contains('Save').click()
     }
 
+    addNewPatientforMatchingError(): void {
+        cy.intercept('https://staging.unifiedpractice.com/Public/PatientManagement/AddPatient?_=*').as('patient');
+        cy.contains('Add Patient').click();
+        cy.wait('@patient')
+        this.completeField('First Name','Automation'+getDayMonthHour);
+        this.completeField('Last Name','Engineer'+getDayMonthHour);
+        cy.get(this.emailField).click().clear().type('engineer'+getDayMonthHour+'@email.com');
+        cy.contains('Save').click();
+
+        navigate.selectAllClinicPatients();
+
+        cy.wait(2500);
+        cy.contains('Add Patient').click();
+        cy.wait(1500);
+        this.completeField('First Name','Automation'+getDayMonthHour+'1');
+        this.completeField('Last Name','Engineer'+getDayMonthHour+'1');
+        cy.get(this.emailField).click().clear().type('engineer'+getDayMonthHour+'@email.com');
+        cy.contains('Save').click()
+
+    }
+
     sendInviteForPP(): void {
-        cy.wait(400).get(this.sendInviteModalSelector).click();
-        cy.wait(400).get(this.sendInviteButtonSelector).click()
+        cy.wait(2600).get(this.sendInviteModalSelector).click();
+        cy.wait(1600).get(this.sendInviteButtonSelector).click()
     }
 
     validateNewPPAccountEmail(): void{
@@ -59,12 +81,12 @@ class PatientList {
         cy.get('a').eq(0).invoke('removeAttr', 'target').click()
         this.completeField('Password', 'password')
         this.completeField('Confirm Password', 'password')
-        cy.get(this.buttonPrimarySelector).click()
+        cy.wait(3000).get(this.buttonPrimarySelector).click()
     }
 
     completeField(name: string, content: any): void
     {
-        cy.contains(name).next({force:true}).clear().type(content);
+        cy.contains(name).next({force:true}).type(content);
     }
 
     goToFormsTab(): void {
@@ -80,8 +102,8 @@ class PatientList {
     }
 
     goToPersonalTab(): void{
-        cy.get(this.mainMenuPatientSelector).within(() =>
-            cy.wait(500).get(this.personalIdSelector).click({force:true})
+        cy.wait(3000).get(this.mainMenuPatientSelector).within(() =>
+            cy.wait(3500).get(this.personalIdSelector).click({force:true})
         )
 
     }
