@@ -51,6 +51,7 @@ class PatientPortal extends BasePage {
     private passwordLogin: string = 'password';
     private cancelButton: string = '.mat-icon.notranslate.mt-1.cancel-icon.mat-icon-no-color';
     private rescheduleButoon: string = '.mat-icon.notranslate.mr-1.material-icons.mat-icon-no-color';
+    
     const randomName = uniqueNamesGenerator({
         dictionaries: [adjectives, colors],
         length: 2,
