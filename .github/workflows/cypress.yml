@@ -2,9 +2,9 @@ name: UP Automation regression
 
 on:
   push:
-    branches: [ main ]
+    branches: [ Alex ]
   pull_request:
-    branches: [ main ]
+    branches: [ Alex ]
 
 jobs:
   
