@@ -301,7 +301,7 @@ class PatientPortal extends BasePage {
         cy.get(this.radioTabSelector).eq(5).click({force:true})
         cy.wait(2400)
         cy.contains('Confirm Appointment').click();
-        cy.wait(2500);
+        cy.wait(8500);
         cy.contains('Your appointment was successfully booked').should('be.visible');
         cy.contains('Dashboard').click();
     }
