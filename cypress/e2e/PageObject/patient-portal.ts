@@ -298,10 +298,10 @@ class PatientPortal extends BasePage {
         cy.wait(2000);
         this.checkAvailability();
         //this.searchAM();
-        cy.get(this.radioTabSelector).eq(5).click({force:true})
+        cy.get(this.radioTabSelector).eq(9).click({force:true})
         cy.wait(2400)
         cy.contains('Confirm Appointment').click();
-        cy.wait(8500);
+        cy.wait(12500);
         cy.contains('Your appointment was successfully booked').should('be.visible');
         cy.contains('Dashboard').click();
     }
@@ -355,7 +355,7 @@ class PatientPortal extends BasePage {
 
     //Another intercept would be ideal in this method
     checkVisibilityUpcoming(): void {
-        cy.wait(7500)
+        cy.wait(22500)
         cy.get('.mat-flat-button.mat-primary.mat-button-base').then($button => {
             if($button.text().includes('Show more upcoming')) {
                 cy.intercept('https://pp.api.staging.unifiedpractice.com/t/automation-cypress/Appointments?Direction=2&Take=6&Skip=*').as('upcoming')
