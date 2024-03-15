@@ -1117,9 +1117,10 @@ class PatientPortal extends BasePage {
     }
 
     openChatwithPractitioner(): void{
-        cy.wait(20300).get(this.headerChatSelector).within(() =>
+            cy.wait(20300);
+            cy.get(this.headerChatSelector).within(() =>
             cy.wait(16500).get(this.iconSelector).click({force:true}) )
-        cy.wait(2000).contains('Chat with your practitioner').click({force:true})
+            cy.wait(2000).contains('Chat with your practitioner').click({force:true})
     }
 
     checkMessageInEHR():void{
