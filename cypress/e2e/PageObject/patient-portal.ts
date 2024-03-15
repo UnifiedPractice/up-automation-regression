@@ -1117,7 +1117,7 @@ class PatientPortal extends BasePage {
     }
 
     openChatwithPractitioner(): void{
-        cy.wait(5300).get(this.headerChatSelector).within(() =>
+        cy.wait(20300).get(this.headerChatSelector).within(() =>
             cy.wait(4500).get(this.iconSelector).click({force:true}) )
         cy.wait(2000).contains('Chat with your practitioner').click({force:true})
     }
@@ -1129,7 +1129,7 @@ class PatientPortal extends BasePage {
     }
 
     openChatwithFrontdesk(): void{
-        cy.wait(300).get(this.headerChatSelector).within(() =>
+        cy.wait(15000).get(this.headerChatSelector).within(() =>
             cy.get(this.iconSelector).click({force:true}) )
         cy.wait(2000).contains('Chat with front desk').click({force:true})
     }
