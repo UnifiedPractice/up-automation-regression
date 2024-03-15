@@ -42,7 +42,7 @@ class PatientPortal extends BasePage {
     private secondArrowSelector: string ='.mat-select-arrow-wrapper';
     private checkboxSelector: string ='.mat-checkbox-inner-container';
     private buttonPrimarySelector: string ='.btn-primary';
-    private headerChatSelector: string = '.chat-header-title';
+    private headerChatSelector: string = 'button.add-channels-btn';
     private iconSelector : string = '.material-icons';
     public bookApointmentSelector : string = '.text-right';
     private uploadLiveChatSelector: string = '.rfu-file-upload-button';
@@ -1116,11 +1116,17 @@ class PatientPortal extends BasePage {
             cy.contains('Chat').click().wait(8500) )
     }
 
+    // openChatwithPractitioner(): void{
+    //         cy.wait(2500);
+    //         cy.get(this.headerChatSelector).within(() =>
+    //         cy.wait(2500).get(this.iconSelector).click({force:true}) )
+    //         cy.wait(2000).contains('Chat with your practitioner').click({force:true})
+    // }
+
     openChatwithPractitioner(): void{
-            cy.wait(20300);
-            cy.get(this.headerChatSelector).within(() =>
-            cy.wait(16500).get(this.iconSelector).click({force:true}) )
-            cy.wait(2000).contains('Chat with your practitioner').click({force:true})
+        cy.wait(5500);
+        cy.get(this.headerChatSelector).click({force:true});
+        cy.wait(2000).contains('Chat with your practitioner').click({force:true})
     }
 
     checkMessageInEHR():void{
