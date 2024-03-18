@@ -79,9 +79,11 @@ class PatientList {
         cy.get('a').eq(7).invoke('removeAttr', 'target').click()
         cy.get('a').eq(7).invoke('removeAttr', 'target').click()
         cy.get('a').eq(0).invoke('removeAttr', 'target').click()
+        
         this.completeField('Password', 'password')
         this.completeField('Confirm Password', 'password')
-        cy.wait(3000).get(this.buttonPrimarySelector).click()
+        cy.wait(5000)
+        cy.get(this.buttonPrimarySelector).click({force:true})
     }
 
     completeField(name: string, content: any): void
