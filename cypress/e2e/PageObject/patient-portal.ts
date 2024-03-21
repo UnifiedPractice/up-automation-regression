@@ -585,7 +585,7 @@ class PatientPortal extends BasePage {
 
     completeField(name: string, content: any): void
     {
-        cy.contains(name).next().type(content, { force: true });
+        cy.contains(name).next().clear({force:true}).type(content, { force: true });
     }
 
     //Method only for new accounts created
@@ -868,26 +868,28 @@ class PatientPortal extends BasePage {
             cy.get('.edit-col').eq(1).click({force:true}).wait(1000)
             )
 
-        this.completeField('Street Address', 'Street Address Test Input')
-        this.completeField('Street Address Line 2', 'Street Address Test Input 2')
+        this.completeField('Street Address', 'Street')
+        this.completeField('Street Address Line 2', 'Street')
         //The completeField logic method cannot be used here
         cy.get('.form-control.ng-pristine').eq(0).click().clear().type('012345678')
         cy.get(this.selectValueSelector).eq(1).click({force:true})
         cy.get(this.fieldArrowSelector).eq(1).click({force:true})
 
         cy.get('.form-control.ng-pristine').eq(1).click().clear().type('012345678')
-        cy.get(this.selectValueSelector).eq(1).click({force:true})
-        cy.get(this.fieldArrowSelector).eq(2).click({force:true})
+        //cy.get(this.selectValueSelector).eq(1).click({force:true})
+        //cy.get(this.fieldArrowSelector).eq(2).click({force:true})
+        cy.wait(2000)
 
-        cy.get(this.selectValueSelector).eq(2).click({force:true})
-        cy.get(this.fieldArrowSelector).eq(2).click({force:true})
+        //cy.get(this.selectValueSelector).eq(2).click({force:true})
+        //cy.get(this.fieldArrowSelector).eq(2).click({force:true})
+        cy.wait(2000)
         this.completeField('State','Ilfov')
 
         cy.get('.form-control.ng-pristine').eq(2).click({force:true})
         this.completeField('City','Bucharest')
         this.completeField('Zip Code','123123')
         this.completeField('Fax Number','39420329312')
-        cy.contains('Save').click({force:true})
+        cy.get('.btn.btn-primary').click({force:true}).wait(4000)
         this.checkForDrawing()
         this.checkFinalStepForms({force:true})
     }
@@ -947,6 +949,7 @@ class PatientPortal extends BasePage {
 
             if (checkSaveButtonExist || checkCompleteFormsExist) {
                 cy.get(".btn.btn-primary").click({force:true})
+                    cy.wait(10000)
                     .then(() => this.checkFinalStepForms())
             }
             })
