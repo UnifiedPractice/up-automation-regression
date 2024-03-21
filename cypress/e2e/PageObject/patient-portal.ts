@@ -299,7 +299,7 @@ class PatientPortal extends BasePage {
         this.checkAvailability();
         //this.searchAM();
         cy.get(this.radioTabSelector).eq(9).click({force:true})
-        cy.wait(2400)
+        cy.wait(4400)
         cy.contains('Confirm Appointment').click();
         cy.wait(12500);
         cy.contains('Your appointment was successfully booked').should('be.visible');
