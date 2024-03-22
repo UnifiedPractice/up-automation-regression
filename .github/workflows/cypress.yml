@@ -26,7 +26,7 @@ jobs:
           record: true
           parallel: true
         run: |
-          npx cypress run --spec "cypress/e2e/Tests/suite_${{ matrix.machine }}/*.spec.ts"
+         npx cypress run --env SUITE=${{ matrix.machine }} --spec "cypress/e2e/Tests/suite_${{ matrix.machine }}/*.spec.ts"
         env:
           # Setarea cheii de înregistrare pentru Cypress Record
           CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
