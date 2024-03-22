@@ -14,10 +14,16 @@ jobs:
         machine: [1, 2, 3, 4] # Definește 4 mașini virtuale
 
     steps:
+      # Verifică indentarea pe linia 10 și liniile învecinate
       - run: git config --global url."https://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@github.com/".insteadOf https://github.com/
+      - name: Checkout
         uses: actions/checkout@v4
         with:
           persist-credentials: false
+      # Instalare Cypress (dacă este necesar):
+      - name: Instalare Cypress
+        run: npm install cypress --save-dev
+      # Verifică dacă există o proprietate lipsă pe linia 10 a unui pas (e.g., uses:)
       - name: Cypress run
         uses: cypress-io/github-action@v6
         with:
