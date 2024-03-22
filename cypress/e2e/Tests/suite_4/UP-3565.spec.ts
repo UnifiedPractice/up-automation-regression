@@ -1,11 +1,11 @@
-import LoginPage from "../PageObject/login-page"
-import SideBarNavigate from "../PageObject/side-bar-menu"
-import PatientPortal from "../PageObject/patient-portal"
-import PatientList from "../PageObject/patient-list";
-import ClinicServices from "../PageObject/clinic-settings/clinic-services";
-import BasePage from "../PageObject/base-page";
-import ClinicLocations from "../PageObject/clinic-settings/clinic-locations";
-import DrawerModal from "../PageObject/drawer-modal";
+import LoginPage from "../../PageObject/login-page"
+import SideBarNavigate from "../../PageObject/side-bar-menu"
+import PatientPortal from "../../PageObject/patient-portal"
+import PatientList from "../../PageObject/patient-list";
+import ClinicServices from "../../PageObject/clinic-settings/clinic-services";
+import BasePage from "../../PageObject/base-page";
+import ClinicLocations from "../../PageObject/clinic-settings/clinic-locations";
+import DrawerModal from "../../PageObject/drawer-modal";
 
 
 describe('Automation test for UP-3565', () => {

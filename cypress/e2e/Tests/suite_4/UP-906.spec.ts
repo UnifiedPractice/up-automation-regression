@@ -1,9 +1,9 @@
-import LoginPage from "../PageObject/login-page"
-import SideBarNavigate from "../PageObject/side-bar-menu"
-import PatientPortal from "../PageObject/patient-portal"
-import DrawerModal from "../PageObject/drawer-modal"
-import ClinicServices from "../PageObject/clinic-settings/clinic-services"
-import ClinicStaff from "../PageObject/clinic-settings/clinic-staff";
+import LoginPage from "../../PageObject/login-page"
+import SideBarNavigate from "../../PageObject/side-bar-menu"
+import PatientPortal from "../../PageObject/patient-portal"
+import DrawerModal from "../../PageObject/drawer-modal"
+import ClinicServices from "../../PageObject/clinic-settings/clinic-services"
+import ClinicStaff from "../../PageObject/clinic-settings/clinic-staff";
 
 
 describe('Automation test for UP-906', () => {

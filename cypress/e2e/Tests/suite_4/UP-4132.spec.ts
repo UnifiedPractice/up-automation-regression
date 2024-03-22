@@ -1,22 +1,23 @@
-import LoginPage from "../PageObject/login-page"
-import SideBarNavigate from "../PageObject/side-bar-menu"
-import PatientPortal from "../PageObject/patient-portal"
+import LoginPage from "../../PageObject/login-page"
+import SideBarNavigate from "../../PageObject/side-bar-menu"
+import PatientPortal from "../../PageObject/patient-portal"
+import patientList from "../../PageObject/patient-list";
 
 
-describe('Automation test for UP-4133', () => {
+describe('Automation test for UP-4132', () => {
     const login = new LoginPage();
     const pp = new PatientPortal() ;
     const navigate = new SideBarNavigate();
 
  
-    it("UP-4133", function () {
+    it("UP-4132", function () {
 
         login.goToStaging();
         login.loginAutomation();
 
         navigate.extendMenu();
-        navigate.selectPP();
 
+        navigate.selectPP();
         pp.setToOn('Allow patients to book appointments online');
         pp.setToOn('Chat messages for your patients available in Patient Portal (file sharing remains available)')
         pp.saveButton();
@@ -25,7 +26,8 @@ describe('Automation test for UP-4133', () => {
         pp.checkLogin();
         pp.proceedLogin();
         pp.openChat();
-        pp.openChatwithPractitioner()
+        pp.openChatwithFrontdesk();
+
 
     })
 

@@ -1,8 +1,8 @@
-import LoginPage from "../PageObject/login-page"
-import SideBarNavigate from "../PageObject/side-bar-menu"
-import PatientPortal from "../PageObject/patient-portal"
-import PatientList from "../PageObject/patient-list";
-import OnboardingForms from "../PageObject/clinic-settings/clinic-onboarding-forms";
+import LoginPage from "../../PageObject/login-page"
+import SideBarNavigate from "../../PageObject/side-bar-menu"
+import PatientPortal from "../../PageObject/patient-portal"
+import PatientList from "../../PageObject/patient-list";
+import OnboardingForms from "../../PageObject/clinic-settings/clinic-onboarding-forms";
 
 describe('Automation test for UP-885', () => {
     const login = new LoginPage();

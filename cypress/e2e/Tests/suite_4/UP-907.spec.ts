@@ -1,8 +1,8 @@
-import LoginPage from "../PageObject/login-page"
-import SideBarNavigate from "../PageObject/side-bar-menu"
-import PatientPortal from "../PageObject/patient-portal"
-import DrawerModal from "../PageObject/drawer-modal"
-import ClinicServices from "../PageObject/clinic-settings/clinic-services"
+import LoginPage from "../../PageObject/login-page"
+import SideBarNavigate from "../../PageObject/side-bar-menu"
+import PatientPortal from "../../PageObject/patient-portal"
+import DrawerModal from "../../PageObject/drawer-modal"
+import ClinicServices from "../../PageObject/clinic-settings/clinic-services"
 
 
 describe('Automation test for UP-907', () => {

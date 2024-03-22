@@ -1,14 +1,15 @@
-import LoginPage from "../PageObject/login-page"
-import SideBarNavigate from "../PageObject/side-bar-menu"
-import PatientPortal from "../PageObject/patient-portal"
+import LoginPage from "../../PageObject/login-page"
+import SideBarNavigate from "../../PageObject/side-bar-menu"
+import PatientPortal from "../../PageObject/patient-portal"
 
-describe('Automation test for UP-901', () => {
+
+describe('Automation test for UP-902', () => {
     const login = new LoginPage();
     const pp = new PatientPortal() ;
     const navigate = new SideBarNavigate();
 
 
-    it("UP-901", function () {
+    it("UP-902", function () {
 
         login.goToStaging();
         login.loginAutomationUniversity();
@@ -24,8 +25,7 @@ describe('Automation test for UP-901', () => {
         pp.checkLogin();
         pp.proceedLogin();
         pp.bookNewAppointmentASAPonUniversities();
-        pp.cancelAppointmentUniversity();
-
+        pp.checkReschedule();
     })
 
 })
