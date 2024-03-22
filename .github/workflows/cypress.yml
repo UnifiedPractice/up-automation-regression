@@ -12,23 +12,24 @@ jobs:
     strategy:
       matrix:
         machine: [1, 2, 3, 4] # Definește 4 mașini virtuale
+
     steps:
+      ...  # Ensure consistent indentation here
       - run: git config --global url."https://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@github.com/".insteadOf https://github.com/
       - name: Checkout
         uses: actions/checkout@v4
         with:
           persist-credentials: false
       - name: Cypress run
-        uses: cypress-io/github-action@v6
-      - name: Run Cypress tests
+        uses: cypress-io/github-action@v6  # Verify version and reference
         with:
           browser: electron
           record: true
           parallel: true
-        run: |
-         npx cypress run --env SUITE=${{ matrix.machine }} --spec "cypress/e2e/Tests/suite_${{ matrix.machine }}/*.spec.ts"
-        env:
-          # Setarea cheii de înregistrare pentru Cypress Record
-          CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
-          # Setarea tokenului GitHub
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          run: |
+            npx cypress run --env SUITE=${{ matrix.machine }} --spec "cypress/e2e/Tests/suite_${{ matrix.machine }}/*.spec.ts"
+  env:
+    # Setarea cheii de înregistrare pentru Cypress Record
+    CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
+    # Setarea tokenului GitHub
+    GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
