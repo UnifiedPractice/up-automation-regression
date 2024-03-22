@@ -2,29 +2,29 @@ name: UP Automation regression
 
 on:
   push:
-    branches: [ main ]
+    branches: [paralellization]
   pull_request:
-    branches: [ main ]
+    branches: [paralellization]
 
 jobs:
-  
   run-automation-regression-tests:
     runs-on: windows-latest
+    strategy:
+      matrix:
+        machine: [1, 2, 3, 4] # Definește 4 mașini virtuale
     steps:
       - run: git config --global url."https://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@github.com/".insteadOf https://github.com/
       - name: Checkout
         uses: actions/checkout@v4
         with:
           persist-credentials: false
-      - name: Cypress run
-        uses: cypress-io/github-action@v6
-        with:
-          browser: electron
-          record: true
-          parallel: false
+      - name: Install Cypress
+        run: npm install cypress
+      - name: Run Cypress tests
+        run: |
+          npx cypress run --spec "cypress/integration/suite_${{ matrix.machine }}/*.js"
         env:
-          # For recording and parallelization to work you must set your CYPRESS_RECORD_KEY
-          # in GitHub repo → Settings → Secrets → Actions
+          # Setarea cheii de înregistrare pentru Cypress Record
           CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
-          # Creating a token https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/creating-a-personal-access-token
+          # Setarea tokenului GitHub
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
