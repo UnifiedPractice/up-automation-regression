@@ -14,14 +14,12 @@ jobs:
         machine: [1, 2, 3, 4] # Definește 4 mașini virtuale
 
     steps:
-      ...  # Ensure consistent indentation here
       - run: git config --global url."https://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@github.com/".insteadOf https://github.com/
-      - name: Checkout
         uses: actions/checkout@v4
         with:
           persist-credentials: false
       - name: Cypress run
-        uses: cypress-io/github-action@v6  # Verify version and reference
+        uses: cypress-io/github-action@v6
         with:
           browser: electron
           record: true
