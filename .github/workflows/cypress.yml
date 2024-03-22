@@ -26,7 +26,7 @@ jobs:
           browser: electron
           record: true
           parallel: true
-          spec: cypress/e2e/Tests/suite_${{ matrix.containers }}/*.spec.ts
+          spec: cypress/e2e/Tests/suite_${{ matrix.containers }}/**.spec.ts
         env:
           # For recording and parallelization to work you must set your CYPRESS_RECORD_KEY
           # in GitHub repo → Settings → Secrets → Actions
