@@ -47,7 +47,7 @@ class PatientPortal extends BasePage {
     public bookApointmentSelector : string = '.text-right';
     private uploadLiveChatSelector: string = '.rfu-file-upload-button';
     private secondSelectBoxSelector
-    private usernameLogin: string= 'automation10@email.com';
+    private usernameLogin: string= 'automation11@email.com';
     private passwordLogin: string = 'password';
     private cancelButton: string = '.mat-icon.notranslate.mt-1.cancel-icon.mat-icon-no-color';
     private rescheduleButoon: string = '.mat-icon.notranslate.mr-1.material-icons.mat-icon-no-color';
@@ -137,7 +137,7 @@ class PatientPortal extends BasePage {
     }
 
     proceedLogin() : void {
-        cy.wait(5000).get('.inp').eq(0).click().type('automation10@email.com');
+        cy.wait(5000).get('.inp').eq(0).click().type('automation11@email.com');
         cy.contains('Password').parent().click().type('password');
         cy.get(this.loginButtonSelector).click().wait(1800);
     }
@@ -356,7 +356,7 @@ class PatientPortal extends BasePage {
     //Another intercept would be ideal in this method
     checkVisibilityUpcoming(): void {
         cy.wait(22500)
-        cy.get('.mat-flat-button.mat-primary.mat-button-base').then($button => {
+        cy.get('.mat-focus-indicator.mat-flat-button.mat-button-base.mat-primary.ng-star-inserted').then($button => {
             if($button.text().includes('Show more upcoming')) {
                 cy.intercept('https://pp.api.staging.unifiedpractice.com/t/automation-cypress/Appointments?Direction=2&Take=6&Skip=*').as('upcoming')
                 cy.contains('Show more upcoming').click()
@@ -793,7 +793,7 @@ class PatientPortal extends BasePage {
 
     forgotPassword() : void{
         cy.contains('Forgot password?').click();
-        cy.get(this.forgotFieldSelector).click().type('automation10@email.com')
+        cy.get(this.forgotFieldSelector).click().type('automation11@email.com')
         cy.contains('Send Me Instructions').click();
         cy.contains('Instructions Sent!').should('be.visible');
 
