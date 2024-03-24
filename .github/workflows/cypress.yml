@@ -21,7 +21,7 @@ jobs:
         with:
           persist-credentials: false
       - name: Set test spec path
-        run: echo "TEST_SPEC_PATH=cypress/e2e/Tests/suite_${{ matrix.containers }}" >> $GITHUB_ENV
+        run: echo "TEST_SPEC_PATH=cypress/e2e/Tests/suite_${{ matrix.containers }}" >> $env:GITHUB_ENV
       - name: Cypress run
         uses: cypress-io/github-action@v6
         with:
