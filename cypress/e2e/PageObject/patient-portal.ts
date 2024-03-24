@@ -356,7 +356,7 @@ class PatientPortal extends BasePage {
     //Another intercept would be ideal in this method
     checkVisibilityUpcoming(): void {
         cy.wait(22500)
-        cy.get('.mat-focus-indicator.mat-flat-button.mat-button-base.mat-primary.ng-star-inserted').then($button => {
+        cy.get('.mat-focus-indicator.mat-flat-button.mat-button-base.mat-primary').then($button => {
             if($button.text().includes('Show more upcoming')) {
                 cy.intercept('https://pp.api.staging.unifiedpractice.com/t/automation-cypress/Appointments?Direction=2&Take=6&Skip=*').as('upcoming')
                 cy.contains('Show more upcoming').click()
