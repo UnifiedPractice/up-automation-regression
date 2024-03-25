@@ -2,7 +2,7 @@ name: UP Automation regression
 
 on:
   schedule:
-    - cron: '20 14 * * *' 
+    - cron: '25 14 * * *' 
 
 jobs:
   run-automation-regression-tests:
