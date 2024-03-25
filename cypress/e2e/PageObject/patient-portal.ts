@@ -140,7 +140,7 @@ class PatientPortal extends BasePage {
     proceedLogin() : void {
         cy.wait(5000).get('.inp').eq(0).click().type('automation14@email.com');
         cy.contains('Password').parent().click().type('password');
-        cy.get(this.loginButtonSelector).click().wait(11000);
+        cy.get(this.loginButtonSelector).click().wait(19000);
     }
 
     checkLogin() {
