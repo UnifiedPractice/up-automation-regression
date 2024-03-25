@@ -2,10 +2,14 @@ name: UP Automation regression
 
 on:
   schedule:
-    - cron: '11 16 * * *' # Rulează la 16:11 în fiecare zi
+    - cron: '15 14 * * *' 
+
+  push:
+    branches: [Alex]
+  pull_request:
+    branches: [Alex]
 
 jobs:
-  
   run-automation-regression-tests:
     runs-on: windows-latest
     steps:
@@ -21,8 +25,5 @@ jobs:
           record: true
           parallel: false
         env:
-          # For recording and parallelization to work you must set your CYPRESS_RECORD_KEY
-          # in GitHub repo → Settings → Secrets → Actions
           CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
-          # Creating a token https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/creating-a-personal-access-token
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
