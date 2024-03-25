@@ -1,10 +1,8 @@
 name: UP Automation regression
 
 on:
-  push:
-    branches: [ Alex ]
-  pull_request:
-    branches: [ Alex ]
+  schedule:
+    - cron: '11 16 * * *' # Rulează la 16:11 în fiecare zi
 
 jobs:
   
