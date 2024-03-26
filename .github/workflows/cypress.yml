@@ -10,7 +10,7 @@ jobs:
   run-automation-regression-tests:
     runs-on: windows-latest
     steps:
-      - run: git config --global url."https://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@github.com/".insteadOf https://github.com/
+      - run: git config --global url."https://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@github.com/".insteadOf https://github.com/
       - name: Checkout
         uses: actions/checkout@v4
         with:
