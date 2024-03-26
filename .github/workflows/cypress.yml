@@ -1,8 +1,10 @@
 name: UP Automation regression
 
 on:
-  schedule:
-    - cron: '25 14 * * *' 
+  push:
+    branches: [ Alex ]
+  pull_request:
+    branches: [ Alex ]
 
 jobs:
   run-automation-regression-tests:
