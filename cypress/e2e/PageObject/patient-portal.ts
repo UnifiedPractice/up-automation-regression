@@ -354,7 +354,6 @@ class PatientPortal extends BasePage {
             })
     }
 
-    //Another intercept would be ideal in this method
     checkVisibilityUpcoming(): void {
         this.selectAppointmentsfromMenu();
         cy.wait(14500)
