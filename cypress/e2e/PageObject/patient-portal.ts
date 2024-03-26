@@ -48,7 +48,7 @@ class PatientPortal extends BasePage {
     public bookApointmentSelector : string = '.text-right';
     private uploadLiveChatSelector: string = '.rfu-file-upload-button';
     private secondSelectBoxSelector
-    private usernameLogin: string= 'automation14@email.com';
+    private usernameLogin: string= 'automation15@email.com';
     private passwordLogin: string = 'password';
     private cancelButton: string = '.mat-icon.notranslate.mt-1.cancel-icon.mat-icon-no-color';
     private rescheduleButoon: string = '.mat-icon.notranslate.mr-1.material-icons.mat-icon-no-color';
@@ -138,7 +138,7 @@ class PatientPortal extends BasePage {
     }
 
     proceedLogin() : void {
-        cy.wait(5000).get('.inp').eq(0).click().type('automation14@email.com');
+        cy.wait(5000).get('.inp').eq(0).click().type('automation15@email.com');
         cy.contains('Password').parent().click().type('password');
         cy.get(this.loginButtonSelector).click().wait(19000);
     }
@@ -356,6 +356,7 @@ class PatientPortal extends BasePage {
 
     //Another intercept would be ideal in this method
     checkVisibilityUpcoming(): void {
+        this.selectAppointmentsfromMenu();
         cy.wait(14500)
         cy.get('.text-center.mt-4').then($button => {
             if($button.text().includes('Show more upcoming')) {
@@ -795,7 +796,7 @@ class PatientPortal extends BasePage {
 
     forgotPassword() : void{
         cy.contains('Forgot password?').click();
-        cy.get(this.forgotFieldSelector).click().type('automation14@email.com')
+        cy.get(this.forgotFieldSelector).click().type('automation15@email.com')
         cy.contains('Send Me Instructions').click();
         cy.contains('Instructions Sent!').should('be.visible');
 
@@ -854,6 +855,13 @@ class PatientPortal extends BasePage {
         cy.get(this.selectValueSelector).eq(2).click({force:true})
         cy.get(this.fieldArrowSelector).eq(Math.floor(Math.random() * 2)+1).click({force:true})
         cy.contains('Save').click({force:true})
+    }
+
+    selectAppointmentsfromMenu(): void{
+        cy.wait(2500).get(this.burgerMenuSelector).click()
+        cy.get('.cdk-overlay-pane').within( () =>
+            cy.contains('My Appointments').click({force:true}).wait(11000)
+        )
     }
 
     selectFormsfromMenu(): void{
