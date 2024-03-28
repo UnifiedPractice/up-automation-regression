@@ -18,3 +18,4 @@ export default defineConfig({
     specPattern: 'cypress/e2e/Tests/*.spec.ts',
   },
 })
+
