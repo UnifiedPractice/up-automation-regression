@@ -107,7 +107,6 @@ class PatientPortal extends BasePage {
         cy.get(this.radioTabSelector).eq(this.randomize).click();
         }
 
-    //Need to be improved with intercept
     interceptAndWaitForAvailabilities(): void{
             cy.wait(500)
         }
