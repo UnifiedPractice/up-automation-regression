@@ -68,7 +68,6 @@ class PatientPortal extends BasePage {
         cy.contains('https://pp.staging.unifiedpractice.com/automation-cypress').should('be.visible').get('.label-pp-url').eq(1).invoke('removeAttr', 'target').click()
         cy.wait(2000)
         cy.wait('@ppOrganization');
-        //It is desired to eliminate this wait, but sometimes in tests the intercept is not enough
         cy.wait(1500)
     }
 
@@ -78,7 +77,6 @@ class PatientPortal extends BasePage {
         cy.contains('https://pp.staging.unifiedpractice.com/automation-cypress').should('be.visible').get('.label-pp-url').eq(1).invoke('removeAttr', 'target').click()
         cy.wait(2000)
         cy.wait('@ppOrganization');
-        //It is desired to eliminate this wait, but sometimes in tests the intercept is not enough
         cy.wait(1500)
     }
     openPPUniveristy(): void {
@@ -86,7 +84,6 @@ class PatientPortal extends BasePage {
         cy.contains('https://pp.staging.unifiedpractice.com/automation-cypress-university').should('be.visible').get('.label-pp-url').eq(1).invoke('removeAttr', 'target').click()
         cy.wait(2000)
         cy.wait('@ppOrganization');
-        //It is desired to eliminate this wait, but sometimes in tests the intercept is not enough
         cy.wait(1500)
     }
 
