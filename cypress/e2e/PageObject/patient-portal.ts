@@ -955,7 +955,7 @@ class PatientPortal extends BasePage {
 
             if (checkSaveButtonExist || checkCompleteFormsExist) {
                 cy.get(".btn.btn-primary").click({force:true})
-                    cy.wait(10000)
+                    cy.wait(3000)
                     .then(() => this.checkFinalStepForms())
             }
             })
