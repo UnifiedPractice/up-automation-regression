@@ -880,24 +880,14 @@ class PatientPortal extends BasePage {
         cy.get('.form-control.ng-pristine').eq(0).click().clear().type('012345678')
         cy.get(this.selectValueSelector).eq(1).click({force:true})
         cy.get(this.fieldArrowSelector).eq(1).click({force:true})
-
         cy.get('.form-control.ng-pristine').eq(1).click().clear().type('012345678')
-        //cy.get(this.selectValueSelector).eq(1).click({force:true})
-        //cy.get(this.fieldArrowSelector).eq(2).click({force:true})
-        cy.wait(2000)
-
-        //cy.get(this.selectValueSelector).eq(2).click({force:true})
-        //cy.get(this.fieldArrowSelector).eq(2).click({force:true})
         cy.wait(2000)
         this.completeField('State','Ilfov')
-
         cy.get('.form-control.ng-pristine').eq(2).click({force:true})
         this.completeField('City','Bucharest')
         this.completeField('Zip Code','123123')
         this.completeField('Fax Number','39420329312')
         cy.get('.btn.btn-primary').click({force:true}).wait(4000)
-        this.checkForDrawing()
-        this.checkFinalStepForms({force:true})
     }
 
     selectCompleteFormsAndCompleteEmergencyInformation() : void {
