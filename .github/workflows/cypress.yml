@@ -1,10 +1,11 @@
-name: UP Automation regression
-
 on:
+  schedule:
+    - cron: '0 21 * * *'  # Rulează zilnic la ora 00:00 ROMANIAN TIME
+
   push:
-    branches: [ Alex ]
+    branches: [Alex]
   pull_request:
-    branches: [ Alex ]
+    branches: [Alex]
 
 jobs:
   run-automation-regression-tests:
