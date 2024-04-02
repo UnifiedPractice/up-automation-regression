@@ -1,6 +1,6 @@
 on:
   schedule:
-    - cron: '0 21 * * *'  # Rulează zilnic la ora 00:00 ROMANIAN TIME
+    - cron: '0 21 * * *'  # Rulează zilnic la ora 21:00 UTC
 
   push:
     branches: [Alex]
