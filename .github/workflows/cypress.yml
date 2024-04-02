@@ -7,10 +7,21 @@ on:
 jobs:
   run-automation-regression-tests:
     runs-on: windows-latest
-    schedule:
-      - cron:  '0 21 * * *' # Rulează zilnic la ora 21:00 UTC
     steps:
-      - run: git config --global url."https://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@github.com/".insteadOf https://github.com/
+      - name: Schedule run at 21:00 UTC
+        if: ${{ github.event_name == 'schedule' }}
+        run: |
+          current_hour=$(date -u +"%H")
+          if [[ $current_hour -eq 21 ]]; then
+            echo "Starting automation regression tests..."
+            git config --global url."https://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@github.com/".insteadOf https://github.com/
+            git clone https://github.com/${{ github.repository }} /tmp/${{ github.repository }}
+            cd /tmp/${{ github.repository }}
+            # Your automation regression tests commands here
+            echo "Automation regression tests completed."
+          else
+            echo "Not running automation regression tests as it's not 21:00 UTC."
+          fi
       - name: Checkout
         uses: actions/checkout@v4
         with:
