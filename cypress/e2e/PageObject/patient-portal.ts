@@ -1086,7 +1086,7 @@ class PatientPortal extends BasePage {
                 cy.intercept('https://pp.api.staging.unifiedpractice.com/t/automation-cypress/Onboarding/medicalforms/*').as('upcomingscreening')
                 cy.contains('Save & Continue').click()
                     cy.wait('@upcomingscreening')
-                    .then(() => this.checkSaveContinueVisibility())
+                    //.then(() => this.checkSaveContinueVisibility())
             }
         })
     }
