@@ -1066,7 +1066,6 @@ class PatientPortal extends BasePage {
         cy.contains('Save').click()
     }
 
-
     selectCompleteFormsAndCompleteScreeningForms() : void {
 
         this.selectFormsfromMenu()
@@ -1076,7 +1075,6 @@ class PatientPortal extends BasePage {
         )
         cy.contains('Complete Forms').click()
         this.checkSaveContinueVisibility()
-
     }
 
     checkSaveContinueVisibility(): void {
