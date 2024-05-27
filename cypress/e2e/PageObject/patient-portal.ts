@@ -19,7 +19,7 @@ const { uniqueNamesGenerator, Config, adjectives, colors } = require('unique-nam
 export const confirm = Math.floor(Math.random() * 22)
 
 class PatientPortal extends BasePage {
-    private globalUsername: string = 'automation14@email.com'
+    private globalUsername: string = 'automation22@email.com'
     private radioSelector: string = '.md-radio';
     private formControl: string = '.form-control';
     private loginButton: string = '.btn-login';
@@ -48,7 +48,7 @@ class PatientPortal extends BasePage {
     public bookApointmentSelector : string = '.text-right';
     private uploadLiveChatSelector: string = '.rfu-file-upload-button';
     private secondSelectBoxSelector
-    private usernameLogin: string= 'automation19@email.com';
+    private usernameLogin: string= 'automation22@email.com';
     private passwordLogin: string = 'password';
     private cancelButton: string = '.mat-icon.notranslate.mt-1.cancel-icon.mat-icon-no-color';
     private rescheduleButoon: string = '.mat-icon.notranslate.mr-1.material-icons.mat-icon-no-color';
