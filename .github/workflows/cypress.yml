@@ -1,11 +1,11 @@
-name: UP Automation Regression Parallelization Test
+name: Patient Portal Regression - 27.05.2024
 
 on:
   push:
     branches: [ Alex ]
   pull_request:
     branches: [ Alex ]
-
+    
 jobs:
   run-automation-regression-tests:
     runs-on: windows-latest
