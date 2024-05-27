@@ -5,7 +5,7 @@ on:
     branches: [ Alex ]
   pull_request:
     branches: [ Alex ]
-
+    
 jobs:
   run-automation-regression-tests:
     runs-on: windows-latest
