@@ -1,32 +1,26 @@
-name: Patient Portal Regression - 27.05.2024
+name: UP Automation regression
 
 on:
   push:
     branches: [ Alex ]
   pull_request:
     branches: [ Alex ]
-    
+
 jobs:
   run-automation-regression-tests:
     runs-on: windows-latest
-    strategy:
-      matrix:
-        container: [1, 2, 3, 4] # Configurăm 4 containere (mașini virtuale)
     steps:
       - run: git config --global url."https://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@github.com/".insteadOf https://github.com/
       - name: Checkout
         uses: actions/checkout@v4
         with:
           persist-credentials: false
-      - name: Install dependencies
-        run: npm install
       - name: Cypress run
         uses: cypress-io/github-action@v6
         with:
           browser: electron
           record: true
-          parallel: true # Activăm paralelizarea
-          group: "Windows Test Group" # Opțional, pentru o mai bună organizare
+          parallel: false
         env:
           CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
