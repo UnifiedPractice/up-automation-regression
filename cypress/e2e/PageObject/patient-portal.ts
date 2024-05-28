@@ -234,7 +234,7 @@ class PatientPortal extends BasePage {
 
     bookSimilar(): void {
         cy.contains('Upcoming Appointments').should('have.css', 'display', 'none');
-        cy.contains('Book Similar').click({force:true});
+        cy.contains('Book Similar').eq(3).click({force:true});
         this.checkLocationsNumber();
         // cy.contains('Automation with CCPE').click();
         // this.checkPractitionersNumber();
