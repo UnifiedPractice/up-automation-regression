@@ -5,8 +5,8 @@ export default defineConfig({
   projectId: "hqze8x",
   pageLoadTimeout: 140000,
   retries: {
-    runMode: 500,
-    openMode: 500
+    runMode: 8,
+    openMode: 8
   },
   e2e: {
     // We've imported your old cypress plugins here.
